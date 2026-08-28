@@ -1,0 +1,367 @@
+{
+  "siteSettings": {
+    "brand": "Landmark",
+    "brandSuffix": "Port Harcourt",
+    "ctaLabel": "Plan a Visit",
+    "navLinks": [
+      {
+        "label": "The Ring",
+        "href": "#the-ring"
+      },
+      {
+        "label": "The Green",
+        "href": "#the-green"
+      },
+      {
+        "label": "The Waterfront",
+        "href": "#the-waterfront"
+      },
+      {
+        "label": "At the Table",
+        "href": "#table"
+      },
+      {
+        "label": "Stay",
+        "href": "#rooms"
+      },
+      {
+        "label": "Plan a Visit",
+        "href": "#visit"
+      }
+    ],
+    "palette": {
+      "marine": "#08126d",
+      "marineDark": "#000529",
+      "marineLight": "#08126d",
+      "orange": "#F47C0B",
+      "orangeLight": "#FFA24D",
+      "orangeDark": "#8C4408",
+      "sand": "#EFE7D6",
+      "ink": "#000000"
+    },
+    "contact": {
+      "addressLines": [
+        "Landmark Village",
+        "Port Harcourt",
+        "Rivers State, Nigeria"
+      ],
+      "hoursLines": [
+        "Sun – Thu · 10am – 11pm",
+        "Fri – Sat · 10am – 1am"
+      ],
+      "phone": "Coming soon",
+      "email": "hello@landmark-portharcourt.ng"
+    }
+  },
+  "hero": {
+    "eyebrow": "Port Harcourt · Open Daily 10am – 11pm",
+    "headingLine1": "A place to",
+    "headingLine2": "return to.",
+    "ctaLabel": "View the grounds",
+    "ctaHref": "#the-concept",
+    "backgroundImage": "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=2600&q=85",
+    "watermark": "Cove",
+    "badge": "Now open"
+  },
+  "intro": {
+    "eyebrow": "The Concept",
+    "headingText": "A waterfront quarter of Port Harcourt, reimagined as a single",
+    "headingItalic": "destination.",
+    "pillars": [
+      {
+        "title": "Nowhere else",
+        "body": "An upside-down attraction built from a concept with no precedent anywhere in the world — designed, not adapted from something already open elsewhere."
+      },
+      {
+        "title": "Grounds, not a park",
+        "body": "Nine distinct quarters connected by water, walkways and green — built to be explored over a day, not queued through in an hour."
+      },
+      {
+        "title": "Built for return visits",
+        "body": "A resident membership, curated F&B, and a beach club designed around the people who will come back every weekend, not once."
+      }
+    ]
+  },
+  "flagship": {
+    "eyebrow": "The Signature Attraction",
+    "heading": "The world,",
+    "headingItalic": "flipped.",
+    "body": "An upside-down attraction built from a concept with no equivalent anywhere else — every room, corridor and fixture inverted, gravity reasoned through rather than simulated.",
+    "note": "",
+    "backgroundImage": "/flagship-upside-down.png",
+    "overlayColor": "#001F3F",
+    "indexNumber": "01",
+    "ctaLabel": "Reserve a walkthrough",
+    "stats": [
+      { "label": "Concept", "value": "World-first" },
+      { "label": "Format", "value": "Walk-through" },
+      { "label": "Duration", "value": "45 min" },
+      { "label": "Opens", "value": "Phase One" }
+    ]
+  },
+  "ring": {
+    "zoneLabel": "Zone One",
+    "title": "The Ring",
+    "intro": "A circular attraction floor at the centre of the grounds. Scroll to move through it — six spaces arranged around a single walking loop.",
+    "items": [
+      {
+        "title": "Hologram Zoo",
+        "area": "480 sqm",
+        "body": "A 3D immersive experience built to put guests inside the wild, not just in front of it.",
+        "imageUrl": "https://images.unsplash.com/photo-1533450718592-29d45635f0a9?auto=format&fit=crop&w=2000&q=80",
+        "icon": "Sparkles"
+      },
+      {
+        "title": "Arcade & Bumper Cars",
+        "area": "517 sqm",
+        "body": "Full-format arcade floor paired with a dedicated bumper car circuit.",
+        "imageUrl": "https://images.unsplash.com/photo-1700085664050-43cea0e1c3fd?auto=format&fit=crop&w=2000&q=80",
+        "icon": "Gamepad2"
+      },
+      {
+        "title": "Kids Club",
+        "area": "900 sqm",
+        "body": "The grounds' largest single space — supervised, self-contained, built for full-day stays.",
+        "imageUrl": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=2000&q=80",
+        "icon": "Baby"
+      },
+      {
+        "title": "Skating",
+        "area": "360 sqm",
+        "body": "A dedicated rink inside the ring — outside the original activity brief, included here because it sits directly on the phase-one footprint.",
+        "imageUrl": "https://images.unsplash.com/photo-1547447134-cd3f5c716030?auto=format&fit=crop&w=2000&q=80",
+        "icon": "Disc3"
+      },
+      {
+        "title": "Seafood Restaurant",
+        "area": "350 sqm",
+        "body": "Sit-down dining at the centre of the ring, between the water feature and the attraction floor.",
+        "imageUrl": "https://images.unsplash.com/photo-1531419925964-8c2e4bc58e63?auto=format&fit=crop&w=2000&q=80",
+        "icon": "UtensilsCrossed"
+      },
+      {
+        "title": "ATV Area",
+        "area": "900 sqm",
+        "body": "A dedicated track — also outside the original brief, flagged for the same reason as Skating.",
+        "imageUrl": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=2000&q=80",
+        "icon": "Car"
+      }
+    ]
+  },
+  "green": {
+    "zoneLabel": "Zone Two",
+    "title": "The Green",
+    "intro": "1,860 sqm concert area anchoring an open-air adventure quarter. Scroll on to move through the rest of it.",
+    "heroImageUrl": "/concert live.jpg",
+    "ctaLabel": "Book court time",
+    "stats": [
+      { "label": "Concert lawn", "value": "1,860 sqm" },
+      { "label": "Format", "value": "Open-air" },
+      { "label": "Adjacent", "value": "Padel · Football" },
+      { "label": "Season", "value": "Year-round" }
+    ],
+    "items": [
+      {
+        "title": "Wall Climbing & Rope Course",
+        "area": "230 sqm",
+        "body": "A vertical course paired with a rope circuit. Bungee jump is under review — not yet sited on the current plan.",
+        "imageUrl": "/DSC05456.jpg",
+        "icon": "Mountain"
+      },
+      {
+        "title": "Padel Court",
+        "area": "Confirmed",
+        "body": "A dedicated court, sited beside the football pitch on the grounds' southern edge.",
+        "imageUrl": "/Padel 2.jpeg",
+        "icon": "CircleDot"
+      },
+      {
+        "title": "5-a-side Football",
+        "area": "Confirmed",
+        "body": "Full-size five-a-side pitch, adjoining the padel court.",
+        "imageUrl": "/Football pitch.jpg",
+        "icon": "Trophy"
+      },
+      {
+        "title": "Archery & Shooting Range",
+        "area": "To confirm",
+        "body": "Included per your brief, but not yet allocated a footprint on the site plan we're working from.",
+        "imageUrl": "/archery.jpg",
+        "icon": "Target"
+      }
+    ]
+  },
+  "waterfront": {
+    "zoneLabel": "Zone Three",
+    "title": "The Waterfront",
+    "intro": "The full beach club complex, its lounges and open water — set apart from the ring, reached along its own approach from the water body.",
+    "heroImage": "https://images.unsplash.com/photo-1500815845799-7748ca339f27?auto=format&fit=crop&w=1600&q=80",
+    "asideImage": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
+    "dayPassLabel": "Reserve a day pass",
+    "stats": [
+      { "label": "Beach club", "value": "3,734 sqm" },
+      { "label": "Lounges", "value": "Two · day & night" },
+      { "label": "Pool decks", "value": "Adult · Kids" },
+      { "label": "Service", "value": "Kitchen · Spa · Bar" }
+    ],
+    "features": [
+      "Club and lounge — two rooms, one for day one for night.",
+      "Adult and kids pools, held separate from the ring behind.",
+      "Spa, kitchen and bar service running through the whole approach."
+    ],
+    "callout": "An inflatable course anchored offshore — timed runs, team heats, open swim sessions between them.",
+    "gallery": [
+      {
+        "title": "Beach Club Pool Deck",
+        "tag": "The main deck",
+        "imageUrl": "https://images.unsplash.com/photo-1561501900-3701fa6a0864?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "title": "Jet Skis",
+        "tag": "Open water, guided or self-run",
+        "imageUrl": "https://images.unsplash.com/photo-1554132267-d06483b00adc?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "title": "The Jetty Restaurant",
+        "tag": "Dining built out over open water",
+        "imageUrl": "https://images.unsplash.com/photo-1550293750-dde2bed30d54?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "title": "Cabanas & Leisure",
+        "tag": "2,050 sqm reserved along the approach",
+        "imageUrl": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  "fnbMarketplace": {
+    "eyebrow": "At the Table",
+    "heading": "A curated line-up,",
+    "headingItalic": "not a food court.",
+    "body": "One seafood house is confirmed. The remaining vendor slots are held open — each will carry a single, distinct kitchen rather than a repeated format.",
+    "vendors": [
+      {
+        "name": "Seafood",
+        "kind": "Anchor",
+        "body": "Anchor restaurant, sited in The Ring"
+      },
+      {
+        "name": "Vendor — to confirm",
+        "kind": "",
+        "body": "Slot reserved, no partner named yet"
+      },
+      {
+        "name": "Vendor — to confirm",
+        "kind": "",
+        "body": "Slot reserved, no partner named yet"
+      },
+      {
+        "name": "Vendor — to confirm",
+        "kind": "",
+        "body": "Slot reserved, no partner named yet"
+      }
+    ]
+  },
+  "overlap": {
+    "eyebrow": "From the shore",
+    "topLine": "Along the",
+    "bottomLine": "coast.",
+    "imageUrl": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2400&q=80",
+    "imageAlt": "Wide coastal shore at low light",
+    "caption": "The grounds meet open water along a curated approach — beach, jetty and cabana leisure held to a single edge.",
+    "align": "left"
+  },
+  "panorama": {
+    "eyebrow": "The Grounds · From Above",
+    "heading": "A single loop, from ring to shore.",
+    "imageUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=3600&q=80",
+    "imageAlt": "Aerial view of the grounds sweeping toward the water",
+    "chapters": [
+      {
+        "title": "The Ring",
+        "body": "Attractions floor at the centre of the grounds — six spaces on one walking loop."
+      },
+      {
+        "title": "The Green",
+        "body": "Concert lawn, courts and adventure quarter along the southern edge."
+      },
+      {
+        "title": "The Waterfront",
+        "body": "Beach club, jetty dining and the offshore inflatable course."
+      }
+    ]
+  },
+  "rooms": {
+    "eyebrow": "Where you stay",
+    "heading": "Rooms held close to the",
+    "italic": "water.",
+    "body": "A limited number of stays across the grounds — each within a short walk of the ring, the green or the shore. Room count is deliberately small; occupancy is managed against membership demand.",
+    "items": [
+      {
+        "name": "Waterfront Suite",
+        "tag": "Suite · Shore-facing",
+        "size": "62 sqm",
+        "guests": "2 guests",
+        "priceFrom": "₦210k / night",
+        "body": "A first-floor suite along the jetty approach — private balcony, direct sight-line to the open water and the beach club deck below.",
+        "imageUrl": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1600&q=80",
+        "features": ["Sea view", "Balcony", "King bed", "Beach club access"]
+      },
+      {
+        "name": "Grove Loft",
+        "tag": "Loft · Green-side",
+        "size": "48 sqm",
+        "guests": "2 guests",
+        "priceFrom": "₦165k / night",
+        "body": "Loft-style room set into the green edge of the grounds. Quieter side of the site, morning light through tall windows, steps from the courts and concert lawn.",
+        "imageUrl": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=80",
+        "features": ["Garden view", "Loft ceiling", "Queen bed"]
+      },
+      {
+        "name": "Ring Studio",
+        "tag": "Studio · Central",
+        "size": "34 sqm",
+        "guests": "2 guests",
+        "priceFrom": "₦120k / night",
+        "body": "Compact studio directly above the attractions ring — for guests who want to be in the middle of everything, not at the edge of it.",
+        "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1600&q=80",
+        "features": ["Central", "Compact", "Ring-side"]
+      },
+      {
+        "name": "Beach Cabana",
+        "tag": "Cabana · Day-use",
+        "size": "22 sqm",
+        "guests": "4 guests",
+        "priceFrom": "₦85k / day",
+        "body": "Private cabana along the beach club approach — day-use only, includes deck, shade and dedicated table service through the afternoon.",
+        "imageUrl": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1600&q=80",
+        "features": ["Day-use", "Deck", "Table service"]
+      }
+    ]
+  },
+  "reveal": {
+    "imageUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80",
+    "imageAlt": "Aerial view of the grounds and waterfront",
+    "heading": "Return to the water.",
+    "subheading": "The waterfront is where the grounds open up — the beach club, the jetty and the swim course all sit along a single approach from the shore.",
+    "callouts": [
+      "Beach club",
+      "Open swim",
+      "Jetty dining",
+      "Cabanas"
+    ]
+  },
+  "siteMap": {
+    "eyebrow": "How the Grounds Sit Together",
+    "heading": "Three zones, one loop.",
+    "caption": "Simplified for orientation — not drawn to the scale of the construction plan."
+  },
+  "visit": {
+    "eyebrow": "Plan Your Visit",
+    "heading": "Come see us.",
+    "body": "Walk-ins are welcome across the grounds. For table bookings, group visits or membership enquiries, get in touch.",
+    "formSubmitLabel": "Send Enquiry",
+    "formSuccessTitle": "Thank you.",
+    "formSuccessBody": "We've received your enquiry and will get back to you shortly.",
+    "responseTime": "We reply within 24 hours."
+  }
+}
