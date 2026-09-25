@@ -7,6 +7,7 @@ import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import PinnedCarousel, { CarouselSlide } from './PinnedCarousel'
 import SplitHeading from './SplitHeading'
 import CountUp from './CountUp'
+import Media from './Media'
 import { openBookingModal } from './BookingModal'
 import { useContent } from '../lib/content'
 
@@ -42,7 +43,7 @@ export default function ZoneGreen() {
       {/* Hero */}
       <div ref={heroRef} className="relative h-[75vh] md:h-[90vh] overflow-hidden">
         <div ref={imgRef} className="absolute inset-0 -top-[6%] h-[112%] w-full">
-          <img
+          <Media
             src={heroImage}
             alt=""
             className="h-full w-full object-cover"
@@ -95,7 +96,7 @@ export default function ZoneGreen() {
             >
               {slide.imageUrl && (
                 <>
-                  <img
+                  <Media
                     src={slide.imageUrl}
                     alt={slide.title || ''}
                     className="absolute inset-0 h-full w-full object-cover"
@@ -134,7 +135,7 @@ export default function ZoneGreen() {
                 <div className="relative h-[70vh] md:h-[75vh] w-full overflow-hidden flex items-end bg-ink">
                   {slide.imageUrl && (
                     <>
-                      <img
+                      <Media
                         src={slide.imageUrl}
                         alt={slide.title || ''}
                         className="absolute inset-0 h-full w-full object-cover"

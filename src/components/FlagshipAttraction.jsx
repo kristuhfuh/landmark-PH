@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import { useContent } from '../lib/content'
 import { openBookingModal } from './BookingModal'
+import Media from './Media'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -71,7 +72,7 @@ export default function FlagshipAttraction() {
       {/* Full-bleed photo with parallax + dark overlay */}
       <div className="absolute inset-0">
         <div ref={imgRef} className="absolute -inset-[8%]">
-          <img
+          <Media
             src={bgImage}
             alt="The upside-down ship attraction"
             className="h-full w-full object-cover"

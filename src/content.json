@@ -21,6 +21,14 @@
         "href": "#table"
       },
       {
+        "label": "Tickets",
+        "href": "#tickets"
+      },
+      {
+        "label": "Citizen App",
+        "href": "#citizen-app"
+      },
+      {
         "label": "Stay",
         "href": "#rooms"
       },
@@ -59,7 +67,7 @@
     "headingLine2": "return to.",
     "ctaLabel": "View the grounds",
     "ctaHref": "#the-concept",
-    "backgroundImage": "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=2600&q=85",
+    "backgroundImage": "/hero.jpg",
     "watermark": "Cove",
     "badge": "Now open"
   },
@@ -108,28 +116,28 @@
         "title": "Hologram Zoo",
         "area": "480 sqm",
         "body": "A 3D immersive experience built to put guests inside the wild, not just in front of it.",
-        "imageUrl": "https://images.unsplash.com/photo-1533450718592-29d45635f0a9?auto=format&fit=crop&w=2000&q=80",
+        "imageUrl": "https://youtu.be/gMEVGQEOpkg?si=VH1iZ-kQZFMQrZVX",
         "icon": "Sparkles"
       },
       {
         "title": "Arcade & Bumper Cars",
         "area": "517 sqm",
         "body": "Full-format arcade floor paired with a dedicated bumper car circuit.",
-        "imageUrl": "https://images.unsplash.com/photo-1700085664050-43cea0e1c3fd?auto=format&fit=crop&w=2000&q=80",
+        "imageUrl": "https://youtu.be/tnalkG8ywT8?si=tN2Rx9zbsC8kTyUO",
         "icon": "Gamepad2"
       },
       {
         "title": "Kids Club",
         "area": "900 sqm",
         "body": "The grounds' largest single space — supervised, self-contained, built for full-day stays.",
-        "imageUrl": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=2000&q=80",
+        "imageUrl": "/kids club.mp4",
         "icon": "Baby"
       },
       {
         "title": "Skating",
         "area": "360 sqm",
         "body": "A dedicated rink inside the ring — outside the original activity brief, included here because it sits directly on the phase-one footprint.",
-        "imageUrl": "https://images.unsplash.com/photo-1547447134-cd3f5c716030?auto=format&fit=crop&w=2000&q=80",
+        "imageUrl": "/roller skating.mp4",
         "icon": "Disc3"
       },
       {
@@ -152,7 +160,7 @@
     "zoneLabel": "Zone Two",
     "title": "The Green",
     "intro": "1,860 sqm concert area anchoring an open-air adventure quarter. Scroll on to move through the rest of it.",
-    "heroImageUrl": "/concert live.jpg",
+    "heroImageUrl": "/concert live 2.jpg",
     "ctaLabel": "Book court time",
     "stats": [
       { "label": "Concert lawn", "value": "1,860 sqm" },
@@ -260,6 +268,237 @@
         "body": "Slot reserved, no partner named yet"
       }
     ]
+  },
+  "tickets": {
+    "eyebrow": "Tickets & Packages",
+    "heading": "Visit us,",
+    "italic": "your way.",
+    "body": "Buy in advance or add at the gate. Family packages held aside for weekends; day-passes to the beach club open daily. Availability confirmed by email — no card charged until you confirm.",
+    "categories": [
+      { "key": "entry", "label": "Grounds entry" },
+      { "key": "activity", "label": "Activity tickets" },
+      { "key": "package", "label": "Packages" },
+      { "key": "daypass", "label": "Beach club" }
+    ],
+    "items": [
+      {
+        "id": "entry-adult",
+        "category": "entry",
+        "name": "Adult day entry",
+        "tag": "General admission",
+        "priceNGN": 5000,
+        "priceUnit": "person",
+        "body": "Full grounds access — walk the ring, the green and the waterfront approach at your own pace.",
+        "includes": [
+          "All three zones",
+          "Free attractions",
+          "Kids club access"
+        ]
+      },
+      {
+        "id": "entry-child",
+        "category": "entry",
+        "name": "Child day entry",
+        "tag": "Ages 4 – 12",
+        "priceNGN": 3000,
+        "priceUnit": "child",
+        "body": "Same access as adult entry. Children under 4 free with a paying adult.",
+        "includes": [
+          "All three zones",
+          "Kids club",
+          "Free attractions"
+        ]
+      },
+      {
+        "id": "entry-family",
+        "category": "entry",
+        "name": "Family day entry",
+        "tag": "2 adults · 2 children",
+        "priceNGN": 15000,
+        "priceUnit": "family",
+        "body": "Four-person family pass — best value for a full day out.",
+        "featured": true,
+        "includes": [
+          "2 adult passes",
+          "2 child passes",
+          "Priority attraction entry"
+        ]
+      },
+      {
+        "id": "activity-flagship",
+        "category": "activity",
+        "name": "Upside-Down Ship walkthrough",
+        "tag": "The Flagship · 45 min",
+        "priceNGN": 8000,
+        "priceUnit": "person",
+        "body": "Timed entry into the ship — every room, corridor and fixture inverted.",
+        "includes": [
+          "Timed slot",
+          "Guided walkthrough",
+          "Photo point"
+        ]
+      },
+      {
+        "id": "activity-atv",
+        "category": "activity",
+        "name": "ATV circuit lap",
+        "tag": "The Ring · 15 min",
+        "priceNGN": 4500,
+        "priceUnit": "person",
+        "body": "Fifteen minutes on the dedicated circuit. Helmet and briefing included.",
+        "includes": ["Helmet", "Briefing", "Marshalled circuit"]
+      },
+      {
+        "id": "activity-padel",
+        "category": "activity",
+        "name": "Padel court",
+        "tag": "The Green · 1 hr",
+        "priceNGN": 12000,
+        "priceUnit": "court hour",
+        "body": "Full court, one hour, up to four players. Rackets available on site.",
+        "includes": ["Court time", "Rackets available", "Ball basket"]
+      },
+      {
+        "id": "activity-jetski",
+        "category": "activity",
+        "name": "Jet ski · 15 min",
+        "tag": "Waterfront · guided",
+        "priceNGN": 20000,
+        "priceUnit": "ride",
+        "body": "Fifteen-minute ride along the marked approach — guided or self-run.",
+        "includes": ["Life jacket", "Briefing", "Marshalled route"]
+      },
+      {
+        "id": "activity-obstacle",
+        "category": "activity",
+        "name": "Inflatable course heat",
+        "tag": "Waterfront · 30 min",
+        "priceNGN": 6500,
+        "priceUnit": "person",
+        "body": "Timed run on the offshore inflatable course. Open swim between heats.",
+        "includes": ["Timed heat", "Life jacket", "Rest area"]
+      },
+      {
+        "id": "package-family-day",
+        "category": "package",
+        "name": "Family day package",
+        "tag": "Four guests · one price",
+        "priceNGN": 35000,
+        "priceUnit": "package",
+        "body": "Entry, one activity per person, and a table at the seafood house for four.",
+        "featured": true,
+        "includes": [
+          "4 grounds entries",
+          "4 activity tickets",
+          "Reserved seafood table",
+          "Priority ride slots"
+        ]
+      },
+      {
+        "id": "package-birthday",
+        "category": "package",
+        "name": "Birthday package",
+        "tag": "Up to 10 guests",
+        "priceNGN": 120000,
+        "priceUnit": "package",
+        "body": "Full day out — entry, three attractions per guest, party space at the kids club, and cake.",
+        "includes": [
+          "10 grounds entries",
+          "3 activities per guest",
+          "Kids club party room · 3 hrs",
+          "Birthday cake"
+        ]
+      },
+      {
+        "id": "package-corporate",
+        "category": "package",
+        "name": "Corporate day out",
+        "tag": "20+ guests · per head",
+        "priceNGN": 8500,
+        "priceUnit": "guest",
+        "body": "For teams — grounds entry, choice of two activities, and lunch at the seafood house.",
+        "includes": [
+          "Grounds entry",
+          "Two activities per guest",
+          "Set lunch",
+          "Dedicated host"
+        ]
+      },
+      {
+        "id": "daypass-adult",
+        "category": "daypass",
+        "name": "Beach club day pass",
+        "tag": "Adult · 10am – 8pm",
+        "priceNGN": 15000,
+        "priceUnit": "person",
+        "body": "Full-day access to the beach club, both lounges, and the adult pool.",
+        "includes": [
+          "Beach club access",
+          "Adult pool",
+          "Sun-lounger",
+          "Towel service"
+        ]
+      },
+      {
+        "id": "daypass-couple",
+        "category": "daypass",
+        "name": "Beach club · couples",
+        "tag": "Two adults · 10am – 8pm",
+        "priceNGN": 27000,
+        "priceUnit": "pair",
+        "body": "Two day passes plus a reserved cabana half-day and welcome drinks.",
+        "featured": true,
+        "includes": [
+          "2 day passes",
+          "Reserved cabana · 4 hrs",
+          "Welcome drinks",
+          "Towel service"
+        ]
+      },
+      {
+        "id": "daypass-cabana",
+        "category": "daypass",
+        "name": "Private cabana",
+        "tag": "Day-use · up to 4",
+        "priceNGN": 75000,
+        "priceUnit": "cabana",
+        "body": "Private cabana on the beach club deck. Table service through the afternoon.",
+        "includes": [
+          "Cabana · 6 hrs",
+          "Up to 4 guests",
+          "Table service",
+          "Beach club access"
+        ]
+      }
+    ]
+  },
+  "citizenApp": {
+    "eyebrow": "Landmark Citizen",
+    "heading": "The grounds,",
+    "italic": "in your pocket.",
+    "body": "Buy tickets, hold your day pass and check what's open — all from one app. Citizens save 10% on every ticket, room and package booked in-app, plus first look at weekend slots.",
+    "features": [
+      {
+        "icon": "Ticket",
+        "label": "10% off every ticket",
+        "body": "Grounds entry, activities, packages and beach passes — always cheaper in-app."
+      },
+      {
+        "icon": "Sparkles",
+        "label": "Priority slots",
+        "body": "First look at weekend cabanas, concert dates and flagship walkthrough windows."
+      },
+      {
+        "icon": "Calendar",
+        "label": "Your visit, held together",
+        "body": "All your bookings, your host contact, and directions inside the grounds — one screen."
+      }
+    ],
+    "appStoreLink": "#",
+    "playStoreLink": "#",
+    "qrImage": "",
+    "mockupImage": "/citizen-app.mp4",
+    "savingsPill": "Save 10%"
   },
   "overlap": {
     "eyebrow": "From the shore",

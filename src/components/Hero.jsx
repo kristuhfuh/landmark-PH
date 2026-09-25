@@ -50,7 +50,7 @@ export default function Hero() {
     <section
       id="top"
       ref={sectionRef}
-      className="relative h-[110svh] md:h-[150svh] w-full"
+      className="relative h-[140svh] md:h-[200svh] w-full"
     >
       {/* Italic script watermark — sits behind the main heading, a big
           ambient word that echoes the resort's spirit. */}

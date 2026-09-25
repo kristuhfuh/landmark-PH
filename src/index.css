@@ -29,9 +29,95 @@ body {
   color: #EFE7D6;
 }
 
+/* Global button corner radius — 8px on every <button> by default. Buttons
+   with an explicit Tailwind rounded utility (rounded-full, rounded-none,
+   etc.) still win via class specificity, so pill/circle CTAs are preserved. */
+button {
+  border-radius: 8px;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(28px);
+}
+
+/* PinnedTrio reveal targets. On desktop we start hidden so GSAP's fromTo
+   initial state doesn't flash — GSAP overrides on scroll-trigger. On mobile
+   (< md) the panels are a simple vertical stack, so we let elements sit
+   visible and use a light fadeIn as they enter. */
+@media (min-width: 768px) {
+  .trio-anim {
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+}
+@media (max-width: 767px) {
+  .trio-anim {
+    animation: fadeIn 0.6s ease-out backwards;
+  }
+}
+
+/* Nav sidesheet — full-page reveal from the left with staggered corners.
+   Two custom properties drive the polygon's top-right and bottom-right x
+   coordinates independently, and their transitions have different
+   durations so the top corner arrives before the bottom. Requires
+   @property support (Chrome 85+, Safari 16.4+, Firefox 128+) — older
+   browsers fall back to an instant show/hide, which is acceptable. */
+@property --sheet-top-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+@property --sheet-bot-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+.sidesheet-panel {
+  --sheet-top-x: 0%;
+  --sheet-bot-x: 0%;
+  clip-path: polygon(0 0, var(--sheet-top-x) 0, var(--sheet-bot-x) 100%, 0 100%);
+  transition:
+    --sheet-top-x 500ms cubic-bezier(0.65, 0, 0.35, 1),
+    --sheet-bot-x 900ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.sidesheet-panel.is-open {
+  --sheet-top-x: 100%;
+  --sheet-bot-x: 100%;
+}
+
+/* Ring section — image layers that wipe in with the same staggered
+   clip-path animation as the nav sidesheet (top-right leads, bottom
+   trails). The active layer is animated imperatively via GSAP so the
+   incoming layer starts at 0% before running to 100%. */
+@property --layer-top-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+@property --layer-bot-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+.ring-layer {
+  --layer-top-x: 0%;
+  --layer-bot-x: 0%;
+  clip-path: polygon(
+    0 0,
+    var(--layer-top-x) 0,
+    var(--layer-bot-x) 100%,
+    0 100%
+  );
+}
+
+/* Outlined-text utility — transparent fill with a soft sand stroke, used
+   for the inactive menu items in the Ring so the composition matches the
+   reference (active item filled + orange bar; others ghosted outlines). */
+.text-outline-sand {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(var(--c-sand) / 0.55);
+  text-stroke: 1px rgb(var(--c-sand) / 0.55);
 }
 
 .hairline {
@@ -76,3 +162,4 @@ body {
     scroll-behavior: auto !important;
   }
 }
+

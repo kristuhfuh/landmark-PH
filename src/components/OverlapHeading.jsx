@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Media from './Media'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -101,7 +102,7 @@ export default function OverlapHeading({
         {/* Photo — 3:4 slab with parallax inner image */}
         <div className={`relative w-full md:w-[62%] aspect-[4/5] overflow-hidden ${photoAlign}`}>
           <div ref={imgRef} className="absolute -inset-[10%]">
-            <img
+            <Media
               src={imageUrl}
               alt={imageAlt}
               className="h-full w-full object-cover"

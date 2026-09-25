@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Media from './Media'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -29,26 +30,31 @@ export default function SemicircleReveal({
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Phase 1 — photo enters and settles into the viewport first.
-      gsap.fromTo(
-        imageRef.current,
-        { scale: 1.25 },
-        {
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'top 25%',
-            scrub: 0.5,
-          },
-        }
-      )
+      // Initial states — set explicitly so the image is always visible even
+      // before scroll triggers fire (defensive against layout-timing bugs
+      // when other pinned sections sit above this one in the flow).
+      gsap.set(imageRef.current, { scale: 1.15, opacity: 1 })
+      gsap.set(circleRef.current, {
+        scale: 0.1,
+        opacity: 0,
+        transformOrigin: 'center bottom',
+      })
 
-      // Phase 2 — starts only after the photo has finished settling. The
-      // arc scales from a small nub up to the huge semicircle that fills
-      // the lower half of the frame.
-      gsap.set(circleRef.current, { scale: 0.05, opacity: 0 })
+      // Phase 1 — photo settles from 1.15 → 1 as the section enters.
+      gsap.to(imageRef.current, {
+        scale: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'top 25%',
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      // Phase 2 — arc grows from a nub to the full semicircle after the
+      // photo has settled.
       gsap.to(circleRef.current, {
         scale: 1,
         opacity: 1,
@@ -58,6 +64,7 @@ export default function SemicircleReveal({
           start: 'top 25%',
           end: 'top -15%',
           scrub: 0.6,
+          invalidateOnRefresh: true,
         },
       })
 
@@ -74,9 +81,15 @@ export default function SemicircleReveal({
             trigger: sectionRef.current,
             start: 'top 10%',
             toggleActions: 'play none none reverse',
+            invalidateOnRefresh: true,
           },
         }
       )
+
+      // Force a refresh once mounted so trigger measurements pick up the
+      // final document height (which is heavily affected by the pinned
+      // horizontal-scroll section that sits above this one).
+      ScrollTrigger.refresh()
     }, sectionRef)
     return () => ctx.revert()
   }, [heading])
@@ -88,7 +101,7 @@ export default function SemicircleReveal({
     >
       {/* Full-bleed photo, parallax-scaled during phase 1. */}
       <div ref={imageRef} className="absolute inset-0 will-change-transform">
-        <img
+        <Media
           src={imageUrl}
           alt={imageAlt}
           className="absolute inset-0 h-full w-full object-cover"

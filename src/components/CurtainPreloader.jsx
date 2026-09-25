@@ -2,19 +2,17 @@ import { useEffect, useRef, useState } from 'react'
 import { useContent } from '../lib/content'
 
 /**
- * Editorial curtain preloader. On first load a full-viewport sand panel
+ * Editorial curtain preloader. On every load a full-viewport sand panel
  * covers the site with the brand mark and a 0→100 counter running along the
  * bottom. Once assets finish loading (or the min hold time elapses,
  * whichever is later), the panel splits at the middle horizontal seam and
  * slides apart — top half up, bottom half down — revealing the hero.
  *
  * Design notes:
- * - Only shows once per session (sessionStorage) so return visitors don't
- *   sit through it again.
+ * - Fires on every page load (no session throttling).
  * - Locks body scroll while active.
  * - Honors prefers-reduced-motion: fades out instantly without the split.
  */
-const SESSION_KEY = 'landmark:seen-preloader'
 const MIN_HOLD_MS = 1400 // baseline visible time even on fast connections
 
 export default function CurtainPreloader() {
@@ -22,10 +20,7 @@ export default function CurtainPreloader() {
   const brand = settings.brand || 'Landmark'
   const brandSuffix = settings.brandSuffix || 'Port Harcourt'
 
-  const [state, setState] = useState(() => {
-    if (typeof window === 'undefined') return 'hidden'
-    return sessionStorage.getItem(SESSION_KEY) ? 'hidden' : 'active'
-  })
+  const [state, setState] = useState('active')
   const [progress, setProgress] = useState(0)
   const rafRef = useRef(0)
 
@@ -51,7 +46,6 @@ export default function CurtainPreloader() {
         window.setTimeout(
           () => {
             setState('hidden')
-            sessionStorage.setItem(SESSION_KEY, '1')
             document.body.style.overflow = prevOverflow
           },
           reduced ? 260 : 1360

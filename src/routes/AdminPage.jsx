@@ -20,6 +20,8 @@ import {
   Compass,
   BedDouble,
   Waves,
+  Ticket,
+  Smartphone,
 } from 'lucide-react'
 
 const SECTIONS = [
@@ -31,6 +33,8 @@ const SECTIONS = [
   { key: 'green', label: 'The Green', icon: Leaf },
   { key: 'waterfront', label: 'The Waterfront', icon: Sun },
   { key: 'fnbMarketplace', label: 'F&B Marketplace', icon: UtensilsCrossed },
+  { key: 'tickets', label: 'Tickets & Packages', icon: Ticket },
+  { key: 'citizenApp', label: 'Citizen App', icon: Smartphone },
   { key: 'overlap', label: 'Editorial Heading', icon: Type },
   { key: 'panorama', label: 'Horizontal Panorama', icon: Compass },
   { key: 'rooms', label: 'Rooms & Stays', icon: BedDouble },
@@ -116,6 +120,20 @@ const LABELS = {
   nodes: 'Site-map nodes',
   walk: 'Walking time',
   signature: 'Headline attraction',
+  categories: 'Categories',
+  priceNGN: 'Price (₦, numeric)',
+  priceLabel: 'Price label (override)',
+  priceUnit: 'Price unit (e.g. person / hour)',
+  includes: 'What\'s included',
+  featured: 'Featured card',
+  id: 'Item ID (unique)',
+  category: 'Category key',
+  italic: 'Italic tail',
+  appStoreLink: 'App Store link',
+  playStoreLink: 'Google Play link',
+  qrImage: 'QR image URL (optional)',
+  mockupImage: 'App-screen mockup URL (optional)',
+  savingsPill: 'Savings pill text',
 }
 
 const label = (key) => LABELS[key] || key

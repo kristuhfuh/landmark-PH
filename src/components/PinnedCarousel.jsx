@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Media, { isVideoSrc } from './Media'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -117,11 +118,15 @@ export default function PinnedCarousel({
               style={{ opacity: activeIndex === i ? 1 : 0 }}
             >
               {url && (
-                <img
+                <Media
                   src={url}
                   alt=""
                   aria-hidden="true"
-                  className="h-full w-full object-cover scale-110 blur-xl"
+                  /* Blur is expensive on video — drop it for video sources
+                     but keep the subtle background dimming via scale + overlay. */
+                  className={`h-full w-full object-cover scale-110 ${
+                    isVideoSrc(url) ? 'opacity-60' : 'blur-xl'
+                  }`}
                 />
               )}
               <div className="absolute inset-0 bg-ink/50" />

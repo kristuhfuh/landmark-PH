@@ -9,7 +9,7 @@ import FlagshipAttraction from './components/FlagshipAttraction'
 import ZoneRing from './components/ZoneRing'
 import ZoneGreen from './components/ZoneGreen'
 import ZoneWaterfront from './components/ZoneWaterfront'
-import FnBMarketplace from './components/FnBMarketplace'
+import PinnedTrio from './components/PinnedTrio'
 import SiteMap from './components/SiteMap'
 import LaunchCTA from './components/LaunchCTA'
 import Footer from './components/Footer'
@@ -20,9 +20,12 @@ import CustomCursor from './components/CustomCursor'
 import BookingModal from './components/BookingModal'
 import CurtainPreloader from './components/CurtainPreloader'
 import SemicircleReveal from './components/SemicircleReveal'
-import HorizontalPanorama from './components/HorizontalPanorama'
 import RoomsShowcase from './components/RoomsShowcase'
-import OverlapHeading from './components/OverlapHeading'
+import TicketsShop from './components/TicketsShop'
+import CartDrawer from './components/CartDrawer'
+import CitizenApp from './components/CitizenApp'
+import Media from './components/Media'
+import { CartProvider } from './lib/cart'
 import { useContent } from './lib/content'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -33,9 +36,7 @@ export default function App() {
   const imgRef = useRef(null)
   const hero = useContent('hero')
   const reveal = useContent('reveal')
-  const panorama = useContent('panorama')
   const rooms = useContent('rooms')
-  const overlap = useContent('overlap')
   const heroImageUrl =
     hero.backgroundImage || '/pexels-petra-nesti-1766376-12161888.jpg'
 
@@ -52,6 +53,21 @@ export default function App() {
           start: 'top top',
           end: 'bottom top',
           scrub: 0.5,
+        },
+      })
+
+      // Hero image scales up as the reader approaches the bottom of the hero
+      // — the photo feels like it's blowing open just before the concept
+      // worm rises into the space above the Ring section.
+      gsap.to(imgRef.current, {
+        scale: 1.3,
+        ease: 'power2.in',
+        scrollTrigger: {
+          trigger: '#top',
+          start: 'bottom bottom',
+          end: 'bottom top',
+          scrub: 0.7,
+          invalidateOnRefresh: true,
         },
       })
     }, heroBgRef)
@@ -79,11 +95,13 @@ export default function App() {
   }, [])
 
   return (
+    <CartProvider>
     <div className="relative">
       <PaletteInjector />
       <CurtainPreloader />
       <CustomCursor />
       <BookingModal />
+      <CartDrawer />
       <Navbar />
       <StickyZoneLabel />
 
@@ -94,7 +112,7 @@ export default function App() {
             {/* Image container is oversized so parallax translation has
                 room to move without exposing empty space. */}
             <div ref={imgRef} className="absolute -top-[10%] h-[130%] w-full">
-              <img
+              <Media
                 src={heroImageUrl}
                 alt=""
                 aria-hidden="true"
@@ -109,33 +127,17 @@ export default function App() {
         <Intro />
       </div>
 
-      <FlagshipAttraction />
-      <AnchorMarquee phrase="A place to return to." separator="—" />
       <ZoneRing />
-      <ZoneGreen />
-      <AnchorMarquee phrase="Grounds, not a park." separator="·" duration={70} />
+      <AnchorMarquee phrase="A place to return to." separator="—" />
+      <FlagshipAttraction />
       <ZoneWaterfront />
-      <OverlapHeading
-        eyebrow={overlap.eyebrow || 'From the shore'}
-        topLine={overlap.topLine || 'Along the'}
-        bottomLine={overlap.bottomLine || 'coast.'}
-        imageUrl={overlap.imageUrl || '/DSC05456.jpg'}
-        imageAlt={overlap.imageAlt || 'The waterfront edge of Landmark Port Harcourt'}
-        caption={overlap.caption}
-        align={overlap.align || 'left'}
-      />
-      <HorizontalPanorama
-        imageUrl={panorama.imageUrl || '/DSC05456.jpg'}
-        imageAlt={panorama.imageAlt || 'The grounds seen from above'}
-        eyebrow={panorama.eyebrow || 'The Grounds · From Above'}
-        heading={panorama.heading || 'A single loop, from ring to shore.'}
-        chapters={panorama.chapters || [
-          { title: 'The Ring', body: 'Attractions floor at the centre of the grounds.' },
-          { title: 'The Green', body: 'Concert lawn, courts, and adventure quarter.' },
-          { title: 'The Waterfront', body: 'Beach club, jetty dining, and open water.' },
-        ]}
-      />
-      <FnBMarketplace />
+      <AnchorMarquee phrase="Grounds, not a park." separator="·" duration={70} />
+      <ZoneGreen />
+      {/* Trio pinned as one horizontal-scroll experience:
+          Along the coast → Grounds from above → At the table */}
+      <PinnedTrio />
+      <TicketsShop />
+      <CitizenApp />
       <RoomsShowcase
         eyebrow={rooms.eyebrow || 'Where you stay'}
         heading={rooms.heading || 'Rooms held close to the'}
@@ -162,5 +164,6 @@ export default function App() {
       <LaunchCTA />
       <Footer />
     </div>
+    </CartProvider>
   )
 }

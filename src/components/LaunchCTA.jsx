@@ -86,7 +86,7 @@ export default function LaunchCTA() {
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-marine-dark text-sand text-xs tracking-widest2 uppercase hover:bg-marine transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-marine-dark text-sand text-xs tracking-widest2 uppercase hover:bg-marine transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
               >
                 <MessageCircle size={14} strokeWidth={1.75} />
                 WhatsApp
@@ -94,7 +94,7 @@ export default function LaunchCTA() {
             )}
             <a
               href={`tel:${phone.replace(/\s+/g, '')}`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 border border-marine-dark/25 text-marine-dark text-xs tracking-widest2 uppercase hover:border-orange-dark hover:text-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-marine-dark/25 text-marine-dark text-xs tracking-widest2 uppercase hover:border-orange-dark hover:text-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
             >
               <Phone size={14} strokeWidth={1.75} />
               Call

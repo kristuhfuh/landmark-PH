@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import SplitHeading from './SplitHeading'
+import Media from './Media'
 import { openBookingModal } from './BookingModal'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -119,8 +120,8 @@ export default function RoomsShowcase({
               <h3 className="font-display text-3xl md:text-5xl leading-tight mb-4">
                 {room.name}
               </h3>
-              {/* Mobile-only inline photo */}
-              <img
+              {/* Mobile-only inline photo/video */}
+              <Media
                 src={room.imageUrl}
                 alt={room.name}
                 className="md:hidden w-full h-64 object-cover mb-4"
@@ -142,6 +143,11 @@ export default function RoomsShowcase({
                   <dd className="font-display italic text-base">{room.priceFrom}</dd>
                 </div>
               </dl>
+              {/* App-discount nudge — Citizen app members save 10%. */}
+              <p className="inline-flex items-center gap-1.5 text-[10px] tracking-widest2 uppercase text-orange-light mb-6">
+                <span aria-hidden="true">↓</span>
+                10% cheaper on the Citizen app
+              </p>
               {room.features?.length > 0 && (
                 <ul className="flex flex-wrap gap-2 mb-6">
                   {room.features.map((f) => (
@@ -181,7 +187,7 @@ export default function RoomsShowcase({
               className="relative aspect-[3/4] w-full overflow-hidden"
             >
               {rooms.map((room, i) => (
-                <img
+                <Media
                   key={room.name}
                   data-room-layer
                   src={room.imageUrl}

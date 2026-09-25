@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
+import Media from './Media'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -132,7 +133,7 @@ export default function DragGallery({ items }) {
               data-gallery-card
               className={`snap-start shrink-0 w-[80vw] ${shapes[i % shapes.length]} relative overflow-hidden`}
             >
-              <img
+              <Media
                 src={it.imageUrl || it.img}
                 alt={it.title}
                 draggable={false}

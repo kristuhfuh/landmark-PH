@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Media from './Media'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -114,7 +115,7 @@ export default function HorizontalPanorama({
           className="absolute inset-y-0 left-0 will-change-transform"
           style={{ width: 'max(300vw, 3200px)' }}
         >
-          <img
+          <Media
             src={imageUrl}
             alt={imageAlt}
             className="absolute inset-0 h-full w-full object-cover"
@@ -178,7 +179,7 @@ export default function HorizontalPanorama({
           <h2 className="font-display text-4xl leading-[0.95] mb-8">{heading}</h2>
         )}
         <div className="relative w-full h-64 mb-10 overflow-hidden">
-          <img
+          <Media
             src={imageUrl}
             alt={imageAlt}
             className="absolute inset-0 h-full w-full object-cover"

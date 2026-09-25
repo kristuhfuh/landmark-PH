@@ -7,6 +7,7 @@ import useTilt from '../hooks/useTilt'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import SplitHeading from './SplitHeading'
 import RevealImage from './RevealImage'
+import Media from './Media'
 import { openBookingModal } from './BookingModal'
 import { useContent } from '../lib/content'
 
@@ -97,7 +98,7 @@ export default function ZoneWaterfront() {
             className="reveal relative h-80 md:h-[36rem] md:ml-16"
           >
             <div ref={beachImgRef} className="absolute -inset-[8%]">
-              <img
+              <Media
                 src={heroImage}
                 alt="Beach club pool overlooking the ocean"
                 className="h-full w-full object-cover"
@@ -109,7 +110,7 @@ export default function ZoneWaterfront() {
               to keep the stack tidy. */}
           <div className="hidden md:block absolute -left-4 -bottom-12 w-56 h-72 overflow-hidden shadow-2xl shadow-marine-dark/30">
             <div ref={asideImgRef} className="absolute -inset-[10%]">
-              <img
+              <Media
                 src={asideImage}
                 alt="Cabana along the beach approach"
                 className="h-full w-full object-cover"

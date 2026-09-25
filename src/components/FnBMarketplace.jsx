@@ -1,6 +1,7 @@
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import SplitHeading from './SplitHeading'
 import RevealImage from './RevealImage'
+import Media from './Media'
 import { useContent } from '../lib/content'
 
 /**
@@ -40,8 +41,8 @@ export default function FnBMarketplace() {
       <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-14 items-start">
         <div className="md:col-span-5 md:sticky md:top-24">
           <RevealImage direction="left" className="reveal h-80 md:h-[35rem] mb-8">
-            <img
-              src="https://images.unsplash.com/photo-1531419925964-8c2e4bc58e63?auto=format&fit=crop&w=1400&q=80"
+            <Media
+              src={fnb.imageUrl || 'https://images.unsplash.com/photo-1531419925964-8c2e4bc58e63?auto=format&fit=crop&w=1400&q=80'}
               alt="White dining tables set outdoors"
               className="h-full w-full object-cover"
             />

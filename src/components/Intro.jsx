@@ -13,6 +13,7 @@ export default function Intro() {
   const pillRef = useRef(null)
   const contentRef = useRef(null)
   const headingRef = useRef(null)
+  const archRef = useRef(null)
   const intro = useContent('intro')
 
   const eyebrow = intro.eyebrow || 'The Concept'
@@ -24,28 +25,52 @@ export default function Intro() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Vertical cylinder â†’ full-width rectangle. Starts as a tall narrow pill
-      // that pokes up into the hero (via the section's negative top margin),
-      // then widens and square-corners as the user scrolls into the section.
+      // Big-worm morph. The head (top) stays a perfect semicircle at every
+      // width — top corners' radii sit at 9999px permanently so CSS
+      // auto-clamps them to half the width. The animation happens over a
+      // short scroll range at the start of the section: the worm rapidly
+      // widens from a narrow tail to full screen width (front-loaded
+      // easing so the "top" expands fast + sides slap against the viewport
+      // edges early). After that the reader scrolls naturally through the
+      // 200vh-tall worm body, which reads as the worm crawling up the page.
       gsap.set(pillRef.current, {
-        width: '30%',
-        height: '90vh',
-        borderRadius: '9999px',
+        width: '22%',
+        height: '105vh',
+        borderTopLeftRadius: '9999px',
+        borderTopRightRadius: '9999px',
+        borderBottomLeftRadius: '9999px',
+        borderBottomRightRadius: '9999px',
       })
       gsap.set(contentRef.current, { opacity: 0 })
+      if (archRef.current) gsap.set(archRef.current, { opacity: 0 })
 
       gsap.to(pillRef.current, {
         width: '100%',
-        height: '110vh',
-        borderRadius: '0px',
-        ease: 'none',
+        height: '200vh',
+        borderBottomLeftRadius: '0px',
+        borderBottomRightRadius: '0px',
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: ref.current,
-          start: 'top 70%',
-          end: 'top 5%',
+          start: 'top 85%',
+          end: 'top 25%',
           scrub: 0.6,
+          invalidateOnRefresh: true,
         },
       })
+
+      if (archRef.current) {
+        gsap.to(archRef.current, {
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: ref.current,
+            start: 'top 65%',
+            end: 'top 30%',
+            scrub: 0.6,
+          },
+        })
+      }
 
       gsap.to(contentRef.current, {
         opacity: 1,
@@ -85,7 +110,7 @@ export default function Intro() {
       ref={ref}
       className="relative -mt-[35vh] pt-0 pb-0 overflow-hidden"
     >
-      <div className="relative flex items-start justify-center min-h-[130vh]">
+      <div className="relative flex items-start justify-center min-h-[200vh]">
         {/* Sand backdrop behind the pill's lower portion so, once expanded,
             it hands off cleanly into the sand-coloured flagship section. */}
         <div className="absolute inset-x-0 bottom-0 h-[45vh] bg-sand -z-10 pointer-events-none" />
@@ -93,13 +118,50 @@ export default function Intro() {
           ref={pillRef}
           className="relative bg-sand overflow-hidden" /*shadow-2xl shadow-ink/40?*/
         >
+          {/* Curved header text — follows the worm's semicircular head. The
+              SVG is narrower than the pill and nudged down from the very
+              top so its rectangle stays INSIDE the pill's rounded top
+              (which otherwise clips its corners via overflow-hidden). */}
+          <svg
+            ref={archRef}
+            className="absolute left-1/2 -translate-x-1/2 pointer-events-none z-20"
+            viewBox="0 0 400 110"
+            preserveAspectRatio="none"
+            style={{
+              top: 'clamp(3rem, 10vh, 10rem)',
+              width: 'min(55%, 900px)',
+              height: 'clamp(5rem, 12vh, 12rem)',
+            }}
+            aria-hidden="true"
+          >
+            <defs>
+              <path
+                id="worm-arch-path"
+                d="M 20 95 Q 200 15 380 95"
+                fill="none"
+              />
+            </defs>
+            <text
+              className="font-display"
+              fontSize="18"
+              letterSpacing="6"
+              fill="rgb(var(--c-orange-dark))"
+              textAnchor="middle"
+              style={{ textTransform: 'uppercase' }}
+            >
+              <textPath href="#worm-arch-path" startOffset="50%">
+                A New Waterfront Quarter · Reimagined From The Shore Up
+              </textPath>
+            </text>
+          </svg>
+
           {/* Floral corner ornaments — bougainvillea-style cluster + palm fronds. */}
           <FloralDecoration position="top-left" size="md" />
           <FloralDecoration position="bottom-right" size="md" />
 
           <div
             ref={contentRef}
-            className="h-full flex flex-col justify-center py-20 md:py-28 px-6 md:px-10 relative z-10"
+            className="h-full flex flex-col justify-center pt-[42vh] md:pt-[48vh] pb-20 md:pb-28 px-6 md:px-10 relative z-10"
           >
             <div className="max-w-5xl mx-auto text-center mb-16 md:mb-20">
               <p className="reveal inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-8">
