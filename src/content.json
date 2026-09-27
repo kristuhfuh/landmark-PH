@@ -33,6 +33,22 @@
         "href": "#rooms"
       },
       {
+        "label": "About",
+        "href": "/about"
+      },
+      {
+        "label": "Things to Do",
+        "href": "/things-to-do"
+      },
+      {
+        "label": "Bookings",
+        "href": "/bookings"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      },
+      {
         "label": "Plan a Visit",
         "href": "#visit"
       }
