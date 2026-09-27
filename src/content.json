@@ -5,32 +5,8 @@
     "ctaLabel": "Plan a Visit",
     "navLinks": [
       {
-        "label": "The Ring",
-        "href": "#the-ring"
-      },
-      {
-        "label": "The Green",
-        "href": "#the-green"
-      },
-      {
-        "label": "The Waterfront",
-        "href": "#the-waterfront"
-      },
-      {
-        "label": "At the Table",
-        "href": "#table"
-      },
-      {
-        "label": "Tickets",
-        "href": "#tickets"
-      },
-      {
-        "label": "Citizen App",
-        "href": "#citizen-app"
-      },
-      {
-        "label": "Stay",
-        "href": "#rooms"
+        "label": "Home",
+        "href": "/"
       },
       {
         "label": "About",
@@ -47,10 +23,6 @@
       {
         "label": "Contact",
         "href": "/contact"
-      },
-      {
-        "label": "Plan a Visit",
-        "href": "#visit"
       }
     ],
     "palette": {
