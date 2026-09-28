@@ -1,6 +1,8 @@
 node_modules
+server/node_modules
 dist
 .env
+server/.env
 .env.local
 .env.*.local
 .DS_Store
@@ -8,3 +10,4 @@ dist
 .vscode
 .idea
 .claude
+public/Untitled design.gif

@@ -189,7 +189,7 @@ export default function BookingFlowPage() {
     notes: '',
   })
   const [card, setCard] = useState({ number: '', expiry: '', cvc: '', name: '' })
-  const [reference] = useState(() =>
+  const [reference, setReference] = useState(() =>
     `LMK-${Math.random().toString(36).slice(2, 7).toUpperCase()}${Date.now().toString().slice(-4)}`
   )
 
@@ -259,7 +259,40 @@ export default function BookingFlowPage() {
     )
   }
 
-  function next() {
+  async function next() {
+    // Submitting from the payment step — persist to the API best-effort
+    // before advancing to the confirmation screen.
+    if (step === 2) {
+      try {
+        const api = (import.meta.env?.VITE_API_URL || 'http://localhost:4000').replace(/\/+$/, '')
+        const res = await fetch(`${api}/api/bookings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            bookingType: type,
+            firstName: contact.firstName,
+            lastName: contact.lastName,
+            email: contact.email,
+            phone: contact.phone,
+            dateFrom: date || undefined,
+            dateTo: checkOut || undefined,
+            timeSlot: time || undefined,
+            guests,
+            addOns,
+            totalNGN: total,
+            notes: contact.notes,
+            status: config.holdOnly ? 'hold' : 'confirmed',
+          }),
+        })
+        if (res.ok) {
+          const body = await res.json()
+          if (body?.reference) setReference(body.reference)
+        }
+      } catch {
+        // API might not be up in local dev — the client-side reference
+        // still shows on the confirmation screen so the flow completes.
+      }
+    }
     setStep((s) => Math.min(STEPS.length - 1, s + 1))
   }
   function back() {
