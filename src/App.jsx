@@ -17,7 +17,6 @@ import PaletteInjector from './components/PaletteInjector'
 import AnchorMarquee from './components/AnchorMarquee'
 import StickyZoneLabel from './components/StickyZoneLabel'
 import CustomCursor from './components/CustomCursor'
-import BookingModal from './components/BookingModal'
 import CurtainPreloader from './components/CurtainPreloader'
 import SemicircleReveal from './components/SemicircleReveal'
 import RoomsShowcase from './components/RoomsShowcase'
@@ -100,7 +99,6 @@ export default function App() {
       <PaletteInjector />
       <CurtainPreloader />
       <CustomCursor />
-      <BookingModal />
       <CartDrawer />
       <Navbar />
       <StickyZoneLabel />

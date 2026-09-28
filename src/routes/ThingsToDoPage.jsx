@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
-import { openBookingModal } from '../components/BookingModal'
 import { useContent } from '../lib/content'
 
 const ZONE_ORDER = ['The Ring', 'The Green', 'The Waterfront']
@@ -193,9 +193,8 @@ export default function ThingsToDoPage() {
                   ? `Next · ${visibleZones[zi + 1].name}`
                   : 'End of the loop'}
               </p>
-              <button
-                type="button"
-                onClick={() => openBookingModal('table')}
+              <Link
+                to="/bookings"
                 className="group inline-flex items-baseline gap-3 font-display italic text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
               >
                 Book something here
@@ -205,7 +204,7 @@ export default function ThingsToDoPage() {
                 >
                   →
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         </section>

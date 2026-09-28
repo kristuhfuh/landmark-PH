@@ -86,8 +86,8 @@ export default function Footer() {
                     You're on the list.
                   </p>
                   <p className="text-marine-dark/70 text-xs leading-relaxed">
-                    We'll write when the beach club opens and when phase-one
-                    dates firm up. No noise in between.
+                    A short monthly note — new dinners at The Jetty, concert
+                    line-ups, and members-only weekends. Nothing in between.
                   </p>
                 </div>
               </div>

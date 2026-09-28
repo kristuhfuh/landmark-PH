@@ -3,7 +3,7 @@ import { Phone, Mail, MessageCircle, Clock, Check } from 'lucide-react'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import SplitHeading from './SplitHeading'
 import FloralDecoration from './FloralDecoration'
-import { openBookingModal } from './BookingModal'
+import { Link } from 'react-router-dom'
 import { useContent } from '../lib/content'
 
 export default function LaunchCTA() {
@@ -99,14 +99,13 @@ export default function LaunchCTA() {
               <Phone size={14} strokeWidth={1.75} />
               Call
             </a>
-            <button
-              type="button"
-              onClick={() => openBookingModal()}
+            <Link
+              to="/bookings"
               className="inline-flex items-center gap-2 px-4 py-2.5 border border-marine-dark/25 text-marine-dark text-xs tracking-widest2 uppercase hover:border-orange-dark hover:text-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
             >
-              Full booking form
+              Book online
               <span aria-hidden="true">→</span>
-            </button>
+            </Link>
           </div>
 
           <dl className="reveal grid grid-cols-2 gap-x-8 gap-y-8 border-t border-ink/15 pt-8">

@@ -27,7 +27,7 @@ export default function FlagshipAttraction() {
     { label: 'Concept', value: 'World-first' },
     { label: 'Format', value: 'Walk-through' },
     { label: 'Duration', value: '45 min' },
-    { label: 'Opens', value: 'Phase One' },
+    { label: 'Open', value: 'Daily · 10am' },
   ]
   const ctaLabel = flagship.ctaLabel || 'Reserve a walkthrough'
   const indexNumber = flagship.indexNumber || '01'

@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
+import { Link } from 'react-router-dom'
 import CircleButton from '../components/CircleButton'
-import { openBookingModal } from '../components/BookingModal'
 import { useContent } from '../lib/content'
 
 const PRINCIPLES = [
@@ -25,10 +25,10 @@ const PRINCIPLES = [
 
 const TIMELINE = [
   { year: '2021', label: 'Concept commissioned' },
-  { year: '2023', label: 'Master plan locked · phase one' },
-  { year: '2024', label: 'Ring & Green groundworks' },
-  { year: '2025', label: 'Waterfront approach opens' },
-  { year: '2026', label: 'Full grounds live' },
+  { year: '2023', label: 'Master plan locked' },
+  { year: '2024', label: 'The Ring & Green opened' },
+  { year: '2025', label: 'Waterfront + Beach Club opened' },
+  { year: '2026', label: 'Full grounds live — you are here' },
 ]
 
 const STATS = [
@@ -270,12 +270,7 @@ export default function AboutPage() {
               <span className="italic text-marine">us.</span>
             </h2>
           </div>
-          <CircleButton
-            as="button"
-            size="md"
-            tone="ink"
-            onClick={() => openBookingModal('walkthrough')}
-          >
+          <CircleButton as={Link} to="/bookings/walkthrough" size="md" tone="ink">
             Reserve a walkthrough
           </CircleButton>
         </div>

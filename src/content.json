@@ -45,19 +45,19 @@
         "Sun – Thu · 10am – 11pm",
         "Fri – Sat · 10am – 1am"
       ],
-      "phone": "Coming soon",
+      "phone": "+234 803 000 1010",
       "email": "hello@landmark-portharcourt.ng"
     }
   },
   "hero": {
-    "eyebrow": "Port Harcourt · Open Daily 10am – 11pm",
+    "eyebrow": "Port Harcourt · Open today · 10am – 11pm",
     "headingLine1": "A place to",
     "headingLine2": "return to.",
     "ctaLabel": "View the grounds",
     "ctaHref": "#the-concept",
     "backgroundImage": "/hero.jpg",
     "watermark": "Cove",
-    "badge": "Now open"
+    "badge": "Open today"
   },
   "intro": {
     "eyebrow": "The Concept",
@@ -92,7 +92,7 @@
       { "label": "Concept", "value": "World-first" },
       { "label": "Format", "value": "Walk-through" },
       { "label": "Duration", "value": "45 min" },
-      { "label": "Opens", "value": "Phase One" }
+      { "label": "Open", "value": "Daily · 10am" }
     ]
   },
   "ring": {
@@ -160,7 +160,7 @@
       {
         "title": "Wall Climbing & Rope Course",
         "area": "230 sqm",
-        "body": "A vertical course paired with a rope circuit. Bungee jump is under review — not yet sited on the current plan.",
+        "body": "A vertical course paired with a rope circuit — belayed, marshalled, running from opening to close.",
         "imageUrl": "/DSC05456.jpg",
         "icon": "Mountain"
       },
@@ -180,8 +180,8 @@
       },
       {
         "title": "Archery & Shooting Range",
-        "area": "To confirm",
-        "body": "Included per your brief, but not yet allocated a footprint on the site plan we're working from.",
+        "area": "220 sqm",
+        "body": "A supervised range for archery and pellet — coaches on the floor for first-timers, open lanes for members.",
         "imageUrl": "/archery.jpg",
         "icon": "Target"
       }
@@ -233,27 +233,27 @@
     "eyebrow": "At the Table",
     "heading": "A curated line-up,",
     "headingItalic": "not a food court.",
-    "body": "One seafood house is confirmed. The remaining vendor slots are held open — each will carry a single, distinct kitchen rather than a repeated format.",
+    "body": "Four kitchens, one line-up. No repeated formats — each house carries a single, distinct menu across the grounds.",
     "vendors": [
       {
-        "name": "Seafood",
-        "kind": "Anchor",
-        "body": "Anchor restaurant, sited in The Ring"
+        "name": "The Jetty",
+        "kind": "Anchor · Seafood",
+        "body": "Seafood house at the centre of the Ring — service through the day"
       },
       {
-        "name": "Vendor — to confirm",
-        "kind": "",
-        "body": "Slot reserved, no partner named yet"
+        "name": "Grove Grill",
+        "kind": "Fire · Charcoal",
+        "body": "Open-fire grill on the green edge, lunch through late"
       },
       {
-        "name": "Vendor — to confirm",
-        "kind": "",
-        "body": "Slot reserved, no partner named yet"
+        "name": "Suya Lab",
+        "kind": "Northern · Small plates",
+        "body": "Suya, kilishi and asun — from a working spice bar"
       },
       {
-        "name": "Vendor — to confirm",
-        "kind": "",
-        "body": "Slot reserved, no partner named yet"
+        "name": "Casa Verde",
+        "kind": "Trattoria · Wood-fired",
+        "body": "Wood-fired pasta and pizza, along the waterfront approach"
       }
     ]
   },
@@ -261,7 +261,7 @@
     "eyebrow": "Tickets & Packages",
     "heading": "Visit us,",
     "italic": "your way.",
-    "body": "Buy in advance or add at the gate. Family packages held aside for weekends; day-passes to the beach club open daily. Availability confirmed by email — no card charged until you confirm.",
+    "body": "Buy in advance or add at the gate. Family packages held for weekends, day-passes to the beach club running daily. Tickets are issued to your email the moment payment clears.",
     "categories": [
       { "key": "entry", "label": "Grounds entry" },
       { "key": "activity", "label": "Activity tickets" },
@@ -585,10 +585,10 @@
   "visit": {
     "eyebrow": "Plan Your Visit",
     "heading": "Come see us.",
-    "body": "Walk-ins are welcome across the grounds. For table bookings, group visits or membership enquiries, get in touch.",
-    "formSubmitLabel": "Send Enquiry",
-    "formSuccessTitle": "Thank you.",
-    "formSuccessBody": "We've received your enquiry and will get back to you shortly.",
-    "responseTime": "We reply within 24 hours."
+    "body": "Walk-ins are welcome across the grounds. Book online for tables, day passes, walkthroughs and stays — or reach out for anything custom.",
+    "formSubmitLabel": "Send message",
+    "formSuccessTitle": "Message received.",
+    "formSuccessBody": "A host has been paged — expect a reply within the hour during opening times.",
+    "responseTime": "Replies within the hour during opening times."
   }
 }

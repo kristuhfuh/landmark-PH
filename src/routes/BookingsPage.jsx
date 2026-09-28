@@ -4,7 +4,6 @@ import { Ticket, BedDouble, UtensilsCrossed, Users, Cake, Waves } from 'lucide-r
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
 import CircleButton from '../components/CircleButton'
-import { openBookingModal } from '../components/BookingModal'
 import { useContent } from '../lib/content'
 
 const BOOKING_TYPES = [
@@ -109,9 +108,8 @@ export default function BookingsPage() {
                 <span className="italic text-marine">you.</span>
               </h1>
               <p className="mt-10 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
-                Every booking is confirmed by email before your card is
-                charged. Pick a type below — a host will follow up within 24
-                hours.
+                Pick a booking type, choose your slot, pay — the ticket lands
+                in your inbox before you close the tab.
               </p>
             </div>
             <figure className="md:col-span-5">
@@ -184,14 +182,13 @@ export default function BookingsPage() {
                   <p className="font-display italic text-orange-dark text-lg mb-6">
                     {b.lead}
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => openBookingModal(b.key)}
+                  <Link
+                    to={`/bookings/${b.key}`}
                     className="inline-flex items-center gap-3 border border-ink/25 px-5 py-3 text-[11px] tracking-widest2 uppercase text-ink hover:bg-orange-dark hover:text-sand hover:border-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
                   >
                     Start this booking
                     <span aria-hidden="true">→</span>
-                  </button>
+                  </Link>
                 </article>
               )
             })}
@@ -216,18 +213,18 @@ export default function BookingsPage() {
               {[
                 {
                   n: '01',
-                  title: 'Tell us what you want',
-                  body: 'Pick a booking type, share your date and headcount. Under a minute.',
+                  title: 'Pick your slot',
+                  body: 'Date, headcount, add-ons — the summary rail updates as you go.',
                 },
                 {
                   n: '02',
-                  title: 'We match a host',
-                  body: 'A concierge writes back within 24 hours to confirm slot, price and any add-ons.',
+                  title: 'Pay securely',
+                  body: 'Card handled by Paystack. Never stored on our servers, cleared in seconds.',
                 },
                 {
                   n: '03',
-                  title: 'Pay on confirmation',
-                  body: 'Your card is only charged once the details are locked in and you say yes.',
+                  title: 'Arrive & show the code',
+                  body: 'Reference + QR land in your email. Show it at the gate — the host has you on the list.',
                 },
               ].map((s) => (
                 <div key={s.n}>
@@ -271,12 +268,7 @@ export default function BookingsPage() {
               </Link>
             </div>
           </div>
-          <CircleButton
-            as="button"
-            size="md"
-            tone="ink"
-            onClick={() => openBookingModal('other')}
-          >
+          <CircleButton as={Link} to="/bookings/other" size="md" tone="ink">
             Custom enquiry
           </CircleButton>
         </div>
