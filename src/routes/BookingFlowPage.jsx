@@ -264,7 +264,7 @@ export default function BookingFlowPage() {
     // before advancing to the confirmation screen.
     if (step === 2) {
       try {
-        const api = (import.meta.env?.VITE_API_URL || 'http://localhost:4000').replace(/\/+$/, '')
+        const api = (import.meta.env?.VITE_API_URL ?? (import.meta.env?.DEV ? 'http://localhost:4000' : '')).replace(/\/+$/, '')
         const res = await fetch(`${api}/api/bookings`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
