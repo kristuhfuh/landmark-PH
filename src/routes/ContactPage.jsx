@@ -52,18 +52,39 @@ export default function ContactPage() {
             <span aria-hidden="true" className="h-px w-10 bg-orange-dark/50" />
             Contact
           </p>
-          <h1
-            className="font-display font-light leading-[0.95] tracking-tight text-ink max-w-5xl"
-            style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
-          >
-            Write to us, or come{' '}
-            <span className="italic text-marine">walk the grounds.</span>
-          </h1>
-          <p className="mt-10 max-w-2xl text-ink/70 text-base md:text-lg leading-relaxed">
-            Walk-ins are welcome. For anything longer than a quick question —
-            group visits, press, partnerships, careers — send a note and we'll
-            come back within 24 hours.
-          </p>
+
+          <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-end">
+            <div className="md:col-span-7">
+              <h1
+                className="font-display font-light leading-[0.95] tracking-tight text-ink"
+                style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
+              >
+                Write to us, or come{' '}
+                <span className="italic text-marine">walk the grounds.</span>
+              </h1>
+              <p className="mt-10 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
+                Walk-ins are welcome. For anything longer than a quick
+                question — group visits, press, partnerships, careers — send
+                a note and we'll come back within 24 hours.
+              </p>
+            </div>
+            <figure className="md:col-span-5">
+              <div className="aspect-[4/5] w-full overflow-hidden bg-ink/5">
+                <img
+                  src="/photo-1500815845799-7748ca339f27.avif"
+                  alt="The waterfront approach"
+                  loading="eager"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <figcaption className="mt-3 flex items-baseline justify-between text-[10px] tracking-widest2 uppercase text-ink/55">
+                <span>Fig. 01</span>
+                <span className="font-display italic normal-case tracking-normal text-ink/70">
+                  Landmark Village
+                </span>
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </section>
 

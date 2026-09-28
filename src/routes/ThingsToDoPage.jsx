@@ -59,23 +59,34 @@ export default function ThingsToDoPage() {
       <PageNav />
 
       {/* Hero */}
-      <section className="border-b border-ink/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-20">
-          <p className="inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
-            <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
+      <section className="relative border-b border-ink/10 overflow-hidden">
+        {/* Photo backdrop */}
+        <div className="absolute inset-0 -z-10">
+          <img
+            src="/concert live.jpg"
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/50 to-sand" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 md:px-10 pt-24 md:pt-40 pb-16 md:pb-24">
+          <p className="inline-flex items-center gap-4 text-orange-light text-xs tracking-widest2 uppercase mb-10">
+            <span className="font-display italic text-orange-light text-base tabular-nums">
               00
             </span>
-            <span aria-hidden="true" className="h-px w-10 bg-orange-dark/50" />
+            <span aria-hidden="true" className="h-px w-10 bg-orange-light/60" />
             Things to do
           </p>
           <h1
-            className="font-display font-light leading-[0.95] tracking-tight text-ink max-w-5xl"
+            className="font-display font-light leading-[0.95] tracking-tight text-sand max-w-5xl"
             style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
           >
             Every attraction, on a{' '}
-            <span className="italic text-marine">single loop.</span>
+            <span className="italic text-orange-light">single loop.</span>
           </h1>
-          <p className="mt-10 max-w-2xl text-ink/70 text-base md:text-lg leading-relaxed">
+          <p className="mt-10 max-w-2xl text-sand/80 text-base md:text-lg leading-relaxed">
             Move through the ring, cross into the green, then follow the
             approach out to the waterfront. Filter by zone, or scroll and take
             it in the way the grounds are laid out.
@@ -93,8 +104,8 @@ export default function ThingsToDoPage() {
                   aria-pressed={active}
                   className={`px-3 py-1.5 text-[11px] tracking-widest2 uppercase border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${
                     active
-                      ? 'bg-orange-dark text-sand border-orange-dark'
-                      : 'text-ink/70 border-ink/25 hover:border-orange-dark hover:text-orange-dark'
+                      ? 'bg-orange text-ink border-orange'
+                      : 'text-sand/80 border-sand/40 hover:border-orange-light hover:text-orange-light'
                   }`}
                 >
                   {f === 'all' ? 'All zones' : f}

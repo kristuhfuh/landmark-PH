@@ -53,7 +53,7 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section className="relative border-b border-ink/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-20 md:pb-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-24">
           <p className="inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
             <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
               00
@@ -62,21 +62,42 @@ export default function AboutPage() {
             About the grounds
           </p>
 
-          <h1
-            className="font-display font-light leading-[0.95] tracking-tight text-ink max-w-5xl"
-            style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
-          >
-            A waterfront quarter, held together by{' '}
-            <span className="italic text-marine">one long walk.</span>
-          </h1>
+          <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-end">
+            <div className="md:col-span-7">
+              <h1
+                className="font-display font-light leading-[0.95] tracking-tight text-ink"
+                style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
+              >
+                A waterfront quarter, held together by{' '}
+                <span className="italic text-marine">one long walk.</span>
+              </h1>
 
-          <p className="mt-10 max-w-2xl text-ink/70 text-base md:text-lg leading-relaxed">
-            {brand} Port Harcourt is a nine-quarter destination on the Rivers
-            State shore — designed as a single place to spend a day, not a
-            catalogue of unrelated attractions. Everything sits on one loop,
-            from the attractions ring at the centre to the beach club along the
-            waterfront edge.
-          </p>
+              <p className="mt-10 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
+                {brand} Port Harcourt is a nine-quarter destination on the
+                Rivers State shore — designed as a single place to spend a
+                day, not a catalogue of unrelated attractions. Everything sits
+                on one loop, from the attractions ring at the centre to the
+                beach club along the waterfront edge.
+              </p>
+            </div>
+
+            <figure className="md:col-span-5 relative">
+              <div className="aspect-[4/5] w-full overflow-hidden bg-ink/5">
+                <img
+                  src="/DSC05456.jpg"
+                  alt="Aerial view of the grounds"
+                  loading="eager"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <figcaption className="mt-3 flex items-baseline justify-between text-[10px] tracking-widest2 uppercase text-ink/55">
+                <span>Fig. 01</span>
+                <span className="font-display italic normal-case tracking-normal text-ink/70">
+                  From above
+                </span>
+              </figcaption>
+            </figure>
+          </div>
         </div>
 
         {/* Watermark */}
@@ -88,6 +109,28 @@ export default function AboutPage() {
           >
             {brand}.
           </p>
+        </div>
+      </section>
+
+      {/* Wide plate */}
+      <section className="border-b border-ink/10">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-14 md:py-20">
+          <figure>
+            <div className="aspect-[21/9] w-full overflow-hidden bg-ink/5">
+              <img
+                src="/hero.jpg"
+                alt="Landmark Port Harcourt at dusk"
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <figcaption className="mt-4 flex flex-wrap items-baseline justify-between gap-3 text-[10px] tracking-widest2 uppercase text-ink/55">
+              <span>Fig. 02 · The approach from the shore</span>
+              <span className="font-display italic normal-case tracking-normal text-ink/70">
+                Photography · on-site
+              </span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -122,6 +165,33 @@ export default function AboutPage() {
                 </article>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Three-image plate */}
+      <section className="border-b border-ink/10">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-14 md:py-20">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {[
+              { src: '/concert live 2.jpg', label: 'The Green · concert lawn' },
+              { src: '/photo-1540541338287-41700207dee6.avif', label: 'The Waterfront · cabanas' },
+              { src: '/Padel 2.jpeg', label: 'The Green · padel court' },
+            ].map((img, i) => (
+              <figure key={img.src} className={i === 0 ? 'col-span-2 md:col-span-1' : ''}>
+                <div className="aspect-[4/5] w-full overflow-hidden bg-ink/5">
+                  <img
+                    src={img.src}
+                    alt=""
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <figcaption className="mt-3 text-[10px] tracking-widest2 uppercase text-ink/55">
+                  {String(i + 3).padStart(2, '0')} · {img.label}
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>

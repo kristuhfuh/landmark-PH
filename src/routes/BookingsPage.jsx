@@ -17,6 +17,7 @@ const BOOKING_TYPES = [
     body: 'Timed entry into the flagship attraction — 45 minutes through every inverted room, corridor and fixture.',
     lead: 'From ₦8,000 / person',
     accent: 'orange',
+    image: '/flagship-upside-down.png',
   },
   {
     key: 'table',
@@ -27,6 +28,7 @@ const BOOKING_TYPES = [
     body: 'Reserve a table at the seafood house at the centre of the ring, or the jetty restaurant along the waterfront.',
     lead: 'No deposit · confirmed by email',
     accent: 'marine',
+    image: '/d32f5702063e63708d194795bd491e05.jpg',
   },
   {
     key: 'rooms',
@@ -37,6 +39,7 @@ const BOOKING_TYPES = [
     body: 'A limited number of shore-facing suites, green-side lofts and central studios — each within a short walk of the ring.',
     lead: 'From ₦120k / night',
     accent: 'orange',
+    image: '/pexels-petra-nesti-1766376-12161888.jpg',
   },
   {
     key: 'daypass',
@@ -47,6 +50,7 @@ const BOOKING_TYPES = [
     body: 'Full-day access to the beach club, both lounges and the adult pool — with sun-lounger and towel service.',
     lead: 'From ₦15,000 / person',
     accent: 'marine',
+    image: '/photo-1500815845799-7748ca339f27.avif',
   },
   {
     key: 'group',
@@ -57,6 +61,7 @@ const BOOKING_TYPES = [
     body: 'Grounds entry, two activities per guest and set lunch at the seafood house. Twenty guests and up, per head.',
     lead: 'From ₦8,500 / guest',
     accent: 'orange',
+    image: '/concert live 2.jpg',
   },
   {
     key: 'birthday',
@@ -67,6 +72,7 @@ const BOOKING_TYPES = [
     body: 'Full day out — entry, three attractions per guest, the kids club party room for three hours, and cake.',
     lead: 'From ₦120,000 / package',
     accent: 'marine',
+    image: '/Splash-Park-image-1.webp',
   },
 ]
 
@@ -93,24 +99,42 @@ export default function BookingsPage() {
             <span aria-hidden="true" className="h-px w-10 bg-orange-dark/50" />
             Bookings
           </p>
-          <h1
-            className="font-display font-light leading-[0.95] tracking-tight text-ink max-w-5xl"
-            style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
-          >
-            Reserve the visit that suits{' '}
-            <span className="italic text-marine">you.</span>
-          </h1>
-          <p className="mt-10 max-w-2xl text-ink/70 text-base md:text-lg leading-relaxed">
-            Every booking is confirmed by email before your card is charged.
-            Pick a type below — a host will follow up within 24 hours.
-          </p>
+          <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-end">
+            <div className="md:col-span-7">
+              <h1
+                className="font-display font-light leading-[0.95] tracking-tight text-ink"
+                style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
+              >
+                Reserve the visit that suits{' '}
+                <span className="italic text-marine">you.</span>
+              </h1>
+              <p className="mt-10 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
+                Every booking is confirmed by email before your card is
+                charged. Pick a type below — a host will follow up within 24
+                hours.
+              </p>
+            </div>
+            <figure className="md:col-span-5">
+              <div className="aspect-[4/5] w-full overflow-hidden bg-ink/5">
+                <img
+                  src="/photo-1540541338287-41700207dee6.avif"
+                  alt="Cabana along the beach club approach"
+                  loading="eager"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <figcaption className="mt-3 text-[10px] tracking-widest2 uppercase text-ink/55">
+                Fig. 01 · Along the waterfront
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </section>
 
       {/* Booking types grid */}
       <section className="border-b border-ink/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
-          <div className="grid md:grid-cols-2 gap-x-10 gap-y-14">
+          <div className="grid md:grid-cols-2 gap-x-10 gap-y-16">
             {BOOKING_TYPES.map((b) => {
               const Icon = b.icon
               const isMarine = b.accent === 'marine'
@@ -129,40 +153,45 @@ export default function BookingsPage() {
                     </span>
                   </div>
 
-                  <div className="flex items-start gap-6">
+                  <figure className="relative aspect-[16/10] w-full overflow-hidden bg-ink/5 mb-6">
+                    <img
+                      src={b.image}
+                      alt=""
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
+                    />
                     <span
-                      className={`hidden md:flex h-14 w-14 shrink-0 border items-center justify-center ${
+                      className={`absolute top-4 left-4 h-11 w-11 border flex items-center justify-center backdrop-blur-sm ${
                         isMarine
-                          ? 'border-marine/30 text-marine'
-                          : 'border-orange-dark/40 text-orange-dark'
+                          ? 'border-sand/60 text-sand bg-marine-dark/40'
+                          : 'border-sand/70 text-sand bg-orange-dark/50'
                       }`}
                     >
-                      <Icon size={22} strokeWidth={1.5} />
+                      <Icon size={18} strokeWidth={1.5} />
                     </span>
-                    <div className="flex-1">
-                      <h2
-                        className={`font-display text-3xl md:text-4xl leading-tight mb-3 ${
-                          isMarine ? 'text-marine' : 'text-ink'
-                        }`}
-                      >
-                        {b.title}
-                      </h2>
-                      <p className="text-ink/70 leading-relaxed max-w-md mb-5">
-                        {b.body}
-                      </p>
-                      <p className="font-display italic text-orange-dark text-lg mb-6">
-                        {b.lead}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => openBookingModal(b.key)}
-                        className="inline-flex items-center gap-3 border border-ink/25 px-5 py-3 text-[11px] tracking-widest2 uppercase text-ink hover:bg-orange-dark hover:text-sand hover:border-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
-                      >
-                        Start this booking
-                        <span aria-hidden="true">→</span>
-                      </button>
-                    </div>
-                  </div>
+                  </figure>
+
+                  <h2
+                    className={`font-display text-3xl md:text-4xl leading-tight mb-3 ${
+                      isMarine ? 'text-marine' : 'text-ink'
+                    }`}
+                  >
+                    {b.title}
+                  </h2>
+                  <p className="text-ink/70 leading-relaxed max-w-md mb-5">
+                    {b.body}
+                  </p>
+                  <p className="font-display italic text-orange-dark text-lg mb-6">
+                    {b.lead}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => openBookingModal(b.key)}
+                    className="inline-flex items-center gap-3 border border-ink/25 px-5 py-3 text-[11px] tracking-widest2 uppercase text-ink hover:bg-orange-dark hover:text-sand hover:border-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+                  >
+                    Start this booking
+                    <span aria-hidden="true">→</span>
+                  </button>
                 </article>
               )
             })}
