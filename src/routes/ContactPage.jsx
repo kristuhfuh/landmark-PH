@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
+import PatternOverlay from '../components/PatternOverlay'
 import { useContent } from '../lib/content'
 
 const SOCIALS = [
@@ -301,8 +302,9 @@ export default function ContactPage() {
       </section>
 
       {/* Find the grounds */}
-      <section className="bg-marine-dark text-sand">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-24">
+      <section className="relative isolate bg-marine-dark text-sand overflow-hidden">
+        <PatternOverlay />
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-24">
           <div className="grid md:grid-cols-12 gap-10 items-end">
             <div className="md:col-span-6">
               <p className="text-orange-light text-[11px] tracking-widest2 uppercase mb-6">

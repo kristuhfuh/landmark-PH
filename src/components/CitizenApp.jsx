@@ -55,9 +55,8 @@ export default function CitizenApp() {
       <div className="relative max-w-6xl mx-auto grid md:grid-cols-12 gap-14 items-center">
         {/* Left column — copy + downloads */}
         <div className="md:col-span-7">
-          <p className="reveal inline-flex items-center gap-4 text-orange-light text-xs tracking-widest2 uppercase mb-6">
+          <p className="reveal inline-flex items-center gap-3 text-orange-light text-xs tracking-widest2 uppercase mb-6">
             <span className="font-display italic text-orange-light/90 text-base tabular-nums">08</span>
-            <span aria-hidden="true" className="h-px w-8 bg-orange-light/50" />
             {eyebrow}
           </p>
           <SplitHeading className="font-display text-4xl md:text-6xl leading-[1.02] mb-6 max-w-xl">

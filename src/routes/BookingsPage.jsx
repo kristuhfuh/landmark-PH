@@ -4,6 +4,7 @@ import { Ticket, BedDouble, UtensilsCrossed, Users, Cake, Waves } from 'lucide-r
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
 import CircleButton from '../components/CircleButton'
+import PatternOverlay from '../components/PatternOverlay'
 import { useContent } from '../lib/content'
 
 const BOOKING_TYPES = [
@@ -91,11 +92,10 @@ export default function BookingsPage() {
       {/* Hero */}
       <section className="border-b border-ink/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-20">
-          <p className="inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
+          <p className="inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
             <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
               00
             </span>
-            <span aria-hidden="true" className="h-px w-10 bg-orange-dark/50" />
             Bookings
           </p>
           <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-end">
@@ -141,11 +141,10 @@ export default function BookingsPage() {
                   key={b.key}
                   className="group relative border-t border-ink/15 pt-8"
                 >
-                  <div className="flex items-baseline gap-4 mb-6">
+                  <div className="flex items-baseline justify-between gap-4 mb-6">
                     <span className="font-display italic text-orange-dark text-sm tabular-nums">
                       {b.n}
                     </span>
-                    <span className="h-px flex-1 bg-ink/15" />
                     <span className="text-[10px] tracking-widest2 uppercase text-ink/55">
                       {b.tag}
                     </span>
@@ -197,8 +196,9 @@ export default function BookingsPage() {
       </section>
 
       {/* How it works */}
-      <section className="bg-marine-dark text-sand border-b border-ink/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
+      <section className="relative isolate bg-marine-dark text-sand border-b border-ink/10 overflow-hidden">
+        <PatternOverlay />
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
           <div className="grid md:grid-cols-12 gap-10 md:gap-14">
             <div className="md:col-span-4">
               <p className="text-orange-light text-[11px] tracking-widest2 uppercase mb-6">

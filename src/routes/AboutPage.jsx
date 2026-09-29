@@ -3,6 +3,7 @@ import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
 import CircleButton from '../components/CircleButton'
+import PatternOverlay from '../components/PatternOverlay'
 import { useContent } from '../lib/content'
 
 const PRINCIPLES = [
@@ -54,11 +55,10 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative border-b border-ink/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-24">
-          <p className="inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
+          <p className="inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
             <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
               00
             </span>
-            <span aria-hidden="true" className="h-px w-10 bg-orange-dark/50" />
             About the grounds
           </p>
 
@@ -150,12 +150,9 @@ export default function AboutPage() {
             <div className="md:col-span-8 space-y-14">
               {PRINCIPLES.map((p) => (
                 <article key={p.n}>
-                  <div className="flex items-baseline gap-4 mb-4">
-                    <span className="font-display italic text-orange-dark text-sm tabular-nums">
-                      {p.n}
-                    </span>
-                    <span className="h-px flex-1 bg-ink/15" />
-                  </div>
+                  <span className="font-display italic text-orange-dark text-sm tabular-nums block mb-4">
+                    {p.n}
+                  </span>
                   <h3 className="font-display text-2xl md:text-3xl text-marine mb-3 leading-tight">
                     {p.title}
                   </h3>
@@ -197,8 +194,9 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="bg-marine-dark text-sand">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-24">
+      <section className="relative isolate bg-marine-dark text-sand overflow-hidden">
+        <PatternOverlay />
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-24">
           <p className="text-orange-light text-[11px] tracking-widest2 uppercase mb-10">
             By the numbers
           </p>

@@ -116,9 +116,8 @@ export default function SiteMap() {
   return (
     <section id="sitemap" ref={ref} className="bg-sand text-ink py-24 md:py-32 px-6 md:px-10">
       <div className="max-w-5xl mx-auto text-center mb-16">
-        <p className="reveal inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-4">
+        <p className="reveal inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-4">
           <span className="font-display italic text-orange-dark/90 text-base tabular-nums">08</span>
-          <span aria-hidden="true" className="h-px w-8 bg-orange-dark/50" />
           {eyebrow}
         </p>
         <SplitHeading className="font-display text-3xl md:text-5xl">

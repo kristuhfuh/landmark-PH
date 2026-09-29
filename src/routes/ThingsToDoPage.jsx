@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
+import PatternOverlay from '../components/PatternOverlay'
 import { useContent } from '../lib/content'
 
 const ZONE_ORDER = ['The Ring', 'The Green', 'The Waterfront']
@@ -58,25 +59,26 @@ export default function ThingsToDoPage() {
     <div className="bg-sand text-ink min-h-screen">
       <PageNav />
 
-      {/* Hero */}
-      <section className="relative border-b border-ink/10 overflow-hidden">
-        {/* Photo backdrop */}
-        <div className="absolute inset-0 -z-10">
+      {/* Hero — `isolate` gives the section its own stacking context so the
+          absolute backdrop can sit at z=0 without falling behind the sand
+          page background. */}
+      <section className="relative isolate border-b border-ink/10 overflow-hidden">
+        <div className="absolute inset-0 z-0">
           <img
             src="/concert live.jpg"
             alt=""
             aria-hidden="true"
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/50 to-sand" />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink/75 via-ink/55 to-marine-dark/85" />
+          <PatternOverlay />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 md:px-10 pt-24 md:pt-40 pb-16 md:pb-24">
-          <p className="inline-flex items-center gap-4 text-orange-light text-xs tracking-widest2 uppercase mb-10">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-24 md:pt-40 pb-16 md:pb-24">
+          <p className="inline-flex items-center gap-3 text-orange-light text-xs tracking-widest2 uppercase mb-10">
             <span className="font-display italic text-orange-light text-base tabular-nums">
               00
             </span>
-            <span aria-hidden="true" className="h-px w-10 bg-orange-light/60" />
             Things to do
           </p>
           <h1
@@ -136,23 +138,15 @@ export default function ThingsToDoPage() {
               )}
             </div>
 
-            {/* Editorial grid — alternating column spans, like Intro pillars */}
-            <div className="grid md:grid-cols-12 md:gap-x-8 md:gap-y-16 gap-y-12">
-              {zone.items.map((item, i) => {
-                const layouts = [
-                  'md:col-span-6 md:col-start-1',
-                  'md:col-span-5 md:col-start-8',
-                  'md:col-span-7 md:col-start-1',
-                  'md:col-span-5 md:col-start-8',
-                  'md:col-span-6 md:col-start-2',
-                  'md:col-span-5 md:col-start-8',
-                ]
-                return (
-                  <article
-                    key={item.title + i}
-                    className={layouts[i % layouts.length]}
-                  >
-                    {item.imageUrl && !item.imageUrl.includes('youtu') && !item.imageUrl.endsWith('.mp4') && (
+            {/* Two-up card grid — all rows aligned flush-left; no offset
+                start columns so the last item never floats away from the
+                edge. */}
+            <div className="grid md:grid-cols-2 gap-x-8 md:gap-x-10 gap-y-12 md:gap-y-16">
+              {zone.items.map((item, i) => (
+                <article key={item.title + i}>
+                  {item.imageUrl &&
+                    !item.imageUrl.includes('youtu') &&
+                    !item.imageUrl.endsWith('.mp4') && (
                       <div className="aspect-[4/3] overflow-hidden bg-ink/5 mb-5">
                         <img
                           src={item.imageUrl}
@@ -162,28 +156,24 @@ export default function ThingsToDoPage() {
                         />
                       </div>
                     )}
-                    <div className="flex items-baseline gap-4 mb-3">
-                      <span className="font-display italic text-orange-dark text-sm tabular-nums">
-                        {String(i + 1).padStart(2, '0')}
+                  <div className="flex items-baseline justify-between gap-4 mb-3">
+                    <span className="font-display italic text-orange-dark text-sm tabular-nums">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    {item.area && (
+                      <span className="text-[10px] tracking-widest2 uppercase text-ink/55">
+                        {item.area}
                       </span>
-                      <span className="h-px flex-1 bg-ink/15" />
-                      {item.area && (
-                        <span className="text-[10px] tracking-widest2 uppercase text-ink/55">
-                          {item.area}
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="font-display text-2xl md:text-3xl text-marine mb-2 leading-tight">
-                      {item.title}
-                    </h3>
-                    {item.body && (
-                      <p className="text-ink/70 leading-relaxed max-w-md">
-                        {item.body}
-                      </p>
                     )}
-                  </article>
-                )
-              })}
+                  </div>
+                  <h3 className="font-display text-2xl md:text-3xl text-marine mb-2 leading-tight">
+                    {item.title}
+                  </h3>
+                  {item.body && (
+                    <p className="text-ink/70 leading-relaxed">{item.body}</p>
+                  )}
+                </article>
+              ))}
             </div>
 
             {/* Zone footer */}

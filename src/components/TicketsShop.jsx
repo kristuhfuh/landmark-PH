@@ -43,9 +43,8 @@ export default function TicketsShop() {
     >
       <div className="max-w-6xl mx-auto">
         <div className="max-w-3xl mb-14 md:mb-20">
-          <p className="reveal inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-6">
+          <p className="reveal inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-6">
             <span className="font-display italic text-orange-dark/90 text-base tabular-nums">07</span>
-            <span aria-hidden="true" className="h-px w-8 bg-orange-dark/50" />
             {eyebrow}
           </p>
           <SplitHeading className="font-display text-4xl md:text-6xl mb-6 leading-[1.02]">
