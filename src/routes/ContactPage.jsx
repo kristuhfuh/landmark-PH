@@ -1,5 +1,17 @@
 import { useEffect, useState } from 'react'
-import { Phone, Mail, MapPin, Check, Instagram, Facebook, Youtube, Linkedin } from 'lucide-react'
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Check,
+  MessageCircle,
+  ChevronDown,
+  Instagram,
+  Facebook,
+  Youtube,
+  Linkedin,
+} from 'lucide-react'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
 import { useContent } from '../lib/content'
@@ -13,11 +25,16 @@ const SOCIALS = [
 
 const REASONS = [
   { key: 'general', label: 'General enquiry' },
+  { key: 'booking', label: 'Booking help' },
   { key: 'press', label: 'Press & media' },
   { key: 'careers', label: 'Careers' },
   { key: 'partners', label: 'Partnerships' },
   { key: 'membership', label: 'Membership' },
 ]
+
+// Rounded pill input — sand card background, ink text, orange-dark on focus.
+const INPUT =
+  'w-full bg-white border border-ink/12 rounded-full px-5 py-3.5 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all'
 
 export default function ContactPage() {
   const settings = useContent('siteSettings')
@@ -25,6 +42,7 @@ export default function ContactPage() {
   const contact = settings.contact || {}
   const [reason, setReason] = useState('general')
   const [submitted, setSubmitted] = useState(false)
+  const [accepted, setAccepted] = useState(false)
 
   useEffect(() => {
     document.title = `Contact · ${brand} Port Harcourt`
@@ -45,16 +63,12 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="border-b border-ink/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-20">
-          <p className="inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
-            <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
-              00
-            </span>
-            <span aria-hidden="true" className="h-px w-10 bg-orange-dark/50" />
-            Contact
-          </p>
-
           <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-end">
             <div className="md:col-span-7">
+              <span className="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white/60 px-3.5 py-1.5 text-[11px] tracking-widest2 uppercase text-ink/70 mb-8">
+                <MessageCircle size={14} className="text-orange-dark" strokeWidth={1.75} />
+                Get in touch
+              </span>
               <h1
                 className="font-display font-light leading-[0.95] tracking-tight text-ink"
                 style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
@@ -65,7 +79,8 @@ export default function ContactPage() {
               <p className="mt-10 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
                 Walk-ins are welcome. For anything longer than a quick
                 question — group visits, press, partnerships, careers — send
-                a note and we'll come back within 24 hours.
+                a note and a host replies within the hour during opening
+                times.
               </p>
             </div>
             <figure className="md:col-span-5">
@@ -88,189 +103,63 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Form + info */}
+      {/* Info rail + form card */}
       <section className="border-b border-ink/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-24 grid md:grid-cols-12 gap-14">
-          {/* Form */}
-          <div className="md:col-span-7">
-            <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-4">
-              01 · Send us a note
-            </p>
-            <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-10">
-              Tell us what you're{' '}
-              <span className="italic">planning.</span>
-            </h2>
-
-            {submitted ? (
-              <div className="border border-orange-dark/30 bg-white/60 px-6 py-8">
-                <div className="w-14 h-14 rounded-full border border-orange-dark/40 flex items-center justify-center mb-5">
-                  <Check size={22} className="text-orange-dark" />
-                </div>
-                <p className="font-display text-3xl mb-3 text-ink">
-                  Thank you.
-                </p>
-                <p className="text-ink/70 text-sm max-w-sm leading-relaxed">
-                  We've logged your{' '}
-                  <span className="italic">{activeLabel?.toLowerCase()}</span>{' '}
-                  and someone from the team will reach out within 24 hours.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-6 text-[11px] tracking-widest2 uppercase text-orange-dark hover:text-ink transition-colors"
-                >
-                  Send another →
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-8 max-w-xl">
-                <fieldset>
-                  <legend className="text-[10px] tracking-widest2 uppercase text-ink/60 mb-3">
-                    Reason for contact
-                  </legend>
-                  <div className="flex flex-wrap gap-2">
-                    {REASONS.map((r) => {
-                      const active = reason === r.key
-                      return (
-                        <button
-                          key={r.key}
-                          type="button"
-                          onClick={() => setReason(r.key)}
-                          aria-pressed={active}
-                          className={`px-3 py-1.5 text-[11px] tracking-widest2 uppercase border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${
-                            active
-                              ? 'bg-orange-dark text-sand border-orange-dark'
-                              : 'text-ink/70 border-ink/25 hover:border-orange-dark hover:text-orange-dark'
-                          }`}
-                        >
-                          {r.label}
-                        </button>
-                      )
-                    })}
-                  </div>
-                </fieldset>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <input
-                    required
-                    type="text"
-                    placeholder="First name"
-                    className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors"
-                  />
-                  <input
-                    required
-                    type="text"
-                    placeholder="Last name"
-                    className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors"
-                  />
-                </div>
-
-                <input
-                  required
-                  type="email"
-                  placeholder="Email address"
-                  className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors"
-                />
-
-                <input
-                  type="tel"
-                  placeholder="Phone (WhatsApp welcome)"
-                  className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors"
-                />
-
-                <textarea
-                  required
-                  rows={5}
-                  placeholder="Your message"
-                  className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 resize-none transition-colors"
-                />
-
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-4 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
-                >
-                  Send message
-                  <span aria-hidden="true">→</span>
-                </button>
-
-                <p className="text-ink/55 text-xs">
-                  We reply within 24 hours.
-                </p>
-              </form>
-            )}
-          </div>
-
-          {/* Info rail */}
-          <aside className="md:col-span-5 md:pl-10 md:border-l md:border-ink/10">
-            <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-4">
-              02 · Direct
-            </p>
-            <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-10">
+          {/* Left: contact info */}
+          <aside className="md:col-span-5">
+            <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-4">
               Reach us any{' '}
               <span className="italic">time.</span>
             </h2>
+            <p className="text-ink/65 leading-relaxed max-w-sm mb-12">
+              Walk-ins welcome across the grounds. For groups, press or
+              partnerships, drop a note and a host will come back within the
+              hour.
+            </p>
 
-            <ul className="space-y-8 text-ink/85">
+            <ul className="space-y-7 text-ink/85">
+              {contact.addressLines?.length > 0 && (
+                <InfoRow
+                  Icon={MapPin}
+                  label="Office Location"
+                  value={contact.addressLines.join(', ')}
+                />
+              )}
               {contact.phone && (
-                <li>
-                  <p className="text-[10px] tracking-widest2 uppercase text-ink/55 mb-2">
-                    Phone
-                  </p>
-                  <a
-                    href={`tel:${String(contact.phone).replace(/\s+/g, '')}`}
-                    className="inline-flex items-center gap-3 font-display text-2xl md:text-3xl text-marine hover:text-orange-dark transition-colors"
-                  >
-                    <Phone size={18} strokeWidth={1.5} />
-                    {contact.phone}
-                  </a>
-                </li>
+                <InfoRow
+                  Icon={Phone}
+                  label="Phone"
+                  value={contact.phone}
+                  href={`tel:${String(contact.phone).replace(/\s+/g, '')}`}
+                />
               )}
               {contact.email && (
-                <li>
-                  <p className="text-[10px] tracking-widest2 uppercase text-ink/55 mb-2">
-                    Email
-                  </p>
-                  <a
-                    href={`mailto:${contact.email}`}
-                    className="inline-flex items-center gap-3 font-display italic text-xl md:text-2xl text-marine hover:text-orange-dark transition-colors break-all"
-                  >
-                    <Mail size={18} strokeWidth={1.5} />
-                    {contact.email}
-                  </a>
-                </li>
-              )}
-              {contact.addressLines?.length > 0 && (
-                <li>
-                  <p className="text-[10px] tracking-widest2 uppercase text-ink/55 mb-2">
-                    Address
-                  </p>
-                  <p className="flex items-start gap-3 font-display text-xl md:text-2xl text-marine leading-tight">
-                    <MapPin size={18} strokeWidth={1.5} className="mt-1 shrink-0" />
-                    <span>
-                      {contact.addressLines.map((line, i) => (
-                        <span key={i} className="block">
-                          {line}
-                        </span>
-                      ))}
-                    </span>
-                  </p>
-                </li>
+                <InfoRow
+                  Icon={Mail}
+                  label="Email"
+                  value={contact.email}
+                  href={`mailto:${contact.email}`}
+                />
               )}
               {contact.hoursLines?.length > 0 && (
-                <li>
-                  <p className="text-[10px] tracking-widest2 uppercase text-ink/55 mb-2">
-                    Hours
-                  </p>
-                  <ul className="space-y-1 font-display text-lg text-ink/80">
-                    {contact.hoursLines.map((h, i) => (
-                      <li key={i}>{h}</li>
-                    ))}
-                  </ul>
+                <li className="flex items-start gap-4">
+                  <span className="h-11 w-11 shrink-0 rounded-full border border-ink/15 bg-white/60 flex items-center justify-center text-orange-dark">
+                    <Clock size={18} strokeWidth={1.5} />
+                  </span>
+                  <div>
+                    <p className="text-ink text-sm font-medium mb-1">Hours</p>
+                    <ul className="text-ink/70 text-sm space-y-0.5">
+                      {contact.hoursLines.map((h, i) => (
+                        <li key={i}>{h}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </li>
               )}
             </ul>
 
-            <div className="mt-10 pt-8 border-t border-ink/15">
+            <div className="mt-10 pt-8 border-t border-ink/12">
               <p className="text-[10px] tracking-widest2 uppercase text-ink/55 mb-4">
                 Follow along
               </p>
@@ -280,7 +169,7 @@ export default function ContactPage() {
                     <a
                       href={href}
                       aria-label={label}
-                      className="h-10 w-10 rounded-full border border-ink/25 flex items-center justify-center text-ink hover:border-orange-dark hover:text-orange-dark transition-colors"
+                      className="h-10 w-10 rounded-full border border-ink/20 flex items-center justify-center text-ink hover:border-orange-dark hover:text-orange-dark transition-colors"
                     >
                       <Icon size={16} strokeWidth={1.5} />
                     </a>
@@ -289,6 +178,125 @@ export default function ContactPage() {
               </ul>
             </div>
           </aside>
+
+          {/* Right: form card */}
+          <div className="md:col-span-7">
+            {submitted ? (
+              <div className="bg-white/70 border border-ink/10 rounded-2xl p-8 md:p-10 shadow-sm">
+                <div className="w-14 h-14 rounded-full border border-orange-dark/40 flex items-center justify-center mb-5">
+                  <Check size={22} className="text-orange-dark" />
+                </div>
+                <p className="font-display text-3xl mb-3 text-ink">
+                  Thank you.
+                </p>
+                <p className="text-ink/70 text-sm max-w-sm leading-relaxed">
+                  We've logged your{' '}
+                  <span className="italic">{activeLabel?.toLowerCase()}</span>{' '}
+                  and a host will be in touch within the hour during opening
+                  times.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSubmitted(false)
+                    setAccepted(false)
+                  }}
+                  className="mt-6 text-[11px] tracking-widest2 uppercase text-orange-dark hover:text-ink transition-colors"
+                >
+                  Send another →
+                </button>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white/70 border border-ink/10 rounded-2xl p-8 md:p-10 shadow-sm space-y-6"
+              >
+                <FormField label="Full name">
+                  <input
+                    required
+                    type="text"
+                    placeholder="Your name"
+                    className={INPUT}
+                  />
+                </FormField>
+
+                <FormField label="Email address">
+                  <input
+                    required
+                    type="email"
+                    placeholder="you@example.com"
+                    className={INPUT}
+                  />
+                </FormField>
+
+                <FormField label="Phone number">
+                  <input
+                    type="tel"
+                    placeholder="+234 800 000 0000"
+                    className={INPUT}
+                  />
+                </FormField>
+
+                <FormField label="Enquiry type">
+                  <div className="relative">
+                    <select
+                      value={reason}
+                      onChange={(e) => setReason(e.target.value)}
+                      className={INPUT + ' appearance-none pr-12 cursor-pointer'}
+                    >
+                      {REASONS.map((r) => (
+                        <option key={r.key} value={r.key}>
+                          {r.label}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown
+                      size={16}
+                      strokeWidth={1.75}
+                      className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink/50"
+                    />
+                  </div>
+                </FormField>
+
+                <FormField label="Message (optional)">
+                  <textarea
+                    rows={5}
+                    placeholder="Tell us more about your visit or enquiry."
+                    className={
+                      'w-full bg-white border border-ink/12 rounded-2xl px-5 py-4 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all resize-none'
+                    }
+                  />
+                </FormField>
+
+                <button
+                  type="submit"
+                  disabled={!accepted}
+                  className="w-full inline-flex items-center justify-center gap-3 bg-ink text-sand rounded-full py-4 text-sm tracking-wide hover:bg-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+                >
+                  Submit
+                </button>
+
+                <label className="flex items-start gap-3 text-sm text-ink/70 cursor-pointer pt-1">
+                  <input
+                    type="checkbox"
+                    checked={accepted}
+                    onChange={(e) => setAccepted(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 accent-orange-dark shrink-0"
+                  />
+                  <span>
+                    By submitting this form, I agree to the{' '}
+                    <a
+                      href="#"
+                      className="text-ink underline underline-offset-2 hover:text-orange-dark"
+                    >
+                      Privacy Policy
+                    </a>
+                    .
+                  </span>
+                </label>
+              </form>
+            )}
+          </div>
         </div>
       </section>
 
@@ -298,7 +306,7 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-12 gap-10 items-end">
             <div className="md:col-span-6">
               <p className="text-orange-light text-[11px] tracking-widest2 uppercase mb-6">
-                03 · Find the grounds
+                Find the grounds
               </p>
               <h2 className="font-display text-4xl md:text-5xl leading-tight">
                 A short drive from central{' '}
@@ -334,4 +342,42 @@ export default function ContactPage() {
       <Footer />
     </div>
   )
+}
+
+function FormField({ label, children }) {
+  return (
+    <label className="block">
+      <span className="block text-[13px] font-medium text-ink mb-2">
+        {label}
+      </span>
+      {children}
+    </label>
+  )
+}
+
+function InfoRow({ Icon, label, value, href }) {
+  const content = (
+    <>
+      <span className="h-11 w-11 shrink-0 rounded-full border border-ink/15 bg-white/60 flex items-center justify-center text-orange-dark">
+        <Icon size={18} strokeWidth={1.5} />
+      </span>
+      <div>
+        <p className="text-ink text-sm font-medium mb-1">{label}</p>
+        <p className="text-ink/70 text-sm leading-relaxed break-all">{value}</p>
+      </div>
+    </>
+  )
+  if (href) {
+    return (
+      <li>
+        <a
+          href={href}
+          className="flex items-start gap-4 group hover:text-orange-dark transition-colors"
+        >
+          {content}
+        </a>
+      </li>
+    )
+  }
+  return <li className="flex items-start gap-4">{content}</li>
 }
