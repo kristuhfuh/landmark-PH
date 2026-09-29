@@ -50,14 +50,14 @@
     }
   },
   "hero": {
-    "eyebrow": "Port Harcourt · Open today · 10am – 11pm",
+    "eyebrow": "Port Harcourt · Open Daily 10am – 11pm",
     "headingLine1": "A place to",
     "headingLine2": "return to.",
     "ctaLabel": "View the grounds",
     "ctaHref": "#the-concept",
     "backgroundImage": "/hero.jpg",
     "watermark": "Cove",
-    "badge": "Open today"
+    "badge": "Now open"
   },
   "intro": {
     "eyebrow": "The Concept",
@@ -80,14 +80,14 @@
   },
   "flagship": {
     "eyebrow": "The Signature Attraction",
-    "heading": "The world,",
-    "headingItalic": "flipped.",
+    "heading": "The World, Flipped",
+    "headingItalic": "",
     "body": "An upside-down attraction built from a concept with no equivalent anywhere else — every room, corridor and fixture inverted, gravity reasoned through rather than simulated.",
     "note": "",
     "backgroundImage": "/flagship-upside-down.png",
     "overlayColor": "#001F3F",
     "indexNumber": "01",
-    "ctaLabel": "Reserve a walkthrough",
+    "ctaLabel": "Book Walkthrough",
     "stats": [
       { "label": "Concept", "value": "World-first" },
       { "label": "Format", "value": "Walk-through" },
@@ -193,7 +193,7 @@
     "intro": "The full beach club complex, its lounges and open water — set apart from the ring, reached along its own approach from the water body.",
     "heroImage": "https://images.unsplash.com/photo-1500815845799-7748ca339f27?auto=format&fit=crop&w=1600&q=80",
     "asideImage": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
-    "dayPassLabel": "Reserve a day pass",
+    "dayPassLabel": "Book Walkthrough",
     "stats": [
       { "label": "Beach club", "value": "3,734 sqm" },
       { "label": "Lounges", "value": "Two · day & night" },

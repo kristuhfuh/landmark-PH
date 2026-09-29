@@ -125,7 +125,7 @@ export default function ZoneWaterfront() {
       {features.length > 0 && (
         <div className="max-w-6xl mx-auto px-6 md:px-10 mb-24">
           <p className="reveal text-orange-dark text-xs tracking-widest2 uppercase mb-6">
-            What's inside the beach club
+            What's inside the beach club?
           </p>
           <ul className="grid md:grid-cols-3 gap-x-10 gap-y-8">
             {features.map((f, i) => (

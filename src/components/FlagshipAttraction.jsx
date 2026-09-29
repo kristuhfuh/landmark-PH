@@ -100,7 +100,7 @@ export default function FlagshipAttraction() {
       <div className="hidden md:flex absolute left-8 top-0 bottom-0 z-10 flex-col items-center justify-center gap-6">
         <span className="h-24 w-px bg-sand/25" />
         <span className="text-sand/60 text-[10px] tracking-widest2 uppercase [writing-mode:vertical-rl] rotate-180">
-          The Flagship · No. {indexNumber}
+          The Flagship {indexNumber}
         </span>
         <span className="h-24 w-px bg-sand/25" />
       </div>
@@ -111,7 +111,13 @@ export default function FlagshipAttraction() {
             {eyebrow}
           </p>
           <h2 className="reveal text-sand font-display text-4xl md:text-6xl lg:text-7xl leading-[1.02] mb-8">
-            {heading} <span className="italic text-orange-light">{headingItalic}</span>
+            {heading}
+            {headingItalic && (
+              <>
+                {' '}
+                <span className="italic text-orange-light">{headingItalic}</span>
+              </>
+            )}
           </h2>
           <p className="reveal text-sand/85 leading-relaxed mb-10 max-w-md whitespace-pre-line">
             {body}

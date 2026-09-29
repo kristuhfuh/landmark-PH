@@ -63,20 +63,18 @@ export default function Hero() {
       </span>
 
       <div className="relative z-10 h-[100svh] flex flex-col items-center justify-center text-center px-6">
-        <div className="hero-rise flex items-center gap-3 mb-8">
-          {badge && (
-            <span className="inline-flex items-center gap-2 border border-sand/40 text-sand/85 text-[10px] tracking-widest2 uppercase px-3 py-1.5">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inset-0 rounded-full bg-orange-light animate-ping opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-light" />
-              </span>
-              {badge}
+        {badge && (
+          <span className="hero-rise inline-flex items-center gap-2 border border-sand/40 text-sand/85 text-[10px] tracking-widest2 uppercase px-3 py-1.5 mb-5">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inset-0 rounded-full bg-orange-light animate-ping opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-light" />
             </span>
-          )}
-          <span className="text-sand/70 text-[11px] md:text-xs tracking-widest2 uppercase">
-            {eyebrow}
+            {badge}
           </span>
-        </div>
+        )}
+        <span className="hero-rise text-sand/70 text-[11px] md:text-xs tracking-widest2 uppercase mb-8">
+          {eyebrow}
+        </span>
 
         <h1
           className="hero-rise font-display font-light text-sand leading-[0.95] tracking-tight max-w-6xl"
