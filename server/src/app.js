@@ -27,15 +27,19 @@ export function createApp() {
   app.get('/api/health', (_req, res) => res.json({ ok: true, ts: Date.now() }))
 
   // --- Auth ---
-  app.post('/api/auth/login', async (req, res) => {
-    const { email, password } = req.body || {}
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password required' })
-    }
-    const user = await verifyCredentials(email, password)
-    if (!user) return res.status(401).json({ error: 'Invalid credentials' })
-    const token = signToken(user)
-    res.json({ token, user })
+  // Express 4 doesn't forward async rejections to error middleware, so
+  // every async route wraps its body in try/catch → next(err).
+  app.post('/api/auth/login', async (req, res, next) => {
+    try {
+      const { email, password } = req.body || {}
+      if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password required' })
+      }
+      const user = await verifyCredentials(email, password)
+      if (!user) return res.status(401).json({ error: 'Invalid credentials' })
+      const token = signToken(user)
+      res.json({ token, user })
+    } catch (err) { next(err) }
   })
 
   app.get('/api/auth/me', requireAdmin, (req, res) => {
@@ -48,13 +52,15 @@ export function createApp() {
     })
   })
 
-  app.post('/api/auth/password', requireAdmin, async (req, res) => {
-    const { newPassword } = req.body || {}
-    if (!newPassword || newPassword.length < 8) {
-      return res.status(400).json({ error: 'Password must be at least 8 chars' })
-    }
-    await updatePassword(req.admin.sub, newPassword)
-    res.json({ ok: true })
+  app.post('/api/auth/password', requireAdmin, async (req, res, next) => {
+    try {
+      const { newPassword } = req.body || {}
+      if (!newPassword || newPassword.length < 8) {
+        return res.status(400).json({ error: 'Password must be at least 8 chars' })
+      }
+      await updatePassword(req.admin.sub, newPassword)
+      res.json({ ok: true })
+    } catch (err) { next(err) }
   })
 
   app.use('/api', contentRoutes)
