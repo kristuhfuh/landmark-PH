@@ -1,5 +1,8 @@
-import 'dotenv/config'
 import mysql from 'mysql2/promise'
+// Env vars are loaded by the entry file — `server/src/index.js` calls
+// `import 'dotenv/config'`, and Vercel injects them into process.env
+// automatically. Keeping dotenv out of this file avoids a slow/failing
+// import in the serverless bundle.
 
 /**
  * Shared MySQL connection pool.
