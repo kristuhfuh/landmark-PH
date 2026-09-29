@@ -110,7 +110,7 @@ export default function Footer() {
 
                 <form
                   onSubmit={handleSubscribe}
-                  className="flex max-w-md rounded-sm overflow-hidden border border-marine-dark/20 bg-white"
+                  className="flex max-w-md overflow-hidden border border-marine-dark/20 bg-white"
                 >
                   <input
                     type="email"
@@ -123,7 +123,7 @@ export default function Footer() {
                   <button
                     type="submit"
                     disabled={!accepted}
-                    className="px-5 py-3 bg-orange text-white text-sm font-medium hover:bg-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+                    className="rounded-none px-5 py-3 bg-orange text-white text-sm font-medium hover:bg-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
                   >
                     Subscribe
                     <ArrowRight size={14} />

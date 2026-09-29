@@ -32,9 +32,9 @@ const REASONS = [
   { key: 'membership', label: 'Membership' },
 ]
 
-// Rounded pill input — sand card background, ink text, orange-dark on focus.
+// 12px-radius inputs — white on the sand card, ink text, orange-dark focus.
 const INPUT =
-  'w-full bg-white border border-ink/12 rounded-full px-5 py-3.5 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all'
+  'w-full bg-white border border-ink/12 rounded-[12px] px-5 py-3.5 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all'
 
 export default function ContactPage() {
   const settings = useContent('siteSettings')
@@ -263,7 +263,7 @@ export default function ContactPage() {
                     rows={5}
                     placeholder="Tell us more about your visit or enquiry."
                     className={
-                      'w-full bg-white border border-ink/12 rounded-2xl px-5 py-4 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all resize-none'
+                      'w-full bg-white border border-ink/12 rounded-[12px] px-5 py-4 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all resize-none'
                     }
                   />
                 </FormField>
@@ -300,7 +300,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map placeholder */}
+      {/* Find the grounds */}
       <section className="bg-marine-dark text-sand">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-24">
           <div className="grid md:grid-cols-12 gap-10 items-end">
@@ -310,29 +310,25 @@ export default function ContactPage() {
               </p>
               <h2 className="font-display text-4xl md:text-5xl leading-tight">
                 A short drive from central{' '}
-                <span className="italic text-orange-light">Port Harcourt.</span>
+                <span className="text-orange-light">Port Harcourt.</span>
               </h2>
               <p className="mt-6 text-sand/70 max-w-md leading-relaxed">
                 Landmark Village, along the Rivers State shore. Signposted
                 turn-in off the coastal road — parking on the ring side.
               </p>
-              <p className="mt-6 font-display italic text-sand/80 text-lg">
-                04.75° N · 07.00° E
-              </p>
             </div>
             <div className="md:col-span-6">
-              <div className="aspect-[4/3] w-full border border-sand/15 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_55%,rgba(244,124,11,0.25),transparent_60%)]" />
-                <div className="absolute inset-0 [background:repeating-linear-gradient(45deg,transparent_0_18px,rgba(239,231,214,0.05)_18px_19px)]" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="relative flex h-4 w-4">
-                    <span className="absolute inset-0 rounded-full bg-orange animate-ping opacity-75" />
-                    <span className="relative inline-flex rounded-full h-4 w-4 bg-orange border-2 border-sand" />
-                  </span>
-                </div>
-                <p className="absolute bottom-4 left-4 text-[10px] tracking-widest2 uppercase text-sand/70">
+              <div className="aspect-[4/3] w-full border border-sand/15 relative overflow-hidden rounded-[12px]">
+                <iframe
+                  title="Landmark Port Harcourt map"
+                  src="https://www.google.com/maps?q=Landmark+Village+Port+Harcourt&z=13&output=embed"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0 h-full w-full grayscale-[35%] contrast-95"
+                />
+                <div className="pointer-events-none absolute bottom-3 left-3 rounded-[8px] bg-marine-dark/85 backdrop-blur-sm px-3 py-1.5 text-[10px] tracking-widest2 uppercase text-sand/85">
                   Landmark Village · Port Harcourt
-                </p>
+                </div>
               </div>
             </div>
           </div>
