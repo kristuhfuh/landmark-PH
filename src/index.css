@@ -74,11 +74,18 @@ body {
   color: #EFE7D6;
 }
 
-/* Global button corner radius — 8px on every <button> by default. Buttons
+/* Global button corner radius — 16px on every <button> by default. Buttons
    with an explicit Tailwind rounded utility (rounded-full, rounded-none,
    etc.) still win via class specificity, so pill/circle CTAs are preserved. */
 button {
-  border-radius: 8px;
+  border-radius: 16px;
+}
+
+/* Opt-in frame radius — apply to cards / forms / image containers that
+   should pick up the global 16px language. */
+.frame-16 {
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .reveal {

@@ -24,15 +24,15 @@ export default function PageNav() {
 
   return (
     <header className="sticky top-0 z-40 bg-sand/90 backdrop-blur-md border-b border-ink/10">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-5">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 px-5 md:px-10 py-4 md:py-5">
         <Link
           to="/"
-          className="inline-flex items-center gap-3 font-display text-lg tracking-wide text-ink hover:text-orange-dark transition-colors"
+          className="inline-flex items-center gap-2 md:gap-3 font-display text-base md:text-lg tracking-wide text-ink hover:text-orange-dark transition-colors min-w-0"
         >
-          <ArrowLeft size={16} strokeWidth={1.75} className="text-orange-dark" />
-          {brand}
-          <span className="text-orange-dark">·</span>
-          <span className="text-ink/70">{brandSuffix}</span>
+          <ArrowLeft size={16} strokeWidth={1.75} className="text-orange-dark shrink-0" />
+          <span className="truncate">{brand}</span>
+          <span className="hidden sm:inline text-orange-dark">·</span>
+          <span className="hidden sm:inline text-ink/70 truncate">{brandSuffix}</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8" aria-label="Sections">
@@ -57,7 +57,7 @@ export default function PageNav() {
         <button
           type="button"
           onClick={() => openBookingModal()}
-          className="border border-orange-dark px-5 py-2 text-xs tracking-widest2 uppercase text-orange-dark hover:bg-orange-dark hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+          className="shrink-0 border border-orange-dark px-3 md:px-5 py-2 text-[10px] md:text-xs tracking-widest2 uppercase text-orange-dark hover:bg-orange-dark hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
         >
           {ctaLabel}
         </button>

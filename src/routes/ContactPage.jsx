@@ -35,7 +35,7 @@ const REASONS = [
 
 // 12px-radius inputs — white on the sand card, ink text, orange-dark focus.
 const INPUT =
-  'w-full bg-white border border-ink/12 rounded-[12px] px-5 py-3.5 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all'
+  'w-full bg-white border border-ink/12 rounded-[16px] px-5 py-3.5 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all'
 
 export default function ContactPage() {
   const settings = useContent('siteSettings')
@@ -183,7 +183,7 @@ export default function ContactPage() {
           {/* Right: form card */}
           <div className="md:col-span-7">
             {submitted ? (
-              <div className="bg-white/70 border border-ink/10 rounded-2xl p-8 md:p-10 shadow-sm">
+              <div className="bg-white/70 border border-ink/10 rounded-[16px] p-8 md:p-10 shadow-sm">
                 <div className="w-14 h-14 rounded-full border border-orange-dark/40 flex items-center justify-center mb-5">
                   <Check size={22} className="text-orange-dark" />
                 </div>
@@ -210,7 +210,7 @@ export default function ContactPage() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="bg-white/70 border border-ink/10 rounded-2xl p-8 md:p-10 shadow-sm space-y-6"
+                className="bg-white/70 border border-ink/10 rounded-[16px] p-8 md:p-10 shadow-sm space-y-6"
               >
                 <FormField label="Full name">
                   <input
@@ -264,7 +264,7 @@ export default function ContactPage() {
                     rows={5}
                     placeholder="Tell us more about your visit or enquiry."
                     className={
-                      'w-full bg-white border border-ink/12 rounded-[12px] px-5 py-4 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all resize-none'
+                      'w-full bg-white border border-ink/12 rounded-[16px] px-5 py-4 text-sm text-ink placeholder:text-ink/40 outline-none focus:border-orange-dark focus:ring-2 focus:ring-orange-dark/15 transition-all resize-none'
                     }
                   />
                 </FormField>
@@ -320,7 +320,7 @@ export default function ContactPage() {
               </p>
             </div>
             <div className="md:col-span-6">
-              <div className="aspect-[4/3] w-full border border-sand/15 relative overflow-hidden rounded-[12px]">
+              <div className="aspect-[4/3] w-full border border-sand/15 relative overflow-hidden rounded-[16px]">
                 <iframe
                   title="Landmark Port Harcourt map"
                   src="https://www.google.com/maps?q=Landmark+Village+Port+Harcourt&z=13&output=embed"

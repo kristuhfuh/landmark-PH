@@ -71,17 +71,17 @@ export default function CitizenApp() {
       />
 
       <div className="relative max-w-2xl mx-auto text-center">
-        {/* Rounded-square app logo */}
+        {/* Rounded-square app logo — uses /public/lca-logo.png (orange
+            silhouettes on marine). Falls back to an empty bg if the file
+            isn't present. */}
         <div className="reveal flex justify-center mb-8">
-          <div className="h-14 w-14 rounded-[14px] bg-ink flex items-center justify-center shadow-[0_4px_16px_-2px_rgba(0,0,0,0.35)]">
-            <svg
-              viewBox="0 0 24 24"
-              className="h-7 w-7 text-sand"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M6 4 h3 v13 h9 v3 H6 z" />
-            </svg>
+          <div className="h-16 w-16 rounded-[16px] overflow-hidden shadow-[0_4px_16px_-2px_rgba(0,0,0,0.35)]">
+            <img
+              src="/lca-logo.png"
+              alt="Landmark Citizen"
+              className="h-full w-full object-cover"
+              onError={(e) => { e.currentTarget.style.display = 'none' }}
+            />
           </div>
         </div>
 
@@ -143,7 +143,7 @@ export default function CitizenApp() {
       {/* Phone mockup — the bottom quarter is deliberately pulled down into
           the next (dark) section so the image reads as "sticking up from
           behind" it. overflow-visible on the section lets it escape. */}
-      <div className="relative z-10 w-full mt-16 md:mt-24 flex justify-center mb-[-18vh] md:mb-[-22vh]">
+      <div className="relative z-10 w-full mt-12 md:mt-24 flex justify-center mb-[-10vh] md:mb-[-22vh]">
         <PhoneMockup mockupImage={mockupImage} />
       </div>
     </section>
@@ -153,7 +153,7 @@ export default function CitizenApp() {
 function CountBox({ value, label }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="min-w-[68px] md:min-w-[80px] rounded-[14px] bg-white border border-ink/10 px-3 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+      <div className="min-w-[68px] md:min-w-[80px] rounded-[16px] bg-white border border-ink/10 px-3 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
         <p className="font-body font-semibold text-2xl md:text-3xl text-ink tabular-nums text-center leading-none">
           {String(value).padStart(2, '0')}
         </p>
@@ -185,7 +185,7 @@ function PhoneMockup({ mockupImage }) {
         <Media
           src={mockupImage}
           alt="Landmark Citizen app"
-          className="block w-auto max-w-full h-auto md:h-[70vh] object-contain select-none"
+          className="block w-auto max-w-full h-[55vh] md:h-[70vh] object-contain select-none"
         />
         {/* Cloudy fade on the bottom half — stronger blur + heavier haze so
             the image reads as being behind a soft fog that intensifies
@@ -207,8 +207,8 @@ function PhoneMockup({ mockupImage }) {
       </div>
 
       {/* Floating card — top-left */}
-      <div className="hidden md:flex absolute top-16 -left-12 items-center gap-3 rounded-xl bg-white text-ink px-3.5 py-2.5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)]">
-        <span className="h-8 w-8 rounded-lg bg-ink text-sand flex items-center justify-center">
+      <div className="hidden md:flex absolute top-16 -left-12 items-center gap-3 rounded-[16px] bg-white text-ink px-3.5 py-2.5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)]">
+        <span className="h-8 w-8 rounded-[12px] bg-ink text-sand flex items-center justify-center">
           <Bell size={14} strokeWidth={2} />
         </span>
         <div className="leading-tight text-left">

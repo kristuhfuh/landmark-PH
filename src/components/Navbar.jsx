@@ -106,16 +106,16 @@ export default function Navbar() {
           />
         </div>
 
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 px-5 md:px-10 py-4 md:py-5">
           <a
             href="#top"
-            className={`font-display text-lg tracking-wide transition-colors ${
+            className={`font-display text-base md:text-lg tracking-wide transition-colors min-w-0 truncate ${
               scrolled ? 'text-ink' : 'text-sand'
             }`}
           >
-            {brand}{' '}
-            <span className={scrolled ? 'text-orange-dark' : 'text-orange-light'}>·</span>{' '}
-            {brandSuffix}
+            {brand}
+            <span className={`hidden sm:inline mx-2 ${scrolled ? 'text-orange-dark' : 'text-orange-light'}`}>·</span>
+            <span className="hidden sm:inline">{brandSuffix}</span>
           </a>
 
           <div className="flex items-center gap-4 md:gap-5">

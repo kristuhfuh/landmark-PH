@@ -81,9 +81,38 @@ export default function RoomsShowcase({
     <section
       id="rooms"
       ref={ref}
-      className="relative z-20 bg-marine-dark text-sand py-24 md:py-36 px-6 md:px-10"
+      className="relative z-20 bg-marine-dark text-sand py-24 md:py-36 px-6 md:px-10 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto mb-16 md:mb-24">
+      {/* Subtle cultural line pattern — adinkra-inspired nested arcs,
+          chevrons and dot grids rendered as a tiling SVG. Sand strokes at
+          low alpha keep it ambient against the marine-dark bg. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml;utf8,${encodeURIComponent(
+            `<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'>
+              <g fill='none' stroke='%23EFE7D6' stroke-width='1'>
+                <circle cx='40' cy='40' r='22'/>
+                <circle cx='40' cy='40' r='14'/>
+                <circle cx='40' cy='40' r='6'/>
+                <path d='M100 20 L140 60 M100 60 L140 20'/>
+                <path d='M100 90 L120 70 L140 90 L120 110 Z'/>
+                <circle cx='120' cy='140' r='3'/>
+                <circle cx='100' cy='140' r='3'/>
+                <circle cx='140' cy='140' r='3'/>
+                <path d='M10 100 Q 40 80 70 100 T 130 100'/>
+                <path d='M10 120 Q 40 100 70 120 T 130 120'/>
+                <path d='M0 160 L30 130 M30 160 L60 130'/>
+              </g>
+            </svg>`
+          )}")`,
+          backgroundSize: '220px 220px',
+          backgroundRepeat: 'repeat',
+        }}
+      />
+
+      <div className="relative max-w-6xl mx-auto mb-16 md:mb-24">
         <p className="reveal text-orange-light text-xs tracking-widest2 uppercase mb-4">
           {eyebrow}
         </p>
@@ -98,7 +127,7 @@ export default function RoomsShowcase({
         )}
       </div>
 
-      <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10 md:gap-14">
+      <div className="relative max-w-6xl mx-auto grid md:grid-cols-12 gap-10 md:gap-14">
         {/* Left: room list */}
         <ol className="md:col-span-7 space-y-10 md:space-y-24">
           {rooms.map((room, i) => (
