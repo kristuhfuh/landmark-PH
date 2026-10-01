@@ -1,12 +1,8 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import * as LucideIcons from 'lucide-react'
-import { Dot } from 'lucide-react'
 import { parallaxLayer } from '../lib/animations'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
-import PinnedCarousel, { CarouselSlide } from './PinnedCarousel'
 import SplitHeading from './SplitHeading'
-import CountUp from './CountUp'
 import Media from './Media'
 import { openBookingModal } from './BookingModal'
 import { useContent } from '../lib/content'
@@ -88,7 +84,6 @@ export default function ZoneGreen() {
           the pinned carousel below, without the horizontal scrub. */}
       <div className="md:hidden bg-ink text-sand">
         {slides.map((slide, i) => {
-          const Icon = (slide.icon && LucideIcons[slide.icon]) || Dot
           return (
             <article
               key={slide.title || i}
@@ -105,15 +100,10 @@ export default function ZoneGreen() {
                 </>
               )}
               <div className="relative z-10 h-full flex flex-col justify-end p-6 pb-10">
-                <span className="text-orange-light font-display italic text-sm tabular-nums mb-2">
+                <span className="text-orange-light font-display italic text-sm tabular-nums mb-3">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <Icon size={26} className="text-orange-light mb-3" strokeWidth={1.5} />
                 <h3 className="font-display text-3xl mb-3">{slide.title}</h3>
-                <CountUp
-                  value={slide.area}
-                  className="text-orange-light text-xs tracking-wide whitespace-nowrap mb-3 inline-block"
-                />
                 <p className="text-sand/85 text-sm leading-relaxed max-w-md">{slide.body}</p>
               </div>
             </article>
@@ -121,51 +111,68 @@ export default function ZoneGreen() {
         })}
       </div>
 
-      {/* Tablet+: pinned horizontal carousel */}
-      <div className="hidden md:block">
-        <PinnedCarousel
-          className="bg-ink"
-          slideImages={slides.map((s) => s.imageUrl || '')}
-          slideTitles={slides.map((s) => s.title || '')}
-        >
-          {slides.map((slide, idx) => {
-            const Icon = (slide.icon && LucideIcons[slide.icon]) || Dot
-            return (
-              <CarouselSlide key={slide.title || idx}>
-                <div className="relative h-[70vh] md:h-[75vh] w-full overflow-hidden flex items-end bg-ink">
+      {/* Tablet+: tilted overlapping card row (Lasala-Plaza inspired). */}
+      <div className="hidden md:block bg-sand text-ink pt-16 pb-24 px-6 md:px-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-start justify-between gap-10 mb-12">
+            <h3
+              className="font-display text-marine leading-[1.05] max-w-3xl"
+              style={{ fontSize: 'clamp(1.75rem, 3vw, 2.75rem)' }}
+            >
+              Stories, places and moments that shape a day on the{' '}
+              <span className="italic">grounds.</span>
+            </h3>
+            <button
+              type="button"
+              onClick={() => openBookingModal('group')}
+              className="shrink-0 inline-flex items-center gap-3 bg-marine-dark text-sand px-6 py-3 rounded-full text-xs tracking-widest2 uppercase hover:bg-marine transition-colors"
+            >
+              More ideas and plans
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div className="relative flex items-start justify-center gap-[-24px] md:-mx-6 overflow-x-visible">
+            {slides.map((slide, i) => {
+              // Alternating tilts + stacked margins create the fanned look.
+              const tilts = ['-rotate-3', 'rotate-2', '-rotate-2', 'rotate-3', '-rotate-1']
+              const marginTops = ['mt-0', 'mt-6', 'mt-0', 'mt-6', 'mt-0']
+              const tilt = tilts[i % tilts.length]
+              const topShift = marginTops[i % marginTops.length]
+              return (
+                <article
+                  key={slide.title || i}
+                  className={`relative shrink-0 w-[220px] lg:w-[260px] aspect-[3/4.3] overflow-hidden shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)] bg-ink transition-transform duration-500 hover:rotate-0 hover:z-20 ${tilt} ${topShift}`}
+                  style={{ marginLeft: i === 0 ? 0 : '-28px', zIndex: 5 + i }}
+                >
                   {slide.imageUrl && (
-                    <>
-                      <Media
-                        src={slide.imageUrl}
-                        alt={slide.title || ''}
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/45 to-ink/10" />
-                    </>
+                    <Media
+                      src={slide.imageUrl}
+                      alt={slide.title || ''}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
                   )}
-                  {/* Editorial index in the top-left corner of each slide. */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute top-8 left-8 md:top-10 md:left-12 z-10 font-display italic text-orange-light/80 text-sm tabular-nums"
-                  >
-                    {String(idx + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-                  </span>
-                  <div className="relative z-10 p-8 md:p-12 text-sand max-w-lg">
-                    <Icon size={30} className="text-orange-light mb-6" strokeWidth={1.5} />
-                    <div className="flex items-baseline gap-4 mb-4">
-                      <h3 className="font-display text-3xl md:text-4xl">{slide.title}</h3>
-                      <CountUp
-                        value={slide.area}
-                        className="text-orange-light text-xs tracking-wide whitespace-nowrap"
-                      />
-                    </div>
-                    <p className="text-sand/85 text-sm md:text-base leading-relaxed">{slide.body}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/20" />
+                  <p className="absolute top-5 left-5 z-10 text-sand text-[10px] tracking-widest2 uppercase">
+                    {String(i + 1).padStart(2, '0')} · {zoneLabel}
+                  </p>
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-5">
+                    <h4 className="font-display text-xl lg:text-2xl text-sand leading-tight mb-4">
+                      {slide.title}
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={() => openBookingModal('group')}
+                      className="inline-flex items-center gap-2 border border-sand/70 text-sand px-3.5 py-1.5 text-[10px] tracking-widest2 uppercase hover:bg-sand hover:text-ink transition-colors"
+                    >
+                      Learn more
+                    </button>
                   </div>
-                </div>
-              </CarouselSlide>
-            )
-          })}
-        </PinnedCarousel>
+                </article>
+              )
+            })}
+          </div>
+        </div>
       </div>
     </section>
   )

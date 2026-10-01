@@ -44,11 +44,11 @@ export default function CitizenApp() {
     return () => clearInterval(t)
   }, [])
 
-  const heading = app.heading || 'Get early access'
+  const heading = app.heading || 'Get Exclusive Rewards with Landmark Citizen'
   const body =
     app.body ||
-    "We're getting close. Sign up for early access to Landmark Citizen — save 10% on every ticket, hold your day pass, and skip the gate queue."
-  const mockupImage = app.mockupImage || '/citizen-app.mp4'
+    "Download the Landmark Citizen app to unlock special perks, early access, and a personalized experience. Join our community and be the first to know about upcoming events and offers."
+  const mockupImage = app.mockupImage || '/Mockup main.png'
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -62,7 +62,7 @@ export default function CitizenApp() {
     <section
       id="citizen-app"
       ref={ref}
-      className="relative bg-sand text-ink py-24 md:py-32 px-6 md:px-10 overflow-hidden"
+      className="relative bg-sand text-ink pt-24 md:pt-32 pb-0 px-6 md:px-10 overflow-visible"
     >
       {/* Soft gradient wash that mimics the reference's sky-tint at the bottom */}
       <div
@@ -114,7 +114,7 @@ export default function CitizenApp() {
             type="submit"
             className="inline-flex items-center gap-2 bg-ink text-sand text-sm font-medium rounded-full px-4 py-2.5 hover:bg-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
           >
-            {joined ? 'On the list ✓' : 'Join waitlist'}
+            {joined ? 'On the list ✓' : 'Subscribe'}
           </button>
         </form>
 
@@ -137,20 +137,13 @@ export default function CitizenApp() {
           </span>
         </div>
 
-        {/* Countdown row */}
-        <div className="reveal mt-10 flex items-end justify-center gap-3 md:gap-4">
-          <CountBox value={remaining.days} label="Days" />
-          <Colon />
-          <CountBox value={remaining.hours} label="Hours" />
-          <Colon />
-          <CountBox value={remaining.minutes} label="Minutes" />
-          <Colon />
-          <CountBox value={remaining.seconds} label="Seconds" />
-        </div>
+       
       </div>
 
-      {/* Phone mockup with floating cards, sitting on the sky-tint */}
-      <div className="relative z-10 mt-16 md:mt-24 flex justify-center">
+      {/* Phone mockup — the bottom quarter is deliberately pulled down into
+          the next (dark) section so the image reads as "sticking up from
+          behind" it. overflow-visible on the section lets it escape. */}
+      <div className="relative z-10 w-full mt-16 md:mt-24 flex justify-center mb-[-18vh] md:mb-[-22vh]">
         <PhoneMockup mockupImage={mockupImage} />
       </div>
     </section>
@@ -186,23 +179,35 @@ function Colon() {
 function PhoneMockup({ mockupImage }) {
   return (
     <div className="relative">
-      {/* Phone frame */}
-      <div className="relative w-[280px] md:w-[340px] aspect-[9/19] rounded-[46px] bg-ink border-[10px] border-ink shadow-[0_40px_80px_-30px_rgba(0,0,0,0.4)]">
-        {/* Dynamic-Island-style notch */}
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 h-6 w-28 bg-ink rounded-full z-20" />
-
-        {/* Screen */}
-        <div className="absolute inset-0 rounded-[36px] overflow-hidden bg-sand">
-          <Media
-            src={mockupImage}
-            alt="Landmark Citizen app"
-            className="h-full w-full object-cover"
-          />
-        </div>
+      {/* The mockup PNG already includes the phone frame — render it at its
+          natural aspect ratio so nothing is clipped or letterboxed. */}
+      <div className="relative inline-block">
+        <Media
+          src={mockupImage}
+          alt="Landmark Citizen app"
+          className="block w-auto max-w-full h-auto md:h-[70vh] object-contain select-none"
+        />
+        {/* Cloudy fade on the bottom half — stronger blur + heavier haze so
+            the image reads as being behind a soft fog that intensifies
+            downward into the next section. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%]"
+          style={{
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 45%, black 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 45%, black 100%)',
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-b from-transparent via-sand/70 to-sand"
+        />
       </div>
 
       {/* Floating card — top-left */}
-      <div className="hidden md:flex absolute top-16 -left-24 items-center gap-3 rounded-xl bg-white text-ink px-3.5 py-2.5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)]">
+      <div className="hidden md:flex absolute top-16 -left-12 items-center gap-3 rounded-xl bg-white text-ink px-3.5 py-2.5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)]">
         <span className="h-8 w-8 rounded-lg bg-ink text-sand flex items-center justify-center">
           <Bell size={14} strokeWidth={2} />
         </span>

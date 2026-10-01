@@ -37,7 +37,7 @@ export default function App() {
   const reveal = useContent('reveal')
   const rooms = useContent('rooms')
   const heroImageUrl =
-    hero.backgroundImage || '/pexels-petra-nesti-1766376-12161888.jpg'
+    hero.backgroundImage || '/hero.jpg'
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -45,7 +45,7 @@ export default function App() {
       // user scrolls, so the hero photo feels like it scrolls with the page
       // instead of sitting frozen in the viewport.
       gsap.to(imgRef.current, {
-        yPercent: -18,
+        yPercent: -42,
         ease: 'none',
         scrollTrigger: {
           trigger: heroBgRef.current,
@@ -117,8 +117,8 @@ export default function App() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-marine-dark/30 mix-blend-multiply" />
-            <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/25 to-ink/70" />
+            <div className="absolute inset-0 bg-marine-dark/15 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-gradient-to-b from-ink/25 via-ink/5 to-ink/45" />
           </div>
         </div>
         <Hero />

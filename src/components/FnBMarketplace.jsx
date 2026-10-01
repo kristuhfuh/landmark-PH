@@ -58,7 +58,8 @@ export default function FnBMarketplace() {
           </p>
         </div>
 
-        <ol className="md:col-span-7 space-y-6">
+        <div className="md:col-span-7">
+        <ol className="space-y-6">
           {vendors.map((v, i) => {
             const status = inferStatus(v)
             const isOpen = status === 'Slot open'
@@ -106,6 +107,21 @@ export default function FnBMarketplace() {
             )
           })}
         </ol>
+        <div className="reveal mt-10 pt-6 border-t border-ink/15 flex justify-end">
+          <a
+            href="/things-to-do"
+            className="group inline-flex items-baseline gap-3 font-display italic text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
+          >
+            View more
+            <span
+              aria-hidden="true"
+              className="inline-block transition-transform duration-300 group-hover:translate-x-1 not-italic"
+            >
+              →
+            </span>
+          </a>
+        </div>
+        </div>
       </div>
     </section>
   )

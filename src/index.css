@@ -2,6 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+/* --- Ronzino ---------------------------------------------------------
+   Self-hosted from /public/fonts/. Drop woff2 files at these paths and
+   the site picks them up immediately. Weights beyond what the design
+   uses can be added by extending this block.
+   `font-display: swap` = fallback text renders instantly, swaps to
+   Ronzino the moment the woff2 lands. */
+@font-face {
+  font-family: 'Ronzino';
+  src: url('/fonts/Ronzino-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ronzino';
+  src: url('/fonts/Ronzino-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ronzino';
+  src: url('/fonts/Ronzino-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ronzino';
+  src: url('/fonts/Ronzino-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ronzino';
+  src: url('/fonts/Ronzino-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Palette variables — space-separated RGB triplets so Tailwind can add
    opacity via rgb(var(--c-x) / <alpha-value>). Overridden at runtime by
    PaletteInjector when the CMS palette changes. */
@@ -22,6 +64,9 @@ html {
 
 body {
   overflow-x: hidden;
+  /* Ronzino everywhere by default. Falls back to Geist / system sans
+     if the woff2 files aren't in /public/fonts/. */
+  font-family: 'Ronzino', 'Geist', ui-sans-serif, system-ui, sans-serif;
 }
 
 ::selection {

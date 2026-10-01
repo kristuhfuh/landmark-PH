@@ -21,8 +21,12 @@ export default {
         ink: 'rgb(var(--c-ink) / <alpha-value>)',
       },
       fontFamily: {
-        display: ['"Instrument Serif"', 'serif'],
-        body: ['"Geist"', 'sans-serif'],
+        // Ronzino is the site's primary typeface for both headings and
+        // body copy. Instrument Serif / Geist are kept as fallbacks so
+        // the site still reads clearly if the Ronzino woff2 files aren't
+        // present in /public/fonts/.
+        display: ['Ronzino', '"Instrument Serif"', 'serif'],
+        body: ['Ronzino', '"Geist"', 'sans-serif'],
       },
       letterSpacing: {
         widest2: '0.28em',

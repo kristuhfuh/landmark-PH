@@ -55,7 +55,7 @@
     "headingLine2": "return to.",
     "ctaLabel": "View the grounds",
     "ctaHref": "#the-concept",
-    "backgroundImage": "/hero.jpg",
+    "backgroundImage": "/Hero 3.mp4",
     "watermark": "Cove",
     "badge": "Now open"
   },
@@ -462,9 +462,9 @@
   },
   "citizenApp": {
     "eyebrow": "Landmark Citizen",
-    "heading": "Get early access",
+    "heading": "Get Exclusive Rewards with Landmark Citizen",
     "italic": "",
-    "body": "We're getting close. Sign up for early access to Landmark Citizen — save 10% on every ticket, hold your day pass and skip the gate queue.",
+    "body": "Download the Landmark Citizen app to unlock special perks, early access, and a personalized experience. Join our community and be the first to know about upcoming events and offers.",
     "features": [
       {
         "icon": "Ticket",
@@ -485,7 +485,7 @@
     "appStoreLink": "#",
     "playStoreLink": "#",
     "qrImage": "",
-    "mockupImage": "/citizen-app.mp4",
+    "mockupImage": "/Mockup main.png",
     "savingsPill": "Save 10%"
   },
   "overlap": {

@@ -161,7 +161,7 @@ export default function Intro() {
 
           <div
             ref={contentRef}
-            className="h-full flex flex-col justify-center pt-[42vh] md:pt-[48vh] pb-20 md:pb-28 px-6 md:px-10 relative z-10"
+            className="h-full flex flex-col justify-center pt-[42vh] md:pt-[48vh] pb-8 md:pb-10 px-6 md:px-10 relative z-10"
           >
             <div className="max-w-5xl mx-auto text-center mb-16 md:mb-20">
               <p className="reveal inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-8">
@@ -187,30 +187,21 @@ export default function Intro() {
                     'md:col-span-5 md:col-start-8 md:mt-16',
                     'md:col-span-6 md:col-start-4',
                   ]
-                  const isLead = i === 0
                   return (
                     <article
                       key={p.title}
                       className={`reveal ${layouts[i] || 'md:col-span-6'}`}
                     >
                       <div className="flex items-baseline gap-4 mb-4">
-                        <span className="font-display italic text-orange-dark text-sm tabular-nums">
+                        <span className="font-display italic text-orange-dark text-base tabular-nums">
                           {String(i + 1).padStart(2, '0')}
                         </span>
                         <span className="h-px flex-1 bg-ink/15" />
                       </div>
-                      <h3
-                        className={`font-display text-marine mb-3 leading-tight ${
-                          isLead ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'
-                        }`}
-                      >
+                      <h3 className="font-display text-marine mb-3 leading-tight text-3xl md:text-4xl">
                         {p.title}
                       </h3>
-                      <p
-                        className={`text-ink/70 leading-relaxed ${
-                          isLead ? 'text-base md:text-lg max-w-lg' : 'text-sm md:text-base max-w-md'
-                        }`}
-                      >
+                      <p className="text-ink/70 leading-relaxed text-base md:text-lg max-w-lg">
                         {p.body}
                       </p>
                     </article>
@@ -222,7 +213,7 @@ export default function Intro() {
             {/* Bridging beat — a small "up next" caption that hints at the
                 Flagship section below and prevents the pillar block from
                 dead-ending into whitespace. */}
-            <div className="reveal max-w-6xl mx-auto w-full mt-20 md:mt-28 pt-8 border-t border-ink/15 flex flex-wrap items-baseline justify-between gap-4">
+            <div className="reveal max-w-6xl mx-auto w-full mt-14 md:mt-16 pt-8 border-t border-ink/15 flex flex-wrap items-baseline justify-between gap-4">
               <p className="text-orange-dark text-[11px] tracking-widest2 uppercase">
                 Next · The Signature Attraction
               </p>

@@ -77,8 +77,8 @@ export default function Footer() {
             </p>
 
             {subscribed ? (
-              <div className="max-w-md border border-orange-dark/40 bg-white/60 px-5 py-4 flex items-start gap-3 text-sm text-marine-dark">
-                <span className="mt-0.5 h-6 w-6 rounded-full border border-orange-dark/50 flex items-center justify-center shrink-0">
+              <div className="max-w-md border border-orange-dark/40 bg-white/60 px-5 py-4 flex items-start gap-3 text-sm text-marine-dark p-124">
+                <span className="mt-0.5 h-full w-6 rounded-16px border-orange-dark/50 flex items-center justify-center shrink-0">
                   <Check size={14} className="text-orange-dark" />
                 </span>
                 <div>
@@ -123,7 +123,7 @@ export default function Footer() {
                   <button
                     type="submit"
                     disabled={!accepted}
-                    className="rounded-none px-5 py-3 bg-orange text-white text-sm font-medium hover:bg-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+                    className="rounded- px-5 py-3 bg-orange text-white text-sm font-medium hover:bg-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
                   >
                     Subscribe
                     <ArrowRight size={14} />

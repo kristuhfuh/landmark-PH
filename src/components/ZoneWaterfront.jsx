@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { Waves } from 'lucide-react'
 import { parallaxLayer } from '../lib/animations'
 import DragGallery from './DragGallery'
 import useTilt from '../hooks/useTilt'
@@ -150,10 +149,7 @@ export default function ZoneWaterfront() {
           className="reveal bg-white border border-marine-dark/15 p-8 md:p-12 shadow-sm grid md:grid-cols-12 gap-6 md:gap-10 items-center"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          <div className="md:col-span-1 flex md:justify-start">
-            <Waves size={36} className="text-orange-dark" strokeWidth={1.5} />
-          </div>
-          <div className="md:col-span-8">
+          <div className="md:col-span-9">
             <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-3">
               On the water
             </p>

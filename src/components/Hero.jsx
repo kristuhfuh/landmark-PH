@@ -77,8 +77,8 @@ export default function Hero() {
         </span>
 
         <h1
-          className="hero-rise font-display font-light text-sand leading-[0.95] tracking-tight max-w-6xl"
-          style={{ fontSize: 'clamp(3rem, 11vw, 8.5rem)' }}
+          className="hero-rise font-display font-light text-sand leading-[0.92] tracking-tight max-w-6xl"
+          style={{ fontSize: 'clamp(3.5rem, 14vw, 11rem)' }}
         >
           {line1}
           <br />

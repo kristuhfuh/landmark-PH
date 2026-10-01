@@ -16,7 +16,6 @@ import {
 } from 'lucide-react'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import SplitHeading from './SplitHeading'
-import CountUp from './CountUp'
 import Media from './Media'
 import { useContent } from '../lib/content'
 
@@ -135,12 +134,11 @@ export default function ZoneRing() {
   }, [active])
 
   const current = ITEMS[active] || {}
-  const ActiveIcon = ICON_MAP[current.icon] || Dot
 
   return (
     <section id="the-ring">
       {/* Mobile: title + zone label, then plain stacked cards. */}
-      <div className="md:hidden bg-sand text-ink px-6 pt-24 pb-10 text-center">
+      <div className="md:hidden bg-sand text-ink px-6 pt-10 pb-10 text-center">
         <p className="text-orange-dark text-xs tracking-widest2 uppercase mb-4">
           {zoneLabel}
         </p>
@@ -151,7 +149,6 @@ export default function ZoneRing() {
       </div>
       <div className="md:hidden bg-sand text-ink">
         {ITEMS.map((item, i) => {
-          const Icon = ICON_MAP[item.icon] || Dot
           return (
             <article
               key={item.title || i}
@@ -168,13 +165,9 @@ export default function ZoneRing() {
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/10" />
               <div className="relative z-10 h-full flex flex-col justify-end p-6 pb-10 text-sand">
-                <Icon size={26} className="text-orange-light mb-4" strokeWidth={1.5} />
-                <div className="flex items-baseline gap-3 mb-2">
-                  <span className="text-orange-light text-xs tracking-widest2 uppercase">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <CountUp value={item.area} className="text-sand/70 text-xs" />
-                </div>
+                <span className="text-orange-light text-xs tracking-widest2 uppercase mb-3">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
                 <h3 className="font-display text-3xl mb-3">{item.title}</h3>
                 <p className="text-sand/85 text-sm leading-relaxed max-w-md">
                   {item.body}
@@ -189,7 +182,7 @@ export default function ZoneRing() {
           pinned auto-advancing slideshow. */}
       <div
         ref={introRef}
-        className="hidden md:block bg-sand text-ink pt-24 md:pt-32 pb-16 px-6 md:px-10"
+        className="hidden md:block bg-sand text-ink pt-6 md:pt-10 pb-14 px-6 md:px-10"
       >
         <div className="max-w-3xl mx-auto text-center">
           <p className="reveal text-orange-dark text-xs tracking-widest2 uppercase mb-4">
@@ -278,13 +271,9 @@ export default function ZoneRing() {
           {/* Right-aligned description card for the active item. */}
           <div className="absolute right-6 md:right-14 bottom-10 md:bottom-16 z-10 max-w-md text-sand">
             <div key={active} className="animate-[fadeIn_0.6s_ease-out]">
-              <ActiveIcon size={28} className="text-orange-light mb-5" strokeWidth={1.5} />
-              <div className="flex items-baseline gap-4 mb-3">
-                <span className="text-orange-light text-xs tracking-widest2 uppercase">
-                  {String(active + 1).padStart(2, '0')} / {String(ITEMS.length).padStart(2, '0')}
-                </span>
-                <CountUp value={current.area} className="text-sand/70 text-xs tracking-wide" />
-              </div>
+              <span className="block text-orange-light text-xs tracking-widest2 uppercase mb-5">
+                {String(active + 1).padStart(2, '0')} / {String(ITEMS.length).padStart(2, '0')}
+              </span>
               <h3 className="font-display text-3xl md:text-4xl mb-4">{current.title}</h3>
               <p className="text-sand/85 text-sm md:text-base leading-relaxed">
                 {current.body}

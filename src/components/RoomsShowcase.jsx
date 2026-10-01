@@ -81,7 +81,7 @@ export default function RoomsShowcase({
     <section
       id="rooms"
       ref={ref}
-      className="relative bg-marine-dark text-sand py-24 md:py-36 px-6 md:px-10"
+      className="relative z-20 bg-marine-dark text-sand py-24 md:py-36 px-6 md:px-10"
     >
       <div className="max-w-6xl mx-auto mb-16 md:mb-24">
         <p className="reveal text-orange-light text-xs tracking-widest2 uppercase mb-4">
