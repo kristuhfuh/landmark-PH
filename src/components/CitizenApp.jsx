@@ -49,7 +49,7 @@ export default function CitizenApp() {
           <div className="relative h-20 w-20 rounded-[18px] overflow-hidden shadow-[0_8px_24px_-6px_rgba(0,0,0,0.45)] bg-marine-dark">
             <LcaLogo />
             <img
-              src="/lca-logo.png"
+              src="/LCA Logo.png"
               alt="Landmark Citizen"
               className="absolute inset-0 h-full w-full object-cover"
               onError={(e) => { e.currentTarget.style.display = 'none' }}
