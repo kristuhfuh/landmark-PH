@@ -118,33 +118,35 @@ export default function Intro() {
           ref={pillRef}
           className="relative bg-sand overflow-hidden" /*shadow-2xl shadow-ink/40?*/
         >
-          {/* Curved header text — follows the worm's semicircular head. The
-              SVG is narrower than the pill and nudged down from the very
-              top so its rectangle stays INSIDE the pill's rounded top
-              (which otherwise clips its corners via overflow-hidden). */}
+          {/* Curved header text — follows the worm's semicircular head.
+              The viewBox + arc depth are tuned to the pill's rounded top
+              so the text visually hugs it. Aspect ratio is preserved
+              (preserveAspectRatio default) so the curve doesn't distort
+              as the responsive width/height clamps change. */}
           <svg
             ref={archRef}
             className="absolute left-1/2 -translate-x-1/2 pointer-events-none z-20"
-            viewBox="0 0 400 110"
-            preserveAspectRatio="none"
+            viewBox="0 0 700 130"
             style={{
-              top: 'clamp(3rem, 10vh, 10rem)',
-              width: 'min(55%, 900px)',
-              height: 'clamp(5rem, 12vh, 12rem)',
+              top: '48px',
+              width: 'min(64%, 860px)',
+              height: 'auto',
             }}
             aria-hidden="true"
           >
             <defs>
+              {/* Wider arc so the whole phrase fits; path length is now
+                  long enough for ~55 chars at fontSize 14 / letterSpacing 2. */}
               <path
                 id="worm-arch-path"
-                d="M 20 95 Q 200 15 380 95"
+                d="M 20 115 Q 350 -45 680 115"
                 fill="none"
               />
             </defs>
             <text
               className="font-display"
-              fontSize="18"
-              letterSpacing="6"
+              fontSize="14"
+              letterSpacing="2"
               fill="rgb(var(--c-orange-dark))"
               textAnchor="middle"
               style={{ textTransform: 'uppercase' }}
@@ -161,7 +163,7 @@ export default function Intro() {
 
           <div
             ref={contentRef}
-            className="h-full flex flex-col justify-center pt-[42vh] md:pt-[48vh] pb-8 md:pb-10 px-6 md:px-10 relative z-10"
+            className="h-full flex flex-col justify-center pt-[14vh] md:pt-[16vh] pb-8 md:pb-10 px-6 md:px-10 relative z-10"
           >
             <div className="max-w-5xl mx-auto text-center mb-16 md:mb-20">
               <p className="reveal inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-8">

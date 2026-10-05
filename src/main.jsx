@@ -10,6 +10,7 @@ const AboutPage = lazy(() => import('./routes/AboutPage.jsx'))
 const ThingsToDoPage = lazy(() => import('./routes/ThingsToDoPage.jsx'))
 const BookingsPage = lazy(() => import('./routes/BookingsPage.jsx'))
 const BookingFlowPage = lazy(() => import('./routes/BookingFlowPage.jsx'))
+const RoomsPage = lazy(() => import('./routes/RoomsPage.jsx'))
 const ContactPage = lazy(() => import('./routes/ContactPage.jsx'))
 
 const routeFallback = (
@@ -45,6 +46,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           }
         />
         <Route path="/about" element={wrapInterior(AboutPage)} />
+        <Route path="/rooms" element={wrapInterior(RoomsPage)} />
         <Route path="/things-to-do" element={wrapInterior(ThingsToDoPage)} />
         <Route path="/bookings" element={wrapInterior(BookingsPage)} />
         <Route path="/bookings/:type" element={wrapInterior(BookingFlowPage)} />

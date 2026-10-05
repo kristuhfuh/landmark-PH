@@ -17,6 +17,10 @@
         "href": "/things-to-do"
       },
       {
+        "label": "Rooms",
+        "href": "/rooms"
+      },
+      {
         "label": "Bookings",
         "href": "/bookings"
       },
@@ -31,8 +35,8 @@
       "marineLight": "#08126d",
       "orange": "#F47C0B",
       "orangeLight": "#FFA24D",
-      "orangeDark": "#8C4408",
-      "sand": "#EFE7D6",
+      "orangeDark": "#F47C0B",
+      "sand": "#FBF9F5",
       "ink": "#000000"
     },
     "contact": {
@@ -149,7 +153,7 @@
     "title": "The Green",
     "intro": "1,860 sqm concert area anchoring an open-air adventure quarter. Scroll on to move through the rest of it.",
     "heroImageUrl": "/concert live 2.jpg",
-    "ctaLabel": "Book court time",
+    "ctaLabel": "Book Court",
     "stats": [
       { "label": "Concert lawn", "value": "1,860 sqm" },
       { "label": "Format", "value": "Open-air" },
@@ -193,7 +197,7 @@
     "intro": "The full beach club complex, its lounges and open water — set apart from the ring, reached along its own approach from the water body.",
     "heroImage": "https://images.unsplash.com/photo-1500815845799-7748ca339f27?auto=format&fit=crop&w=1600&q=80",
     "asideImage": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
-    "dayPassLabel": "Book Walkthrough",
+    "dayPassLabel": "Book Day Pass",
     "stats": [
       { "label": "Beach club", "value": "3,734 sqm" },
       { "label": "Lounges", "value": "Two · day & night" },

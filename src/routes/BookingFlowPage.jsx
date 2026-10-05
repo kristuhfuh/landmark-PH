@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   Ticket,
   BedDouble,
@@ -168,12 +168,27 @@ const NAIRA = new Intl.NumberFormat('en-NG', {
   maximumFractionDigits: 0,
 })
 
+function slugify(name) {
+  return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+}
+
 export default function BookingFlowPage() {
   const { type = 'walkthrough' } = useParams()
   const navigate = useNavigate()
   const config = TYPES[type]
   const settings = useContent('siteSettings')
+  const rooms = useContent('rooms')
   const brand = settings.brand || 'Landmark'
+  const [searchParams] = useSearchParams()
+
+  // If arriving from /rooms with ?room=<slug>, surface the preselected room
+  // in the summary rail so the user knows which stay they're booking.
+  const selectedRoom = useMemo(() => {
+    if (type !== 'rooms') return null
+    const roomSlug = searchParams.get('room')
+    if (!roomSlug) return null
+    return (rooms.items || []).find((r) => slugify(r.name) === roomSlug) || null
+  }, [type, searchParams, rooms])
 
   const [step, setStep] = useState(0)
   const [date, setDate] = useState('')
@@ -454,8 +469,8 @@ export default function BookingFlowPage() {
                 >
                   {step === 2
                     ? config.holdOnly
-                      ? 'Hold this booking'
-                      : `Pay ${NAIRA.format(total)}`
+                      ? 'Request Quote'
+                      : `Pay & Confirm · ${NAIRA.format(total)}`
                     : 'Continue'}
                   <span aria-hidden="true">→</span>
                 </button>
@@ -468,7 +483,7 @@ export default function BookingFlowPage() {
             <div className="sticky top-24">
               <figure className="aspect-[4/5] w-full overflow-hidden bg-ink/5 mb-6">
                 <img
-                  src={config.image}
+                  src={selectedRoom?.imageUrl || config.image}
                   alt=""
                   loading="eager"
                   className="h-full w-full object-cover"
@@ -478,9 +493,15 @@ export default function BookingFlowPage() {
               <p className="text-[10px] tracking-widest2 uppercase text-ink/55 mb-3">
                 Your booking
               </p>
-              <h2 className="font-display text-2xl md:text-3xl text-marine leading-tight mb-6">
-                {config.title}
+              <h2 className="font-display text-2xl md:text-3xl text-marine leading-tight mb-3">
+                {selectedRoom ? selectedRoom.name : config.title}
               </h2>
+              {selectedRoom && (
+                <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-6">
+                  {selectedRoom.tag} · {selectedRoom.priceFrom}
+                </p>
+              )}
+              {!selectedRoom && <div className="mb-6" />}
 
               <dl className="space-y-4 text-sm border-t border-ink/15 pt-6">
                 <SummaryRow label="Date">
@@ -797,7 +818,7 @@ function StepPayment({ config, total, card, setCard }) {
     return (
       <div>
         <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-3">
-          03 · Hold this booking
+          03 · Request a quote
         </p>
         <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-6">
           No card{' '}

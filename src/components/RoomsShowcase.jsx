@@ -81,18 +81,18 @@ export default function RoomsShowcase({
     <section
       id="rooms"
       ref={ref}
-      className="relative z-20 bg-marine-dark text-sand py-24 md:py-36 px-6 md:px-10 overflow-hidden"
+      className="relative z-20 bg-[#E6F0F7] text-marine-dark py-24 md:py-36 px-6 md:px-10 overflow-clip"
     >
       {/* Subtle cultural line pattern — adinkra-inspired nested arcs,
           chevrons and dot grids rendered as a tiling SVG. Sand strokes at
           low alpha keep it ambient against the marine-dark bg. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        className="pointer-events-none absolute inset-0 opacity-[0.1]"
         style={{
           backgroundImage: `url("data:image/svg+xml;utf8,${encodeURIComponent(
             `<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'>
-              <g fill='none' stroke='%23EFE7D6' stroke-width='1'>
+              <g fill='none' stroke='%23000529' stroke-width='1'>
                 <circle cx='40' cy='40' r='22'/>
                 <circle cx='40' cy='40' r='14'/>
                 <circle cx='40' cy='40' r='6'/>
@@ -113,15 +113,15 @@ export default function RoomsShowcase({
       />
 
       <div className="relative max-w-6xl mx-auto mb-16 md:mb-24">
-        <p className="reveal text-orange-light text-xs tracking-widest2 uppercase mb-4">
+        <p className="reveal text-orange-dark text-xs tracking-widest2 uppercase mb-4">
           {eyebrow}
         </p>
         <SplitHeading className="font-display text-4xl md:text-6xl leading-[1.02] max-w-4xl">
           {heading}
-          <span className="italic text-orange-light"> {italic}</span>
+          <span className="italic text-orange-dark"> {italic}</span>
         </SplitHeading>
         {body && (
-          <p className="reveal text-sand/70 mt-6 max-w-xl leading-relaxed">
+          <p className="reveal text-marine/80 mt-6 max-w-xl leading-relaxed">
             {body}
           </p>
         )}
@@ -134,15 +134,15 @@ export default function RoomsShowcase({
             <li
               key={room.name}
               ref={registerCard}
-              className={`reveal border-t border-sand/15 pt-8 md:pt-12 transition-colors duration-500 ${
-                i === activeIndex ? 'text-sand' : 'text-sand/55'
+              className={`reveal border-t border-marine-dark/15 pt-8 md:pt-12 transition-colors duration-500 ${
+                i === activeIndex ? 'text-marine-dark' : 'text-marine-dark/50'
               }`}
             >
               <div className="flex items-baseline gap-4 mb-4">
-                <span className="font-display italic text-orange-light text-sm tabular-nums">
+                <span className="font-display italic text-orange-dark text-sm tabular-nums">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="text-xs tracking-widest2 uppercase text-orange-light/80">
+                <span className="text-xs tracking-widest2 uppercase text-orange-dark/80">
                   {room.tag}
                 </span>
               </div>
@@ -160,20 +160,20 @@ export default function RoomsShowcase({
               </p>
               <dl className="grid grid-cols-3 gap-4 text-sm max-w-sm mb-6">
                 <div>
-                  <dt className="text-[10px] tracking-widest2 uppercase text-orange-light/70 mb-1">Size</dt>
+                  <dt className="text-[10px] tracking-widest2 uppercase text-orange-dark/70 mb-1">Size</dt>
                   <dd className="font-display italic text-base">{room.size}</dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] tracking-widest2 uppercase text-orange-light/70 mb-1">Guests</dt>
+                  <dt className="text-[10px] tracking-widest2 uppercase text-orange-dark/70 mb-1">Guests</dt>
                   <dd className="font-display italic text-base">{room.guests}</dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] tracking-widest2 uppercase text-orange-light/70 mb-1">From</dt>
+                  <dt className="text-[10px] tracking-widest2 uppercase text-orange-dark/70 mb-1">From</dt>
                   <dd className="font-display italic text-base">{room.priceFrom}</dd>
                 </div>
               </dl>
               {/* App-discount nudge — Citizen app members save 10%. */}
-              <p className="inline-flex items-center gap-1.5 text-[10px] tracking-widest2 uppercase text-orange-light mb-6">
+              <p className="inline-flex items-center gap-1.5 text-[10px] tracking-widest2 uppercase text-orange-dark mb-6">
                 <span aria-hidden="true">↓</span>
                 10% cheaper on the Citizen app
               </p>
@@ -182,7 +182,7 @@ export default function RoomsShowcase({
                   {room.features.map((f) => (
                     <li
                       key={f}
-                      className="text-[11px] tracking-widest2 uppercase text-sand/75 border border-sand/25 px-3 py-1"
+                      className="text-[11px] tracking-widest2 uppercase text-marine-dark/75 border border-marine-dark/25 rounded-full px-3 py-1"
                     >
                       {f}
                     </li>
@@ -193,19 +193,33 @@ export default function RoomsShowcase({
                 <button
                   type="button"
                   onClick={() => openBookingModal('rooms')}
-                  className="text-sand text-xs tracking-widest2 uppercase px-6 py-3 bg-orange-dark hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+                  className="text-sand text-xs tracking-widest2 uppercase px-6 py-3 rounded-[16px] bg-marine hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marine"
                 >
-                  Reserve
+                  Reserve Room
                 </button>
                 <a
-                  href="#visit"
-                  className="text-sand/80 text-xs tracking-widest2 uppercase px-6 py-3 border border-sand/30 hover:border-orange-light hover:text-orange-light transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-light"
+                  href="/bookings/rooms"
+                  className="inline-flex items-center text-marine text-xs tracking-widest2 uppercase px-6 py-3 rounded-[16px] border border-marine/40 hover:bg-marine hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marine"
                 >
                   View room
                 </a>
               </div>
             </li>
           ))}
+          <li className="pt-10 border-t border-marine-dark/15">
+            <a
+              href="/rooms"
+              className="group inline-flex items-baseline gap-3 font-display italic text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
+            >
+              View all rooms
+              <span
+                aria-hidden="true"
+                className="inline-block transition-transform duration-300 group-hover:translate-x-1 not-italic"
+              >
+                →
+              </span>
+            </a>
+          </li>
         </ol>
 
         {/* Right: sticky photo stack (hidden below md — mobile shows inline) */}
@@ -213,7 +227,7 @@ export default function RoomsShowcase({
           <div className="sticky top-24">
             <div
               ref={imageStackRef}
-              className="relative aspect-[3/4] w-full overflow-hidden"
+              className="relative aspect-[3/4] w-full overflow-hidden rounded-[16px] shadow-[0_20px_50px_-20px_rgba(0,5,41,0.25)]"
             >
               {rooms.map((room, i) => (
                 <Media

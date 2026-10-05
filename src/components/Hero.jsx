@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import CircleButton from './CircleButton'
 import { useContent } from '../lib/content'
 
 export default function Hero() {
@@ -57,14 +56,14 @@ export default function Hero() {
       <span
         aria-hidden="true"
         className="hero-rise absolute inset-x-0 top-[38%] md:top-[32%] -translate-y-1/2 text-center font-display italic text-sand/[0.08] pointer-events-none select-none leading-none whitespace-nowrap"
-        style={{ fontSize: 'clamp(10rem, 32vw, 34rem)' }}
+        style={{ fontSize: 'clamp(10rem, 32vw, 24rem)' }}
       >
         {watermark}
       </span>
 
-      <div className="relative z-10 h-[100svh] flex flex-col items-center justify-center text-center px-6">
+      <div className="relative z-10 h-[100svh] flex flex-col items-center justify-center text-center px-6 md:px-10">
         {badge && (
-          <span className="hero-rise inline-flex items-center gap-2 border border-sand/40 text-sand/85 text-[10px] tracking-widest2 uppercase px-3 py-1.5 mb-5">
+          <span className="hero-rise inline-flex items-center gap-2 rounded-full border border-sand/40 text-sand/90 text-[10px] tracking-widest2 uppercase px-3.5 py-1.5 mb-4">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inset-0 rounded-full bg-orange-light animate-ping opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-light" />
@@ -72,23 +71,27 @@ export default function Hero() {
             {badge}
           </span>
         )}
-        <span className="hero-rise text-sand/70 text-[11px] md:text-xs tracking-widest2 uppercase mb-8">
+        <span className="hero-rise text-sand/70 text-[11px] md:text-xs tracking-widest2 uppercase mb-6 md:mb-8">
           {eyebrow}
         </span>
 
         <h1
           className="hero-rise font-display font-light text-sand leading-[0.92] tracking-tight max-w-6xl"
-          style={{ fontSize: 'clamp(3.5rem, 14vw, 11rem)' }}
+          style={{ fontSize: 'clamp(3.5rem, 14vw, 8rem)' }}
         >
           {line1}
           <br />
           <span className="italic text-orange-light font-normal">{line2}</span>
         </h1>
 
-        <div className="hero-rise mt-14">
-          <CircleButton as="a" href={ctaHref} size="md" tone="sand">
+        <div className="hero-rise mt-12">
+          <a
+            href={ctaHref}
+            className="inline-flex items-center gap-3 bg-orange-dark text-sand px-9 py-4 text-xs md:text-sm tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-light"
+          >
             {ctaLabel}
-          </CircleButton>
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
 

@@ -70,7 +70,7 @@ export default function ZoneGreen() {
             ))}
             <button
               type="button"
-              onClick={() => openBookingModal('table')}
+              onClick={() => openBookingModal('other')}
               className="reveal ml-auto inline-flex items-center gap-3 border border-orange-light/70 text-sand px-6 py-3 text-xs tracking-widest2 uppercase hover:bg-orange-light hover:text-ink transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-light"
             >
               {ctaLabel}
@@ -122,14 +122,13 @@ export default function ZoneGreen() {
               Stories, places and moments that shape a day on the{' '}
               <span className="italic">grounds.</span>
             </h3>
-            <button
-              type="button"
-              onClick={() => openBookingModal('group')}
+            <a
+              href="/things-to-do"
               className="shrink-0 inline-flex items-center gap-3 bg-marine-dark text-sand px-6 py-3 rounded-full text-xs tracking-widest2 uppercase hover:bg-marine transition-colors"
             >
               More ideas and plans
               <span aria-hidden="true">→</span>
-            </button>
+            </a>
           </div>
 
           <div className="relative flex items-start justify-center gap-[-24px] md:-mx-6 overflow-x-visible">
@@ -160,13 +159,12 @@ export default function ZoneGreen() {
                     <h4 className="font-display text-xl lg:text-2xl text-sand leading-tight mb-4">
                       {slide.title}
                     </h4>
-                    <button
-                      type="button"
-                      onClick={() => openBookingModal('group')}
+                    <a
+                      href="/things-to-do"
                       className="inline-flex items-center gap-2 border border-sand/70 text-sand px-3.5 py-1.5 text-[10px] tracking-widest2 uppercase hover:bg-sand hover:text-ink transition-colors"
                     >
                       Learn more
-                    </button>
+                    </a>
                   </div>
                 </article>
               )

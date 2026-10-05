@@ -5,11 +5,7 @@ import SplitHeading from './SplitHeading'
 import { useContent } from '../lib/content'
 import { useCart, formatNaira } from '../lib/cart'
 
-/**
- * Tickets & Packages section — category-filtered product grid. Each item
- * card has a quantity stepper and an "Add" button that pushes the item
- * into the cart context (opens the cart drawer as a side-effect).
- */
+
 export default function TicketsShop() {
   const ref = useRevealOnScroll({ stagger: 0.06 })
   const tickets = useContent('tickets')

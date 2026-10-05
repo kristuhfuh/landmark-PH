@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import { Ticket, BedDouble, UtensilsCrossed, Users, Cake, Waves } from 'lucide-react'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
-import CircleButton from '../components/CircleButton'
 import PatternOverlay from '../components/PatternOverlay'
 import { useContent } from '../lib/content'
 
 const BOOKING_TYPES = [
   {
     key: 'walkthrough',
+    cta: 'Book Walkthrough',
     icon: Ticket,
     n: '01',
     tag: 'The Flagship',
@@ -21,6 +21,7 @@ const BOOKING_TYPES = [
   },
   {
     key: 'table',
+    cta: 'Book Table',
     icon: UtensilsCrossed,
     n: '02',
     tag: 'At the Table',
@@ -32,6 +33,7 @@ const BOOKING_TYPES = [
   },
   {
     key: 'rooms',
+    cta: 'Reserve Room',
     icon: BedDouble,
     n: '03',
     tag: 'Where you stay',
@@ -43,6 +45,7 @@ const BOOKING_TYPES = [
   },
   {
     key: 'daypass',
+    cta: 'Book Day Pass',
     icon: Waves,
     n: '04',
     tag: 'The Waterfront',
@@ -54,6 +57,7 @@ const BOOKING_TYPES = [
   },
   {
     key: 'group',
+    cta: 'Plan Group Visit',
     icon: Users,
     n: '05',
     tag: 'For teams',
@@ -65,6 +69,7 @@ const BOOKING_TYPES = [
   },
   {
     key: 'birthday',
+    cta: 'Plan Event',
     icon: Cake,
     n: '06',
     tag: 'Celebrations',
@@ -185,7 +190,7 @@ export default function BookingsPage() {
                     to={`/bookings/${b.key}`}
                     className="inline-flex items-center gap-3 border border-ink/25 px-5 py-3 text-[11px] tracking-widest2 uppercase text-ink hover:bg-orange-dark hover:text-sand hover:border-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
                   >
-                    Start this booking
+                    {b.cta}
                     <span aria-hidden="true">→</span>
                   </Link>
                 </article>
@@ -268,9 +273,13 @@ export default function BookingsPage() {
               </Link>
             </div>
           </div>
-          <CircleButton as={Link} to="/bookings/other" size="md" tone="ink">
-            Custom enquiry
-          </CircleButton>
+          <Link
+            to="/bookings/other"
+            className="inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+          >
+            Plan a Visit
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </section>
 

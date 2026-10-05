@@ -11,11 +11,11 @@ const EXPLORE_LINKS = [
 ]
 
 const EXPERIENCES_LINKS = [
-  { label: 'Things To Do', href: '#the-ring' },
-  { label: 'Event Spaces', href: '#the-green' },
-  { label: 'Contact', href: '#visit' },
-  { label: 'Book a Stay', href: '#visit' },
-  { label: 'Book a Package', href: '#visit' },
+  { label: 'Things to Do', href: '/things-to-do' },
+  { label: 'Reserve Room', href: '/bookings/rooms' },
+  { label: 'Book Day Pass', href: '/bookings/daypass' },
+  { label: 'Book Walkthrough', href: '/bookings/walkthrough' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 const LANDMARK_LINKS = [

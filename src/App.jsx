@@ -10,11 +10,10 @@ import ZoneRing from './components/ZoneRing'
 import ZoneGreen from './components/ZoneGreen'
 import ZoneWaterfront from './components/ZoneWaterfront'
 import PinnedTrio from './components/PinnedTrio'
-import SiteMap from './components/SiteMap'
+import LandmarkOfferings from './components/LandmarkOfferings'
 import LaunchCTA from './components/LaunchCTA'
 import Footer from './components/Footer'
 import PaletteInjector from './components/PaletteInjector'
-import AnchorMarquee from './components/AnchorMarquee'
 import StickyZoneLabel from './components/StickyZoneLabel'
 import CustomCursor from './components/CustomCursor'
 import CurtainPreloader from './components/CurtainPreloader'
@@ -126,15 +125,13 @@ export default function App() {
       </div>
 
       <ZoneRing />
-      <AnchorMarquee phrase="A place to return to." separator="—" />
       <FlagshipAttraction />
       <ZoneWaterfront />
-      <AnchorMarquee phrase="Grounds, not a park." separator="·" duration={70} />
       <ZoneGreen />
       {/* Trio pinned as one horizontal-scroll experience:
           Along the coast → Grounds from above → At the table */}
       <PinnedTrio />
-      <TicketsShop />
+      {/* <TicketsShop /> */}
       <CitizenApp />
       <RoomsShowcase
         eyebrow={rooms.eyebrow || 'Where you stay'}
@@ -158,7 +155,7 @@ export default function App() {
           'Cabanas',
         ]}
       />
-      <SiteMap />
+      <LandmarkOfferings />
       <LaunchCTA />
       <Footer />
     </div>

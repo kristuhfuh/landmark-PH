@@ -95,7 +95,7 @@ export default function CurtainPreloader() {
         {/* The brand sits centered relative to the *whole* viewport, so the
             wordmark straddles the seam and appears to tear apart as the two
             halves separate. */}
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 translate-y-[50vh] flex items-center justify-center">
+        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 translate-y-[50vh] flex items-center justify-center z-10">
           <BrandMark brand={brand} brandSuffix={brandSuffix} exiting={exiting} />
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function CurtainPreloader() {
           exiting ? 'translate-y-full' : 'translate-y-0'
         }`}
       >
-        <div className="absolute inset-x-0 bottom-1/2 translate-y-1/2 -translate-y-[50vh] flex items-center justify-center">
+        <div className="absolute inset-x-0 bottom-1/2 translate-y-1/2 -translate-y-[50vh] flex items-center justify-center z-10">
           <BrandMark brand={brand} brandSuffix={brandSuffix} exiting={exiting} />
         </div>
 

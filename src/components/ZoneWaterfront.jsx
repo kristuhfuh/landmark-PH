@@ -37,7 +37,7 @@ export default function ZoneWaterfront() {
   const asideImage =
     waterfront.asideImage ||
     'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80'
-  const dayPassLabel = waterfront.dayPassLabel || 'Reserve a day pass'
+  const dayPassLabel = waterfront.dayPassLabel || 'Book Day Pass'
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -82,8 +82,8 @@ export default function ZoneWaterfront() {
 
           <button
             type="button"
-            onClick={() => openBookingModal('table')}
-            className="reveal inline-flex items-center gap-3 bg-orange-dark text-sand px-7 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+            onClick={() => openBookingModal('daypass')}
+            className="reveal inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
           >
             {dayPassLabel}
             <span aria-hidden="true">→</span>
@@ -163,10 +163,10 @@ export default function ZoneWaterfront() {
           <div className="md:col-span-3 flex md:justify-end">
             <button
               type="button"
-              onClick={() => openBookingModal('group')}
+              onClick={() => openBookingModal('daypass')}
               className="inline-flex items-center gap-3 border border-orange-dark text-orange-dark px-5 py-3 text-xs tracking-widest2 uppercase hover:bg-orange-dark hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
             >
-              Book a heat
+              Book Day Pass
               <span aria-hidden="true">→</span>
             </button>
           </div>

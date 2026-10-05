@@ -6,6 +6,7 @@ import { openBookingModal } from './BookingModal'
 const LINKS = [
   { label: 'About', to: '/about' },
   { label: 'Things to Do', to: '/things-to-do' },
+  { label: 'Rooms', to: '/rooms' },
   { label: 'Bookings', to: '/bookings' },
   { label: 'Contact', to: '/contact' },
 ]

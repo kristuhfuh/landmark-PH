@@ -54,7 +54,7 @@
   --c-orange: 244 124 11;
   --c-orange-light: 255 162 77;
   --c-orange-dark: 140 68 8;
-  --c-sand: 239 231 214;
+  --c-sand: 251 249 245;
   --c-ink: 17 20 15;
 }
 
@@ -197,11 +197,6 @@ button {
 @keyframes landmark-marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
-}
-
-@keyframes landmark-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {

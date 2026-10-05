@@ -29,7 +29,7 @@ export default function FlagshipAttraction() {
     { label: 'Duration', value: '45 min' },
     { label: 'Open', value: 'Daily · 10am' },
   ]
-  const ctaLabel = flagship.ctaLabel || 'Reserve a walkthrough'
+  const ctaLabel = flagship.ctaLabel || 'Book Walkthrough'
   const indexNumber = flagship.indexNumber || '01'
 
   useEffect(() => {

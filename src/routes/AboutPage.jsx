@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
-import CircleButton from '../components/CircleButton'
 import PatternOverlay from '../components/PatternOverlay'
 import { useContent } from '../lib/content'
 
@@ -268,9 +267,13 @@ export default function AboutPage() {
               <span className="italic text-marine">us.</span>
             </h2>
           </div>
-          <CircleButton as={Link} to="/bookings/walkthrough" size="md" tone="ink">
-            Reserve a walkthrough
-          </CircleButton>
+          <Link
+            to="/bookings/walkthrough"
+            className="inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+          >
+            Book Walkthrough
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </section>
 

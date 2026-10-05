@@ -168,7 +168,7 @@ export default function ZoneRing() {
                 <span className="text-orange-light text-xs tracking-widest2 uppercase mb-3">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h3 className="font-display text-3xl mb-3">{item.title}</h3>
+                <h3 className="font-display text-2xl mb-3">{item.title}</h3>
                 <p className="text-sand/85 text-sm leading-relaxed max-w-md">
                   {item.body}
                 </p>
@@ -259,7 +259,7 @@ export default function ZoneRing() {
                         ? 'text-sand'
                         : 'text-sand/40 group-hover:text-sand/70'
                     }`}
-                    style={{ fontSize: 'clamp(1.75rem, 3.5vw, 3.25rem)' }}
+                    style={{ fontSize: 'clamp(1.1rem, 2vw, 1.75rem)' }}
                   >
                     {item.title}
                   </span>
@@ -274,7 +274,7 @@ export default function ZoneRing() {
               <span className="block text-orange-light text-xs tracking-widest2 uppercase mb-5">
                 {String(active + 1).padStart(2, '0')} / {String(ITEMS.length).padStart(2, '0')}
               </span>
-              <h3 className="font-display text-3xl md:text-4xl mb-4">{current.title}</h3>
+              <h3 className="font-display text-2xl md:text-3xl mb-4">{current.title}</h3>
               <p className="text-sand/85 text-sm md:text-base leading-relaxed">
                 {current.body}
               </p>
