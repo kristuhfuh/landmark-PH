@@ -151,13 +151,10 @@ export default function PinnedCarousel({
       {/* Dot pagination — clickable jump-to-slide. */}
       {slideCount > 1 && (
         <div
-          className="absolute bottom-6 md:bottom-8 inset-x-0 z-20 flex items-center justify-center gap-6"
+          className="absolute bottom-6 md:bottom-8 inset-x-0 z-20 flex items-center justify-center"
           role="tablist"
           aria-label="Slides"
         >
-          <span className="font-display italic text-orange-light text-xs tabular-nums">
-            {String(activeIndex + 1).padStart(2, '0')}
-          </span>
           <div className="flex items-center gap-2">
             {Array.from({ length: slideCount }).map((_, i) => (
               <button
@@ -169,15 +166,12 @@ export default function PinnedCarousel({
                 onClick={() => jumpTo(i)}
                 className={`h-1 transition-all duration-500 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-light ${
                   i === activeIndex
-                    ? 'w-8 bg-orange-light'
+                    ? 'rounded-full w-8 bg-orange-light'
                     : 'w-3 bg-sand/30 hover:bg-sand/60'
                 }`}
               />
             ))}
           </div>
-          <span className="text-sand/60 text-xs tracking-widest2 uppercase tabular-nums">
-            of {String(slideCount).padStart(2, '0')}
-          </span>
         </div>
       )}
     </div>

@@ -39,12 +39,11 @@ export default function TicketsShop() {
     >
       <div className="max-w-6xl mx-auto">
         <div className="max-w-3xl mb-14 md:mb-20">
-          <p className="reveal inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-6">
-            <span className="font-display italic text-orange-dark/90 text-base tabular-nums">07</span>
+          <p className="reveal text-orange-dark text-xs tracking-widest2 uppercase mb-6">
             {eyebrow}
           </p>
           <SplitHeading className="font-display text-4xl md:text-6xl mb-6 leading-[1.02]">
-            {heading} <span className="italic text-marine">{italic}</span>
+            {heading} <span className="text-marine">{italic}</span>
           </SplitHeading>
           <p className="reveal text-ink/70 leading-relaxed max-w-xl">{body}</p>
         </div>
@@ -67,13 +66,13 @@ export default function TicketsShop() {
                 onClick={() => setActiveCategory(c.key)}
                 className={`inline-flex items-baseline gap-2 px-4 py-2 text-xs tracking-widest2 uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${
                   active
-                    ? 'bg-marine-dark text-sand'
+                    ? 'min-h-11 rounded-full bg-marine-dark text-sand'
                     : 'text-ink/70 hover:text-orange-dark'
                 }`}
               >
                 {c.label}
                 <span
-                  className={`font-display italic tabular-nums text-sm ${
+                  className={`font-display tabular-nums text-sm ${
                     active ? 'text-orange-light' : 'text-ink/40'
                   }`}
                 >
@@ -93,7 +92,7 @@ export default function TicketsShop() {
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
           {filtered.length === 0 ? (
-            <p className="col-span-full text-ink/55 text-sm italic">
+            <p className="col-span-full text-ink/55 text-sm">
               Nothing here yet — check another category.
             </p>
           ) : (
@@ -155,11 +154,11 @@ function TicketCard({ item, index = 0, onAdd }) {
       </div>
 
       <div className="p-6 md:p-8 flex-1 flex flex-col">
-        {/* Price — the visual hero of the card. Big italic serif, vibrant
+        {/* Price — the visual hero of the card. Large upright type, vibrant
             main orange, with the unit as a small kicker on the right. */}
         <div className="flex items-baseline gap-2 mb-5">
           <span
-            className={`font-display italic text-5xl md:text-6xl leading-[0.9] ${
+            className={`font-display text-5xl md:text-6xl leading-[0.9] ${
               featured ? 'text-orange-light' : 'text-orange'
             }`}
           >
@@ -257,7 +256,7 @@ function TicketCard({ item, index = 0, onAdd }) {
           }}
           className={`flex-1 inline-flex items-center justify-center gap-2 py-2.5 text-xs tracking-widest2 uppercase transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${
             featured
-              ? 'bg-orange text-marine-dark hover:bg-orange-light'
+              ? 'min-h-11 rounded-full bg-orange text-marine-dark hover:bg-orange-light'
               : 'bg-marine-dark text-sand hover:bg-orange hover:text-marine-dark'
           }`}
         >
@@ -280,12 +279,12 @@ function QtyStepper({ value, onChange, tone = 'light' }) {
         type="button"
         aria-label="Decrease quantity"
         onClick={() => onChange(Math.max(1, value - 1))}
-        className={`h-8 w-8 border inline-flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${btn}`}
+        className={`min-h-11 rounded-full h-8 w-8 border inline-flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${btn}`}
       >
         −
       </button>
       <span
-        className={`font-display italic w-6 text-center tabular-nums text-lg ${
+        className={`font-display w-6 text-center tabular-nums text-lg ${
           tone === 'dark' ? 'text-sand' : 'text-marine'
         }`}
       >
@@ -295,7 +294,7 @@ function QtyStepper({ value, onChange, tone = 'light' }) {
         type="button"
         aria-label="Increase quantity"
         onClick={() => onChange(Math.min(20, value + 1))}
-        className={`h-8 w-8 border inline-flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${btn}`}
+        className={`min-h-11 rounded-full h-8 w-8 border inline-flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${btn}`}
       >
         +
       </button>

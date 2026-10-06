@@ -11,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger)
 export default function FlagshipAttraction() {
   const ref = useRevealOnScroll({ stagger: 0.08 })
   const imgRef = useRef(null)
-  const indexRef = useRef(null)
   const flagship = useContent('flagship')
 
   const eyebrow = flagship.eyebrow || 'The Signature Attraction'
@@ -30,7 +29,6 @@ export default function FlagshipAttraction() {
     { label: 'Open', value: 'Daily · 10am' },
   ]
   const ctaLabel = flagship.ctaLabel || 'Book Walkthrough'
-  const indexNumber = flagship.indexNumber || '01'
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -47,18 +45,6 @@ export default function FlagshipAttraction() {
         },
       })
 
-      // The giant "01" scale-index drifts up faster than the photo so
-      // it feels layered above.
-      gsap.to(indexRef.current, {
-        yPercent: -30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: ref.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 0.6,
-        },
-      })
     }, ref)
     return () => ctx.revert()
   }, [])
@@ -86,21 +72,11 @@ export default function FlagshipAttraction() {
         />
       </div>
 
-      {/* Giant scale number pinned to the right — editorial "01" mark. */}
-      <div
-        ref={indexRef}
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute right-4 md:right-14 top-16 md:top-24 z-0 font-display italic text-orange-light/20 leading-none"
-        style={{ fontSize: 'clamp(10rem, 26vw, 26rem)' }}
-      >
-        {indexNumber}
-      </div>
-
       {/* Vertical rule label — editorial "spine" that anchors the section. */}
       <div className="hidden md:flex absolute left-8 top-0 bottom-0 z-10 flex-col items-center justify-center gap-6">
         <span className="h-24 w-px bg-sand/25" />
         <span className="text-sand/60 text-[10px] tracking-widest2 uppercase [writing-mode:vertical-rl] rotate-180">
-          The Flagship {indexNumber}
+          The Flagship
         </span>
         <span className="h-24 w-px bg-sand/25" />
       </div>
@@ -115,7 +91,7 @@ export default function FlagshipAttraction() {
             {headingItalic && (
               <>
                 {' '}
-                <span className="italic text-orange-light">{headingItalic}</span>
+                <span className="text-orange-light">{headingItalic}</span>
               </>
             )}
           </h2>
@@ -130,7 +106,7 @@ export default function FlagshipAttraction() {
                 <dt className="text-orange-light/80 text-[10px] tracking-widest2 uppercase mb-2">
                   {s.label}
                 </dt>
-                <dd className="font-display italic text-sand text-xl md:text-2xl">
+                <dd className="font-display text-sand text-xl md:text-2xl">
                   {s.value}
                 </dd>
               </div>
@@ -141,7 +117,7 @@ export default function FlagshipAttraction() {
             <button
               type="button"
               onClick={() => openBookingModal('walkthrough')}
-              className="inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
+              className="min-h-11 rounded-full inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand"
             >
               {ctaLabel}
               <span aria-hidden="true">→</span>

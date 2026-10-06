@@ -75,7 +75,7 @@ export default function ContactPage() {
                 style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
               >
                 Write to us, or come{' '}
-                <span className="italic text-marine">walk the grounds.</span>
+                <span className="text-marine">walk the grounds.</span>
               </h1>
               <p className="mt-10 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
                 Walk-ins are welcome. For anything longer than a quick
@@ -95,7 +95,7 @@ export default function ContactPage() {
               </div>
               <figcaption className="mt-3 flex items-baseline justify-between text-[10px] tracking-widest2 uppercase text-ink/55">
                 <span>Fig. 01</span>
-                <span className="font-display italic normal-case tracking-normal text-ink/70">
+                <span className="font-display normal-case tracking-normal text-ink/70">
                   Landmark Village
                 </span>
               </figcaption>
@@ -111,7 +111,7 @@ export default function ContactPage() {
           <aside className="md:col-span-5">
             <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-4">
               Reach us any{' '}
-              <span className="italic">time.</span>
+              <span>time.</span>
             </h2>
             <p className="text-ink/65 leading-relaxed max-w-sm mb-12">
               Walk-ins welcome across the grounds. For groups, press or
@@ -183,7 +183,7 @@ export default function ContactPage() {
           {/* Right: form card */}
           <div className="md:col-span-7">
             {submitted ? (
-              <div className="bg-white/70 border border-ink/10 rounded-[16px] p-8 md:p-10 shadow-sm">
+              <div className="bg-white border border-marine-dark/12 rounded-[16px] p-8 md:p-10 shadow-[0_8px_24px_-14px_rgba(0,5,41,0.18)]">
                 <div className="w-14 h-14 rounded-full border border-orange-dark/40 flex items-center justify-center mb-5">
                   <Check size={22} className="text-orange-dark" />
                 </div>
@@ -192,7 +192,7 @@ export default function ContactPage() {
                 </p>
                 <p className="text-ink/70 text-sm max-w-sm leading-relaxed">
                   We've logged your{' '}
-                  <span className="italic">{activeLabel?.toLowerCase()}</span>{' '}
+                  <span>{activeLabel?.toLowerCase()}</span>{' '}
                   and a host will be in touch within the hour during opening
                   times.
                 </p>
@@ -202,7 +202,7 @@ export default function ContactPage() {
                     setSubmitted(false)
                     setAccepted(false)
                   }}
-                  className="mt-6 text-[11px] tracking-widest2 uppercase text-orange-dark hover:text-ink transition-colors"
+                  className="min-h-11 rounded-full mt-6 text-[11px] tracking-widest2 uppercase text-orange-dark hover:text-ink transition-colors"
                 >
                   Send another →
                 </button>
@@ -210,7 +210,7 @@ export default function ContactPage() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="bg-white/70 border border-ink/10 rounded-[16px] p-8 md:p-10 shadow-sm space-y-6"
+                className="bg-white border border-marine-dark/12 rounded-[16px] p-8 md:p-10 shadow-[0_8px_24px_-14px_rgba(0,5,41,0.18)] space-y-6"
               >
                 <FormField label="Full name">
                   <input
@@ -272,7 +272,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={!accepted}
-                  className="w-full inline-flex items-center justify-center gap-3 bg-ink text-sand rounded-full py-4 text-sm tracking-wide hover:bg-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+                  className="min-h-11 w-full inline-flex items-center justify-center gap-3 bg-ink text-sand rounded-full py-4 text-sm tracking-wide hover:bg-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
                 >
                   Submit
                 </button>

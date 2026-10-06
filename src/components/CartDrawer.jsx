@@ -111,7 +111,7 @@ export default function CartDrawer() {
               <p className="text-orange-dark text-[11px] tracking-widest2 uppercase">
                 {step === 'done' ? 'Thank you' : step === 'checkout' ? 'Checkout' : 'Your cart'}
               </p>
-              <p className="font-display italic text-ink/60 text-sm mt-1">
+              <p className="font-display text-ink/60 text-sm mt-1">
                 {step === 'done'
                   ? 'Enquiry received'
                   : totalCount === 0
@@ -124,7 +124,7 @@ export default function CartDrawer() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close cart"
-              className="text-ink/70 hover:text-ink transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark rounded-full"
+              className="min-h-11 text-ink/70 hover:text-ink transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark rounded-full"
             >
               <X size={22} />
             </button>
@@ -169,7 +169,7 @@ function CartView({ lines, subtotal, setQuantity, removeItem, onContinue }) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-center py-20">
         <ShoppingBag size={36} className="text-ink/30 mb-4" strokeWidth={1.5} />
-        <p className="font-display italic text-2xl text-ink/70 mb-2">
+        <p className="font-display text-2xl text-ink/70 mb-2">
           Cart's empty.
         </p>
         <p className="text-ink/50 text-sm max-w-xs">
@@ -198,7 +198,7 @@ function CartView({ lines, subtotal, setQuantity, removeItem, onContinue }) {
                 type="button"
                 onClick={() => removeItem(l.id)}
                 aria-label={`Remove ${l.name}`}
-                className="text-ink/40 hover:text-orange-dark transition-colors"
+                className="min-h-11 rounded-full text-ink/40 hover:text-orange-dark transition-colors"
               >
                 <Trash2 size={14} strokeWidth={1.75} />
               </button>
@@ -209,18 +209,18 @@ function CartView({ lines, subtotal, setQuantity, removeItem, onContinue }) {
                   type="button"
                   aria-label="Decrease"
                   onClick={() => setQuantity(l.id, Math.max(1, l.quantity - 1))}
-                  className="h-8 w-8 border border-ink/25 text-ink hover:border-orange-dark hover:text-orange-dark transition-colors inline-flex items-center justify-center"
+                  className="min-h-11 rounded-full h-8 w-8 border border-ink/25 text-ink hover:border-orange-dark hover:text-orange-dark transition-colors inline-flex items-center justify-center"
                 >
                   −
                 </button>
-                <span className="font-display italic tabular-nums text-lg w-6 text-center">
+                <span className="font-display tabular-nums text-lg w-6 text-center">
                   {l.quantity}
                 </span>
                 <button
                   type="button"
                   aria-label="Increase"
                   onClick={() => setQuantity(l.id, Math.min(20, l.quantity + 1))}
-                  className="h-8 w-8 border border-ink/25 text-ink hover:border-orange-dark hover:text-orange-dark transition-colors inline-flex items-center justify-center"
+                  className="min-h-11 rounded-full h-8 w-8 border border-ink/25 text-ink hover:border-orange-dark hover:text-orange-dark transition-colors inline-flex items-center justify-center"
                 >
                   +
                 </button>
@@ -229,7 +229,7 @@ function CartView({ lines, subtotal, setQuantity, removeItem, onContinue }) {
                 <p className="text-ink/55 text-[11px] tracking-wide">
                   {formatNaira(l.unit)} each
                 </p>
-                <p className="font-display italic text-marine text-xl leading-none">
+                <p className="font-display text-marine text-xl leading-none">
                   {formatNaira(l.subtotal)}
                 </p>
               </div>
@@ -243,14 +243,14 @@ function CartView({ lines, subtotal, setQuantity, removeItem, onContinue }) {
           <span className="text-[11px] tracking-widest2 uppercase text-ink/60">
             Subtotal
           </span>
-          <span className="font-display italic text-marine text-3xl md:text-4xl leading-none">
+          <span className="font-display text-marine text-3xl md:text-4xl leading-none">
             {formatNaira(subtotal)}
           </span>
         </div>
         <button
           type="button"
           onClick={onContinue}
-          className="w-full inline-flex items-center justify-center gap-3 py-4 bg-orange-dark text-sand text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+          className="min-h-11 rounded-full w-full inline-flex items-center justify-center gap-3 py-4 bg-orange-dark text-sand text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
         >
           Continue to checkout
           <ArrowRight size={16} />
@@ -270,7 +270,7 @@ function CheckoutView({ lines, subtotal, onBack, onSubmit }) {
         <button
           type="button"
           onClick={onBack}
-          className="text-xs tracking-widest2 uppercase text-ink/60 hover:text-orange-dark transition-colors"
+          className="min-h-11 rounded-full text-xs tracking-widest2 uppercase text-ink/60 hover:text-orange-dark transition-colors"
         >
           ← Back to cart
         </button>
@@ -325,7 +325,7 @@ function CheckoutView({ lines, subtotal, onBack, onSubmit }) {
                 <span className="text-ink/50 tabular-nums mr-2">{l.quantity}×</span>
                 {l.name}
               </span>
-              <span className="font-display italic text-marine">
+              <span className="font-display text-marine">
                 {formatNaira(l.subtotal)}
               </span>
             </li>
@@ -335,7 +335,7 @@ function CheckoutView({ lines, subtotal, onBack, onSubmit }) {
           <span className="text-[11px] tracking-widest2 uppercase text-ink/60">
             Subtotal
           </span>
-          <span className="font-display italic text-marine text-2xl leading-none">
+          <span className="font-display text-marine text-2xl leading-none">
             {formatNaira(subtotal)}
           </span>
         </div>
@@ -343,7 +343,7 @@ function CheckoutView({ lines, subtotal, onBack, onSubmit }) {
 
       <button
         type="submit"
-        className="w-full inline-flex items-center justify-center gap-3 py-4 bg-orange-dark text-sand text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+        className="min-h-11 rounded-full w-full inline-flex items-center justify-center gap-3 py-4 bg-orange-dark text-sand text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
       >
         Send booking request
         <ArrowRight size={16} />
@@ -372,7 +372,7 @@ function DoneView({ reference, onClose }) {
           <p className="text-[10px] tracking-widest2 uppercase text-ink/55 mb-1">
             Reference
           </p>
-          <p className="font-display italic text-marine text-xl tabular-nums">
+          <p className="font-display text-marine text-xl tabular-nums">
             {reference}
           </p>
         </div>
@@ -380,7 +380,7 @@ function DoneView({ reference, onClose }) {
       <button
         type="button"
         onClick={onClose}
-        className="mt-8 text-xs tracking-widest2 uppercase text-orange-dark hover:text-orange transition-colors"
+        className="min-h-11 rounded-full mt-8 text-xs tracking-widest2 uppercase text-orange-dark hover:text-orange transition-colors"
       >
         Close
       </button>

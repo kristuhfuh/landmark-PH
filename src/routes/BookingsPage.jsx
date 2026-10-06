@@ -1,88 +1,38 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Ticket, BedDouble, UtensilsCrossed, Users, Cake, Waves } from 'lucide-react'
+import { ArrowRight, CalendarDays, Send, CheckCircle2 } from 'lucide-react'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
 import PatternOverlay from '../components/PatternOverlay'
 import { useContent } from '../lib/content'
+import { bookingTypes, resolveBooking, NAIRA } from '../lib/bookingTypes'
 
-const BOOKING_TYPES = [
-  {
-    key: 'walkthrough',
-    cta: 'Book Walkthrough',
-    icon: Ticket,
-    n: '01',
-    tag: 'The Flagship',
-    title: 'Upside-Down Walkthrough',
-    body: 'Timed entry into the flagship attraction — 45 minutes through every inverted room, corridor and fixture.',
-    lead: 'From ₦8,000 / person',
-    accent: 'orange',
-    image: '/flagship-upside-down.png',
-  },
-  {
-    key: 'table',
-    cta: 'Book Table',
-    icon: UtensilsCrossed,
-    n: '02',
-    tag: 'At the Table',
-    title: 'Table Booking',
-    body: 'Reserve a table at the seafood house at the centre of the ring, or the jetty restaurant along the waterfront.',
-    lead: 'No deposit · confirmed by email',
-    accent: 'marine',
-    image: '/d32f5702063e63708d194795bd491e05.jpg',
-  },
-  {
-    key: 'rooms',
-    cta: 'Reserve Room',
-    icon: BedDouble,
-    n: '03',
-    tag: 'Where you stay',
-    title: 'Rooms & Stays',
-    body: 'A limited number of shore-facing suites, green-side lofts and central studios — each within a short walk of the ring.',
-    lead: 'From ₦120k / night',
-    accent: 'orange',
-    image: '/pexels-petra-nesti-1766376-12161888.jpg',
-  },
-  {
-    key: 'daypass',
-    cta: 'Book Day Pass',
-    icon: Waves,
-    n: '04',
-    tag: 'The Waterfront',
-    title: 'Beach Club Day Pass',
-    body: 'Full-day access to the beach club, both lounges and the adult pool — with sun-lounger and towel service.',
-    lead: 'From ₦15,000 / person',
-    accent: 'marine',
-    image: '/photo-1500815845799-7748ca339f27.avif',
-  },
-  {
-    key: 'group',
-    cta: 'Plan Group Visit',
-    icon: Users,
-    n: '05',
-    tag: 'For teams',
-    title: 'Group & Corporate',
-    body: 'Grounds entry, two activities per guest and set lunch at the seafood house. Twenty guests and up, per head.',
-    lead: 'From ₦8,500 / guest',
-    accent: 'orange',
-    image: '/concert live 2.jpg',
-  },
-  {
-    key: 'birthday',
-    cta: 'Plan Event',
-    icon: Cake,
-    n: '06',
-    tag: 'Celebrations',
-    title: 'Birthday & Private Events',
-    body: 'Full day out — entry, three attractions per guest, the kids club party room for three hours, and cake.',
-    lead: 'From ₦120,000 / package',
-    accent: 'marine',
-    image: '/Splash-Park-image-1.webp',
-  },
+const BOOKING_ORDER = ['entry', 'packages', 'group', 'walkthrough', 'table', 'rooms', 'daypass', 'birthday']
+const HOW_IT_WORKS = [
+  { icon: CalendarDays, title: 'Plan your visit', body: 'Choose your ticket, package or experience, then add your preferred date and party size.' },
+  { icon: Send, title: 'Send your request', body: 'Review your visit and contact details. Your booking reference appears once your request is received.' },
+  { icon: CheckCircle2, title: 'We confirm the details', body: 'Our team will confirm availability and share payment details before your visit.' },
 ]
+
+function priceLabel(type, config, tickets, rooms) {
+  if (config.holdOnly) return 'Reservation on enquiry'
+  if (config.catalogCategory) {
+    const prices = (tickets.items || []).filter(item => item.category === config.catalogCategory && Number.isFinite(Number(item.priceNGN))).sort((a, b) => Number(a.priceNGN) - Number(b.priceNGN))
+    const lowest = prices[0]
+    return lowest ? `From ${NAIRA.format(lowest.priceNGN)} / ${lowest.priceUnit || config.unit}` : 'Contact us for availability'
+  }
+  if (type === 'rooms') {
+    const stays = (rooms.items || []).map(room => resolveBooking(config, null, room)).filter(room => room.stay)
+    const lowest = stays.length ? Math.min(...stays.map(room => room.basePrice)) : config.basePrice
+    return `From ${NAIRA.format(lowest)} / night`
+  }
+  return `From ${NAIRA.format(config.basePrice)} / ${config.unit}`
+}
 
 export default function BookingsPage() {
   const settings = useContent('siteSettings')
+  const tickets = useContent('tickets')
+  const rooms = useContent('rooms')
   const brand = settings.brand || 'Landmark'
 
   useEffect(() => {
@@ -93,196 +43,91 @@ export default function BookingsPage() {
   return (
     <div className="bg-sand text-ink min-h-screen">
       <PageNav />
-
-      {/* Hero */}
-      <section className="border-b border-ink/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-20">
-          <p className="inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
-            <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
-              00
-            </span>
-            Bookings
-          </p>
-          <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-end">
-            <div className="md:col-span-7">
-              <h1
-                className="font-display font-light leading-[0.95] tracking-tight text-ink"
-                style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
-              >
-                Reserve the visit that suits{' '}
-                <span className="italic text-marine">you.</span>
-              </h1>
-              <p className="mt-10 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
-                Pick a booking type, choose your slot, pay — the ticket lands
-                in your inbox before you close the tab.
-              </p>
-            </div>
-            <figure className="md:col-span-5">
-              <div className="aspect-[4/5] w-full overflow-hidden bg-ink/5">
-                <img
-                  src="/photo-1540541338287-41700207dee6.avif"
-                  alt="Cabana along the beach club approach"
-                  loading="eager"
-                  className="h-full w-full object-cover"
-                />
+      <main>
+        <section className="border-b border-marine-dark/10">
+          <div className="max-w-7xl mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-16 md:pb-20">
+            <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-center">
+              <div className="md:col-span-7">
+                <p className="text-orange-dark text-xs tracking-widest2 uppercase mb-6">Plan your visit</p>
+                <h1 className="font-display font-light leading-[1.02] tracking-tight text-marine-dark" style={{ fontSize: 'clamp(2.75rem, 7vw, 6rem)' }}>
+                  A day away.<br />A stay to <span className="text-marine">remember.</span>
+                </h1>
+                <p className="mt-7 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
+                  Entry tickets, thoughtful packages and visits made for your whole group. Choose how you would like to experience {brand}, and we will help with the details.
+                </p>
+                <a href="#booking-options" className="mt-8 inline-flex min-h-11 items-center gap-3 rounded-full bg-marine-dark px-6 py-3 text-sm text-sand hover:bg-marine transition-colors">Explore bookings <ArrowRight size={16} /></a>
               </div>
-              <figcaption className="mt-3 text-[10px] tracking-widest2 uppercase text-ink/55">
-                Fig. 01 · Along the waterfront
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      {/* Booking types grid */}
-      <section className="border-b border-ink/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
-          <div className="grid md:grid-cols-2 gap-x-10 gap-y-16">
-            {BOOKING_TYPES.map((b) => {
-              const Icon = b.icon
-              const isMarine = b.accent === 'marine'
-              return (
-                <article
-                  key={b.key}
-                  className="group relative border-t border-ink/15 pt-8"
-                >
-                  <div className="flex items-baseline justify-between gap-4 mb-6">
-                    <span className="font-display italic text-orange-dark text-sm tabular-nums">
-                      {b.n}
-                    </span>
-                    <span className="text-[10px] tracking-widest2 uppercase text-ink/55">
-                      {b.tag}
-                    </span>
-                  </div>
-
-                  <figure className="relative aspect-[16/10] w-full overflow-hidden bg-ink/5 mb-6">
-                    <img
-                      src={b.image}
-                      alt=""
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
-                    />
-                    <span
-                      className={`absolute top-4 left-4 h-11 w-11 border flex items-center justify-center backdrop-blur-sm ${
-                        isMarine
-                          ? 'border-sand/60 text-sand bg-marine-dark/40'
-                          : 'border-sand/70 text-sand bg-orange-dark/50'
-                      }`}
-                    >
-                      <Icon size={18} strokeWidth={1.5} />
-                    </span>
-                  </figure>
-
-                  <h2
-                    className={`font-display text-3xl md:text-4xl leading-tight mb-3 ${
-                      isMarine ? 'text-marine' : 'text-ink'
-                    }`}
-                  >
-                    {b.title}
-                  </h2>
-                  <p className="text-ink/70 leading-relaxed max-w-md mb-5">
-                    {b.body}
-                  </p>
-                  <p className="font-display italic text-orange-dark text-lg mb-6">
-                    {b.lead}
-                  </p>
-                  <Link
-                    to={`/bookings/${b.key}`}
-                    className="inline-flex items-center gap-3 border border-ink/25 px-5 py-3 text-[11px] tracking-widest2 uppercase text-ink hover:bg-orange-dark hover:text-sand hover:border-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
-                  >
-                    {b.cta}
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </article>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="relative isolate bg-marine-dark text-sand border-b border-ink/10 overflow-hidden">
-        <PatternOverlay />
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
-          <div className="grid md:grid-cols-12 gap-10 md:gap-14">
-            <div className="md:col-span-4">
-              <p className="text-orange-light text-[11px] tracking-widest2 uppercase mb-6">
-                How bookings work
-              </p>
-              <h2 className="font-display text-4xl md:text-5xl leading-tight text-sand">
-                Three quiet{' '}
-                <span className="italic text-orange-light">steps.</span>
-              </h2>
+              <figure className="md:col-span-5">
+                <div className="aspect-[4/3] md:aspect-[4/5] overflow-hidden rounded-3xl bg-marine-dark/5">
+                  <img src="/photo-1540541338287-41700207dee6.avif" alt="Palm-lined pool and cabanas at the waterfront" loading="eager" className="h-full w-full object-cover" />
+                </div>
+                <figcaption className="mt-4 text-sm text-marine-dark/65">A little time by the waterfront.</figcaption>
+              </figure>
             </div>
-            <div className="md:col-span-8 grid md:grid-cols-3 gap-10">
-              {[
-                {
-                  n: '01',
-                  title: 'Pick your slot',
-                  body: 'Date, headcount, add-ons — the summary rail updates as you go.',
-                },
-                {
-                  n: '02',
-                  title: 'Pay securely',
-                  body: 'Card handled by Paystack. Never stored on our servers, cleared in seconds.',
-                },
-                {
-                  n: '03',
-                  title: 'Arrive & show the code',
-                  body: 'Reference + QR land in your email. Show it at the gate — the host has you on the list.',
-                },
-              ].map((s) => (
-                <div key={s.n}>
-                  <p className="font-display italic text-orange-light text-lg tabular-nums mb-3">
-                    {s.n}
-                  </p>
-                  <h3 className="font-display text-2xl leading-tight text-sand mb-3">
-                    {s.title}
-                  </h3>
-                  <p className="text-sand/70 text-sm leading-relaxed">
-                    {s.body}
-                  </p>
+          </div>
+        </section>
+
+        <section id="booking-options" aria-labelledby="booking-options-title" className="scroll-mt-24 border-b border-marine-dark/10">
+          <div className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
+            <div className="mb-10 md:mb-14">
+              <p className="text-orange-dark text-xs tracking-widest2 uppercase mb-3">Your visit, your way</p>
+              <h2 id="booking-options-title" className="font-display text-3xl md:text-4xl leading-tight text-marine-dark">Find your next experience.</h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-x-10 lg:gap-x-14 gap-y-12 md:gap-y-16">
+              {BOOKING_ORDER.map(key => {
+                const booking = bookingTypes[key]
+                const Icon = booking.icon
+                return (
+                  <article key={key} className="group flex flex-col min-w-0">
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-marine-dark/5 mb-6">
+                      <img src={booking.image} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03]" />
+                      <span className="absolute top-4 left-4 h-11 w-11 rounded-full flex items-center justify-center bg-sand text-marine-dark"><Icon size={19} strokeWidth={1.5} aria-hidden="true" /></span>
+                    </div>
+                    <p className="text-xs tracking-widest2 uppercase text-marine-dark/65 mb-3">{booking.tag}</p>
+                    <h3 className="font-display text-3xl leading-tight text-marine-dark mb-3">{booking.title}</h3>
+                    <p className="text-ink/70 leading-relaxed max-w-lg mb-5">{booking.lead}</p>
+                    <div className="mt-auto">
+                      <p className="font-medium text-orange-dark mb-5">{priceLabel(key, booking, tickets, rooms)}</p>
+                      <Link to={`/bookings/${key}`} className="min-h-11 rounded-full inline-flex items-center gap-3 border border-marine-dark/25 px-6 py-3 text-sm text-marine-dark hover:bg-marine-dark hover:text-sand hover:border-marine-dark transition-colors">
+                        {booking.cta}<ArrowRight size={16} aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative isolate bg-marine-dark text-sand overflow-hidden">
+          <PatternOverlay />
+          <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
+            <p className="text-orange-light text-xs tracking-widest2 uppercase mb-4">How bookings work</p>
+            <h2 className="font-display text-3xl md:text-4xl leading-tight mb-10 md:mb-14">A few details. Then leave it with us.</h2>
+            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+              {HOW_IT_WORKS.map(({ icon: Icon, title, body }) => (
+                <div key={title} className="border-t border-sand/20 pt-6">
+                  <Icon size={23} strokeWidth={1.5} className="text-orange-light mb-5" aria-hidden="true" />
+                  <h3 className="font-display text-2xl leading-tight mb-3">{title}</h3>
+                  <p className="text-sand/75 text-sm leading-relaxed max-w-sm">{body}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA */}
-      <section>
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 md:py-32 flex flex-col md:flex-row items-start md:items-center gap-12 md:gap-16">
-          <div className="flex-1">
-            <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-6">
-              Something not on the list?
-            </p>
-            <h2 className="font-display text-4xl md:text-6xl leading-[1.05] text-ink max-w-2xl">
-              We'll build the day{' '}
-              <span className="italic text-marine">around you.</span>
-            </h2>
-            <p className="mt-6 text-ink/70 max-w-xl leading-relaxed">
-              Weddings, private takeovers, film shoots, brand activations. Tell
-              us what you're planning — we'll come back with a shape.
-            </p>
-            <div className="mt-8">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-3 text-[11px] tracking-widest2 uppercase text-orange-dark hover:text-ink transition-colors"
-              >
-                Or reach out directly →
-              </Link>
+        <section>
+          <div className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24 flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-14">
+            <div className="flex-1">
+              <p className="text-orange-dark text-xs tracking-widest2 uppercase mb-4">Something special in mind?</p>
+              <h2 className="font-display text-3xl md:text-5xl leading-tight text-marine-dark max-w-2xl">We will build the day around you.</h2>
+              <p className="mt-5 text-ink/70 max-w-xl leading-relaxed">Weddings, private takeovers, film shoots and brand activations. Tell us what you are planning, and our team will help bring it together.</p>
+              <Link to="/contact" className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm text-marine hover:text-orange-dark transition-colors">Talk to our team <ArrowRight size={16} /></Link>
             </div>
+            <Link to="/bookings/other" className="min-h-11 rounded-full inline-flex items-center gap-3 bg-orange-dark text-sand px-7 py-3 text-sm hover:bg-orange transition-colors">Plan a visit <ArrowRight size={16} aria-hidden="true" /></Link>
           </div>
-          <Link
-            to="/bookings/other"
-            className="inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
-          >
-            Plan a Visit
-            <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-      </section>
-
+        </section>
+      </main>
       <Footer />
     </div>
   )

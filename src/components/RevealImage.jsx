@@ -25,6 +25,11 @@ export default function RevealImage({
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.set(maskRef.current, { display: 'none' })
+        gsap.set(contentRef.current, { scale: 1 })
+        return
+      }
       const initialTransform = {
         right: 'translateX(0%)',
         left: 'translateX(0%)',

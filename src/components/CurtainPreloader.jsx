@@ -124,7 +124,7 @@ export default function CurtainPreloader() {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <span className="font-display italic text-marine-dark text-lg tabular-nums w-10 text-right">
+          <span className="font-display text-marine-dark text-lg tabular-nums w-10 text-right">
             {String(progress).padStart(2, '0')}
           </span>
         </div>
@@ -149,7 +149,7 @@ function BrandMark({ brand, brandSuffix, exiting }) {
       >
         {brand}
       </h1>
-      <p className="mt-4 font-display italic text-marine-dark/70 text-lg md:text-xl">
+      <p className="mt-4 font-display text-marine-dark/70 text-lg md:text-xl">
         {brandSuffix}
       </p>
     </div>

@@ -6,13 +6,13 @@ import Media from './Media'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * Editorial "big italic word over a photo" pattern. The heading is broken
+ * Editorial "large word over a photo" pattern. The heading is broken
  * into two lines that overlap the image from opposite sides — top line slides
  * in from the left over the top edge of the photo, bottom line slides in from
  * the right over the bottom edge. Photo has a subtle parallax as you scroll.
  *
  * Props:
- *   eyebrow, topLine, bottomLine (italic display), imageUrl, imageAlt,
+ *   eyebrow, topLine, bottomLine (accent colour), imageUrl, imageAlt,
  *   caption (small note below the image), align ('left' | 'right')
  */
 export default function OverlapHeading({
@@ -120,10 +120,10 @@ export default function OverlapHeading({
           {topLine}
         </h2>
 
-        {/* Bottom line — italic, overlaps the bottom edge */}
+        {/* Bottom line — accent colour, overlaps the bottom edge */}
         <h2
           ref={bottomRef}
-          className={`absolute z-10 bottom-4 md:bottom-10 right-4 ${bottomAlign} font-display italic leading-[0.85] tracking-tight text-orange-dark`}
+          className={`absolute z-10 bottom-4 md:bottom-10 right-4 ${bottomAlign} font-display leading-[0.85] tracking-tight text-orange-dark`}
           style={{ fontSize: 'clamp(3rem, 13vw, 12rem)' }}
         >
           {bottomLine}

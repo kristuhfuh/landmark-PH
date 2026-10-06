@@ -3,25 +3,17 @@ import SplitHeading from './SplitHeading'
 import RevealImage from './RevealImage'
 import Media from './Media'
 import { useContent } from '../lib/content'
+import { vendorStatus } from '../lib/vendorStatus'
 
 /**
- * "At the Table" — the F&B lineup. Each vendor slot is a numbered editorial
- * card with a status pill (Confirmed / In talks / Slot open). This keeps the
+ * "At the Table" — the F&B lineup. Each vendor slot is an editorial
+ * entry with a public status when relevant. This keeps the
  * unfinished slots honest while still reading as an intentional curation.
  */
 
 const STATUS_STYLES = {
   Confirmed: 'bg-orange-dark text-sand',
-  'In talks': 'border border-orange-dark/50 text-orange-dark',
   'Slot open': 'border border-ink/25 text-ink/60',
-}
-
-function inferStatus(v) {
-  if (v.status) return v.status
-  if (v.kind === 'Anchor' || /confirm(ed)?$/i.test(v.kind || '')) return 'Confirmed'
-  if (/talks|discussion|shortlist/i.test((v.body || '') + (v.kind || ''))) return 'In talks'
-  if (/to confirm|reserved|open|tba|tbd/i.test(v.name || '') || !v.name) return 'Slot open'
-  return 'In talks'
 }
 
 export default function FnBMarketplace() {
@@ -51,7 +43,7 @@ export default function FnBMarketplace() {
             {eyebrow}
           </p>
           <SplitHeading className="font-display text-3xl md:text-5xl mb-6">
-            {heading} <span className="italic text-marine">{headingItalic}</span>
+            {heading} <span className="text-marine">{headingItalic}</span>
           </SplitHeading>
           <p className="reveal text-ink/70 leading-relaxed max-w-md whitespace-pre-line">
             {body}
@@ -59,9 +51,9 @@ export default function FnBMarketplace() {
         </div>
 
         <div className="md:col-span-7">
-        <ol className="space-y-6">
+        <ul className="space-y-8">
           {vendors.map((v, i) => {
-            const status = inferStatus(v)
+            const status = vendorStatus(v)
             const isOpen = status === 'Slot open'
             const name = isOpen ? 'Slot held open' : v.name
             return (
@@ -70,25 +62,20 @@ export default function FnBMarketplace() {
                 className="reveal group relative border-t border-ink/15 pt-6 md:pt-8"
               >
                 <div className="flex items-start gap-6 md:gap-10">
-                  <span className="font-display italic text-orange-dark text-sm tabular-nums pt-1 w-8 shrink-0">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-baseline justify-between gap-3 mb-2">
                       <h3
                         className={`font-display text-2xl md:text-3xl leading-tight ${
-                          isOpen ? 'italic text-ink/50' : 'text-ink'
+                          isOpen ? ' text-ink/50' : 'text-ink'
                         }`}
                       >
                         {name}
                       </h3>
-                      <span
-                        className={`text-[10px] tracking-widest2 uppercase px-3 py-1 shrink-0 ${
-                          STATUS_STYLES[status] || STATUS_STYLES['In talks']
-                        }`}
-                      >
-                        {status}
-                      </span>
+                      {status && (
+                        <span className={`rounded-full text-[10px] tracking-widest2 uppercase px-3 py-1 shrink-0 ${STATUS_STYLES[status]}`}>
+                          {status}
+                        </span>
+                      )}
                     </div>
                     {v.kind && !isOpen && (
                       <p className="text-orange-dark text-xs tracking-widest2 uppercase mb-2">
@@ -106,16 +93,16 @@ export default function FnBMarketplace() {
               </li>
             )
           })}
-        </ol>
+        </ul>
         <div className="reveal mt-10 pt-6 border-t border-ink/15 flex justify-end">
           <a
             href="/things-to-do"
-            className="group inline-flex items-baseline gap-3 font-display italic text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
+            className="group inline-flex items-baseline gap-3 font-display text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
           >
             View more
             <span
               aria-hidden="true"
-              className="inline-block transition-transform duration-300 group-hover:translate-x-1 not-italic"
+              className="inline-block transition-transform duration-300 group-hover:translate-x-1"
             >
               →
             </span>

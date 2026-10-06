@@ -106,43 +106,37 @@
     "items": [
       {
         "title": "Hologram Zoo",
-        "area": "480 sqm",
         "body": "A 3D immersive experience built to put guests inside the wild, not just in front of it.",
         "imageUrl": "https://youtu.be/gMEVGQEOpkg?si=VH1iZ-kQZFMQrZVX",
         "icon": "Sparkles"
       },
       {
         "title": "Arcade & Bumper Cars",
-        "area": "517 sqm",
         "body": "Full-format arcade floor paired with a dedicated bumper car circuit.",
         "imageUrl": "https://youtu.be/tnalkG8ywT8?si=tN2Rx9zbsC8kTyUO",
         "icon": "Gamepad2"
       },
       {
         "title": "Kids Club",
-        "area": "900 sqm",
         "body": "The grounds' largest single space — supervised, self-contained, built for full-day stays.",
         "imageUrl": "/kids club.mp4",
         "icon": "Baby"
       },
       {
         "title": "Skating",
-        "area": "360 sqm",
-        "body": "A dedicated rink inside the ring — outside the original activity brief, included here because it sits directly on the phase-one footprint.",
+        "body": "A dedicated skating rink in the Ring, with space to find your rhythm.",
         "imageUrl": "/roller skating.mp4",
         "icon": "Disc3"
       },
       {
         "title": "Seafood Restaurant",
-        "area": "350 sqm",
         "body": "Sit-down dining at the centre of the ring, between the water feature and the attraction floor.",
         "imageUrl": "https://images.unsplash.com/photo-1531419925964-8c2e4bc58e63?auto=format&fit=crop&w=2000&q=80",
         "icon": "UtensilsCrossed"
       },
       {
         "title": "ATV Area",
-        "area": "900 sqm",
-        "body": "A dedicated track — also outside the original brief, flagged for the same reason as Skating.",
+        "body": "A dedicated track for an adventurous ride around the grounds.",
         "imageUrl": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=2000&q=80",
         "icon": "Car"
       }
@@ -151,11 +145,10 @@
   "green": {
     "zoneLabel": "Zone Two",
     "title": "The Green",
-    "intro": "1,860 sqm concert area anchoring an open-air adventure quarter. Scroll on to move through the rest of it.",
+    "intro": "An open-air concert lawn anchors a quarter dedicated to sport and adventure.",
     "heroImageUrl": "/concert live 2.jpg",
     "ctaLabel": "Book Court",
     "stats": [
-      { "label": "Concert lawn", "value": "1,860 sqm" },
       { "label": "Format", "value": "Open-air" },
       { "label": "Adjacent", "value": "Padel · Football" },
       { "label": "Season", "value": "Year-round" }
@@ -163,28 +156,24 @@
     "items": [
       {
         "title": "Wall Climbing & Rope Course",
-        "area": "230 sqm",
         "body": "A vertical course paired with a rope circuit — belayed, marshalled, running from opening to close.",
         "imageUrl": "/DSC05456.jpg",
         "icon": "Mountain"
       },
       {
         "title": "Padel Court",
-        "area": "Confirmed",
         "body": "A dedicated court, sited beside the football pitch on the grounds' southern edge.",
         "imageUrl": "/Padel 2.jpeg",
         "icon": "CircleDot"
       },
       {
         "title": "5-a-side Football",
-        "area": "Confirmed",
         "body": "Full-size five-a-side pitch, adjoining the padel court.",
         "imageUrl": "/Football pitch.jpg",
         "icon": "Trophy"
       },
       {
         "title": "Archery & Shooting Range",
-        "area": "220 sqm",
         "body": "A supervised range for archery and pellet — coaches on the floor for first-timers, open lanes for members.",
         "imageUrl": "/archery.jpg",
         "icon": "Target"
@@ -199,7 +188,6 @@
     "asideImage": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
     "dayPassLabel": "Book Day Pass",
     "stats": [
-      { "label": "Beach club", "value": "3,734 sqm" },
       { "label": "Lounges", "value": "Two · day & night" },
       { "label": "Pool decks", "value": "Adult · Kids" },
       { "label": "Service", "value": "Kitchen · Spa · Bar" }
@@ -228,7 +216,7 @@
       },
       {
         "title": "Cabanas & Leisure",
-        "tag": "2,050 sqm reserved along the approach",
+        "tag": "Private shade along the waterfront",
         "imageUrl": "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80"
       }
     ]
@@ -530,7 +518,6 @@
       {
         "name": "Waterfront Suite",
         "tag": "Suite · Shore-facing",
-        "size": "62 sqm",
         "guests": "2 guests",
         "priceFrom": "₦210k / night",
         "body": "A first-floor suite along the jetty approach — private balcony, direct sight-line to the open water and the beach club deck below.",
@@ -540,7 +527,6 @@
       {
         "name": "Grove Loft",
         "tag": "Loft · Green-side",
-        "size": "48 sqm",
         "guests": "2 guests",
         "priceFrom": "₦165k / night",
         "body": "Loft-style room set into the green edge of the grounds. Quieter side of the site, morning light through tall windows, steps from the courts and concert lawn.",
@@ -550,7 +536,6 @@
       {
         "name": "Ring Studio",
         "tag": "Studio · Central",
-        "size": "34 sqm",
         "guests": "2 guests",
         "priceFrom": "₦120k / night",
         "body": "Compact studio directly above the attractions ring — for guests who want to be in the middle of everything, not at the edge of it.",
@@ -560,7 +545,6 @@
       {
         "name": "Beach Cabana",
         "tag": "Cabana · Day-use",
-        "size": "22 sqm",
         "guests": "4 guests",
         "priceFrom": "₦85k / day",
         "body": "Private cabana along the beach club approach — day-use only, includes deck, shade and dedicated table service through the afternoon.",

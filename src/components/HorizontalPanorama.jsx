@@ -141,7 +141,7 @@ export default function HorizontalPanorama({
                 className="absolute z-10 max-w-xs"
                 style={{ left: `${leftPct}%`, top }}
               >
-                <span className="block font-display italic text-orange-light text-sm tabular-nums mb-2">
+                <span className="block font-display text-orange-light text-sm tabular-nums mb-2">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <h3 className="font-display text-2xl md:text-4xl leading-tight text-sand">
@@ -189,7 +189,7 @@ export default function HorizontalPanorama({
         <ol className="space-y-10">
           {chapters.map((c, i) => (
             <li key={c.title} className="border-t border-sand/15 pt-6">
-              <span className="block font-display italic text-orange-light text-sm tabular-nums mb-2">
+              <span className="block font-display text-orange-light text-sm tabular-nums mb-2">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <h3 className="font-display text-2xl leading-tight mb-2">

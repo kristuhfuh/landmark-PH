@@ -12,7 +12,7 @@ import { openBookingModal } from './BookingModal'
  * links live in the sidesheet so the top bar can breathe and stay editorial
  * at every breakpoint.
  *
- * Sidesheet: right-slide panel. Numbered nav items, active-state italic,
+ * Sidesheet: right-slide panel. Numbered nav items, active-state colour,
  * contact info block, brand watermark at the bottom. Same drawer for
  * desktop and mobile — one behaviour to reason about.
  */
@@ -129,7 +129,7 @@ export default function Navbar() {
               onClick={() => openBookingModal()}
               className={`hidden md:inline-flex border px-5 py-2 text-sm tracking-wide transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark ${
                 scrolled
-                  ? 'border-orange-dark text-orange-dark hover:bg-orange-dark hover:text-sand'
+                  ? 'min-h-11 rounded-full border-orange-dark text-orange-dark hover:bg-orange-dark hover:text-sand'
                   : 'border-orange text-orange-light hover:bg-orange hover:text-ink'
               }`}
             >
@@ -141,7 +141,7 @@ export default function Navbar() {
               aria-label="Open menu"
               aria-expanded={open}
               className={`inline-flex items-center gap-3 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark ${
-                isDark ? 'text-sand hover:text-orange-light' : 'text-ink hover:text-orange-dark'
+                isDark ? 'min-h-11 rounded-full text-sand hover:text-orange-light' : 'text-ink hover:text-orange-dark'
               }`}
             >
               <span className="hidden md:inline text-[11px] tracking-widest2 uppercase">
@@ -181,7 +181,7 @@ export default function Navbar() {
               <p className="text-orange-dark text-[11px] tracking-widest2 uppercase">
                 Explore
               </p>
-              <p className="font-display italic text-ink/60 text-sm mt-1">
+              <p className="font-display text-ink/60 text-sm mt-1">
                 {brand} · {brandSuffix}
               </p>
             </div>
@@ -190,7 +190,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close menu"
-              className="text-ink/70 hover:text-ink transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark rounded-full"
+              className="min-h-11 text-ink/70 hover:text-ink transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark rounded-full"
             >
               <X size={22} />
             </button>
@@ -215,13 +215,13 @@ export default function Navbar() {
                       transitionDelay: open ? `${100 + i * 60}ms` : '0ms',
                     }}
                   >
-                    <span className="font-display italic text-orange-dark text-xs tabular-nums w-6 shrink-0">
+                    <span className="font-display text-orange-dark text-xs tabular-nums w-6 shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <span
                       className={`font-display leading-none flex-1 transition-colors ${
                         isActive
-                          ? 'text-orange-dark italic'
+                          ? 'text-orange-dark '
                           : 'text-ink group-hover:text-orange-dark'
                       }`}
                       style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
@@ -305,7 +305,7 @@ export default function Navbar() {
                   setOpen(false)
                   openBookingModal()
                 }}
-                className="w-full inline-flex items-center justify-center gap-3 bg-orange-dark text-sand py-4 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+                className="min-h-11 rounded-full w-full inline-flex items-center justify-center gap-3 bg-orange-dark text-sand py-4 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
               >
                 {ctaLabel}
                 <span aria-hidden="true">→</span>
@@ -327,7 +327,7 @@ function CartButton({ scrolled, totalCount, onClick }) {
       type="button"
       onClick={onClick}
       aria-label={`Open cart (${totalCount} ${totalCount === 1 ? 'item' : 'items'})`}
-      className={`relative inline-flex items-center gap-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark ${tone}`}
+      className={`min-h-11 rounded-full relative inline-flex items-center gap-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark ${tone}`}
     >
       <ShoppingBag size={20} strokeWidth={1.75} />
       {totalCount > 0 && (

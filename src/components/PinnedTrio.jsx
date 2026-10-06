@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Media from './Media'
 import { useContent } from '../lib/content'
+import { vendorStatus } from '../lib/vendorStatus'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -22,16 +23,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const STATUS_STYLES = {
   Confirmed: 'bg-orange-dark text-sand',
-  'In talks': 'border border-orange-dark/50 text-orange-dark',
   'Slot open': 'border border-ink/25 text-ink/60',
-}
-
-function inferStatus(v) {
-  if (v.status) return v.status
-  if (v.kind === 'Anchor' || /confirm(ed)?$/i.test(v.kind || '')) return 'Confirmed'
-  if (/talks|discussion|shortlist/i.test((v.body || '') + (v.kind || ''))) return 'In talks'
-  if (/to confirm|reserved|open|tba|tbd/i.test(v.name || '') || !v.name) return 'Slot open'
-  return 'In talks'
 }
 
 export default function PinnedTrio() {
@@ -146,7 +138,7 @@ export default function PinnedTrio() {
       {/* DESKTOP: pinned horizontal scroll through three panels */}
       <section
         ref={outerRef}
-        className="hidden md:block relative h-screen w-full overflow-hidden"
+        className="trio-horizontal hidden md:block relative h-screen w-full overflow-hidden"
       >
         {/* Top progress rail — width scales linearly across the full pinned
             range (not per-panel), so long panels take proportionally longer
@@ -173,9 +165,6 @@ export default function PinnedTrio() {
 
         {/* Bottom panel indicator */}
         <div className="absolute bottom-6 md:bottom-8 inset-x-0 z-30 flex items-center justify-center gap-6 pointer-events-none">
-          <span className="font-display italic text-orange text-xs tabular-nums">
-            {String(activePanel + 1).padStart(2, '0')}
-          </span>
           <div className="flex items-center gap-2">
             {panels.map((p, i) => (
               <span
@@ -187,14 +176,14 @@ export default function PinnedTrio() {
               />
             ))}
           </div>
-          <span className="text-ink/60 text-xs tracking-widest2 uppercase tabular-nums">
+          <span className="text-ink/60 text-xs tracking-widest2 uppercase">
             {panels[activePanel]?.label}
           </span>
         </div>
       </section>
 
       {/* MOBILE: normal vertical stack — pinned horizontal is bad on touch. */}
-      <div className="md:hidden">
+      <div className="trio-stack md:hidden">
         <CoastPanel overlap={overlap} compact />
         <AbovePanel panorama={panorama} compact />
         <TablePanel fnb={fnb} compact />
@@ -234,7 +223,7 @@ function CoastPanel({ overlap, compact }) {
           data-trio-reveal="up"
           className="max-w-6xl w-full mx-auto text-orange-dark text-xs tracking-widest2 uppercase mb-8 md:mb-10 shrink-0 trio-anim"
         >
-          01 · {eyebrow}
+          {eyebrow}
         </p>
       )}
 
@@ -259,11 +248,11 @@ function CoastPanel({ overlap, compact }) {
           {topLine}
         </h2>
 
-        {/* Bottom line — italic, overlaps the bottom-right */}
+        {/* Bottom line — accent colour, overlaps the bottom-right */}
         <h2
           data-trio-reveal="right"
           data-trio-delay="0.45"
-          className={`absolute z-10 bottom-6 md:bottom-10 right-4 trio-anim ${bottomAlign} font-display italic leading-[0.85] tracking-tight text-orange-dark`}
+          className={`absolute z-10 bottom-6 md:bottom-10 right-4 trio-anim ${bottomAlign} font-display leading-[0.85] tracking-tight text-orange-dark`}
           style={{ fontSize: 'clamp(3rem, 11vw, 10rem)' }}
         >
           {bottomLine}
@@ -331,7 +320,7 @@ function AbovePanel({ panorama, compact }) {
         className="absolute top-8 md:top-12 left-6 md:left-12 z-10 trio-anim"
       >
         <span className="text-orange-light text-xs tracking-widest2 uppercase">
-          02 · {eyebrow}
+          {eyebrow}
         </span>
       </div>
       {heading && !compact && (
@@ -371,7 +360,7 @@ function AbovePanel({ panorama, compact }) {
                 className="absolute max-w-xs trio-anim"
                 style={{ left: `${leftPct}%`, top }}
               >
-                <span className="block font-display italic text-orange-light text-sm tabular-nums mb-2">
+                <span className="block font-display text-orange-light text-sm tabular-nums mb-2">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <h3 className="font-display text-2xl md:text-4xl leading-tight text-sand">
@@ -393,7 +382,7 @@ function AbovePanel({ panorama, compact }) {
           <ol className="space-y-8">
             {chapters.map((c, i) => (
               <li key={c.title} className="border-t border-sand/20 pt-5">
-                <span className="block font-display italic text-orange-light text-sm tabular-nums mb-2">
+                <span className="block font-display text-orange-light text-sm tabular-nums mb-2">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <h3 className="font-display text-2xl leading-tight mb-2">
@@ -433,11 +422,11 @@ function TablePanel({ fnb, compact }) {
       data-trio-panel
       className={`${outer} ${height} bg-sand text-ink relative overflow-hidden flex items-center`}
     >
-      <div className="max-w-6xl mx-auto w-full px-6 md:px-12 grid md:grid-cols-12 gap-8 md:gap-14 items-center">
+      <div className="max-w-6xl mx-auto w-full px-6 md:px-12 py-12 md:py-8 grid md:grid-cols-12 gap-10 md:gap-14 items-center">
         <div className="md:col-span-5">
           <div
             data-trio-reveal="scale"
-            className="relative w-full aspect-[4/5] overflow-hidden mb-6 shadow-2xl shadow-marine-dark/20 trio-anim"
+            className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-6 border border-ink/10 trio-anim"
           >
             <Media
               src={imageUrl}
@@ -450,14 +439,14 @@ function TablePanel({ fnb, compact }) {
             data-trio-delay="0.15"
             className="text-orange-dark text-xs tracking-widest2 uppercase mb-3 trio-anim"
           >
-            03 · {eyebrow}
+            {eyebrow}
           </p>
           <h2
             data-trio-reveal="up"
             data-trio-delay="0.25"
             className="font-display text-3xl md:text-4xl mb-4 leading-tight trio-anim"
           >
-            {heading} <span className="italic text-marine">{italic}</span>
+            {heading} <span className="text-marine">{italic}</span>
           </h2>
           <p
             data-trio-reveal="up"
@@ -468,9 +457,9 @@ function TablePanel({ fnb, compact }) {
           </p>
         </div>
 
-        <ol className="md:col-span-7 space-y-4 max-h-[75vh] overflow-y-auto pr-2">
+        <ul className={`md:col-span-7 space-y-6 ${compact ? 'py-8' : 'max-h-[75vh] overflow-y-auto pr-2'}`}>
           {vendors.map((v, i) => {
-            const status = inferStatus(v)
+            const status = vendorStatus(v)
             const isOpen = status === 'Slot open'
             const name = isOpen ? 'Slot held open' : v.name
             return (
@@ -481,25 +470,20 @@ function TablePanel({ fnb, compact }) {
                 className="border-t border-ink/15 pt-4 trio-anim"
               >
                 <div className="flex items-baseline gap-5 md:gap-8">
-                  <span className="font-display italic text-orange-dark text-sm tabular-nums pt-1 w-8 shrink-0">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-baseline justify-between gap-3 mb-1">
                       <h3
                         className={`font-display text-xl md:text-2xl leading-tight ${
-                          isOpen ? 'italic text-ink/50' : 'text-ink'
+                          isOpen ? ' text-ink/50' : 'text-ink'
                         }`}
                       >
                         {name}
                       </h3>
-                      <span
-                        className={`text-[10px] tracking-widest2 uppercase px-3 py-1 shrink-0 ${
-                          STATUS_STYLES[status] || STATUS_STYLES['In talks']
-                        }`}
-                      >
-                        {status}
-                      </span>
+                      {status && (
+                        <span className={`rounded-full text-[10px] tracking-widest2 uppercase px-3 py-1 shrink-0 ${STATUS_STYLES[status]}`}>
+                          {status}
+                        </span>
+                      )}
                     </div>
                     {v.kind && !isOpen && (
                       <p className="text-orange-dark text-[10px] tracking-widest2 uppercase mb-1.5">
@@ -517,7 +501,7 @@ function TablePanel({ fnb, compact }) {
               </li>
             )
           })}
-        </ol>
+        </ul>
       </div>
     </section>
   )

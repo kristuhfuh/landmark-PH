@@ -13,7 +13,6 @@ import PinnedTrio from './components/PinnedTrio'
 import LandmarkOfferings from './components/LandmarkOfferings'
 import LaunchCTA from './components/LaunchCTA'
 import Footer from './components/Footer'
-import PaletteInjector from './components/PaletteInjector'
 import StickyZoneLabel from './components/StickyZoneLabel'
 import CustomCursor from './components/CustomCursor'
 import CurtainPreloader from './components/CurtainPreloader'
@@ -39,6 +38,7 @@ export default function App() {
     hero.backgroundImage || '/hero.jpg'
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const ctx = gsap.context(() => {
       // Parallax: image translates upward within its sticky frame as the
       // user scrolls, so the hero photo feels like it scrolls with the page
@@ -95,7 +95,6 @@ export default function App() {
   return (
     <CartProvider>
     <div className="relative">
-      <PaletteInjector />
       <CurtainPreloader />
       <CustomCursor />
       <CartDrawer />

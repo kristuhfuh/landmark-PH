@@ -9,8 +9,7 @@ gsap.registerPlugin(ScrollTrigger)
  * element scrolls into view. Non-numeric strings (e.g. "Confirmed") pass
  * through unchanged.
  *
- * Extracts an optional numeric prefix from strings like "480 sqm" or
- * "1,860 sqm" and animates just the number, preserving the suffix.
+ * Extracts an optional numeric prefix from strings like "45 min" and animates just the number, preserving the suffix.
  */
 export default function CountUp({ value, className = '' }) {
   const ref = useRef(null)

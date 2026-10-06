@@ -242,7 +242,7 @@ export default function ZoneRing() {
                   type="button"
                   onClick={() => setActive(i)}
                   aria-current={isActive ? 'true' : undefined}
-                  className="group relative flex items-center gap-4 py-1.5 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-light !rounded-none"
+                  className="min-h-11 group relative flex items-center gap-4 py-1.5 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-light rounded-full"
                 >
                   <span
                     aria-hidden="true"

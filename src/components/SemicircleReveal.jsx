@@ -30,6 +30,12 @@ export default function SemicircleReveal({
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.set(imageRef.current, { scale: 1, opacity: 1 })
+        gsap.set(circleRef.current, { scale: 1, opacity: 1 })
+        gsap.set(headingRef.current, { yPercent: 0, opacity: 1 })
+        return
+      }
       // Initial states — set explicitly so the image is always visible even
       // before scroll triggers fire (defensive against layout-timing bugs
       // when other pinned sections sit above this one in the flow).

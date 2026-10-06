@@ -54,10 +54,7 @@ export default function LandmarkOfferings() {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-12 gap-10 items-end mb-14 md:mb-20">
           <div className="md:col-span-7">
-            <p className="reveal inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-6">
-              <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
-                08
-              </span>
+            <p className="reveal text-orange-dark text-xs tracking-widest2 uppercase mb-6">
               Across the Landmark Group
             </p>
             <h2
@@ -65,7 +62,7 @@ export default function LandmarkOfferings() {
               style={{ fontSize: 'clamp(2.25rem, 5.5vw, 4.5rem)' }}
             >
               More than one{' '}
-              <span className="italic text-marine">destination.</span>
+              <span className="text-marine">destination.</span>
             </h2>
           </div>
           <p className="reveal md:col-span-5 text-ink/65 text-base md:text-right leading-relaxed">

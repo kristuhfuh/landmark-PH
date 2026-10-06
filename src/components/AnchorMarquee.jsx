@@ -28,7 +28,7 @@ export default function AnchorMarquee({
         {[...items, ...items].map((text, i) => (
           <span
             key={i}
-            className="font-display italic text-3xl md:text-5xl text-marine-dark/35 pr-8 md:pr-12 tracking-tight"
+            className="font-display text-3xl md:text-5xl text-marine-dark/35 pr-8 md:pr-12 tracking-tight"
           >
             {text}
           </span>

@@ -8,7 +8,7 @@ import { useContent } from '../lib/content'
 /**
  * Browse page for all rooms. Translates the reference's "accommodation
  * list" pattern into the Landmark idiom (Instrument Serif italics,
- * sand/marine/orange-dark, numbered eyebrows, 16px radii).
+ * sand/marine/orange-dark, uppercase eyebrows, 16px radii).
  *
  * Row structure, left -> right:
  *   image (with corner chip) | details column | features + price + CTA
@@ -54,10 +54,7 @@ export default function RoomsPage() {
       {/* Hero */}
       <section className="border-b border-ink/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-14 md:pb-16">
-          <p className="inline-flex items-center gap-4 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
-            <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
-              00
-            </span>
+          <p className="text-orange-dark text-xs tracking-widest2 uppercase mb-10">
             Where you stay
           </p>
 
@@ -68,7 +65,7 @@ export default function RoomsPage() {
                 style={{ fontSize: 'clamp(2.75rem, 8vw, 6rem)' }}
               >
                 Rooms held close to the{' '}
-                <span className="italic text-marine">water.</span>
+                <span className="text-marine">water.</span>
               </h1>
               <p className="mt-8 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
                 {rooms.body ||
@@ -76,7 +73,7 @@ export default function RoomsPage() {
               </p>
             </div>
             <p className="md:col-span-5 text-ink/60 text-sm md:text-right leading-relaxed">
-              {items.length} rooms · prices from <span className="font-display italic text-marine text-base">₦85k</span>
+              {items.length} rooms · prices from <span className="font-display text-marine text-base">₦85k</span>
             </p>
           </div>
 
@@ -93,7 +90,7 @@ export default function RoomsPage() {
                   aria-pressed={active}
                   className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] tracking-widest2 uppercase border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${
                     active
-                      ? 'bg-ink text-sand border-ink'
+                      ? 'min-h-11 rounded-full bg-ink text-sand border-ink'
                       : 'text-ink/70 border-ink/20 hover:border-orange-dark hover:text-orange-dark'
                   }`}
                 >
@@ -118,7 +115,7 @@ export default function RoomsPage() {
               return (
                 <li
                   key={room.name}
-                  className="bg-white border border-ink/10 rounded-[16px] overflow-hidden grid md:grid-cols-12 shadow-[0_1px_2px_rgba(0,5,41,0.03)]"
+                  className="bg-white border border-marine-dark/15 rounded-[16px] overflow-hidden grid md:grid-cols-12 shadow-[0_6px_20px_-10px_rgba(0,5,41,0.15)]"
                 >
                   {/* Image */}
                   <div className="relative md:col-span-4 aspect-[4/3] md:aspect-auto md:min-h-[260px]">
@@ -148,7 +145,6 @@ export default function RoomsPage() {
                     </p>
 
                     <dl className="grid grid-cols-2 gap-y-3 gap-x-6 text-sm">
-                      <SpecRow label="Size" value={room.size} />
                       <SpecRow label="Guests" value={room.guests} />
                       <SpecRow label="Rooms" value="1" />
                       <SpecRow label="Wi-Fi" value="Fibre" />
@@ -175,14 +171,14 @@ export default function RoomsPage() {
                         From
                       </p>
                       <p
-                        className="font-display italic text-marine leading-none mb-5"
+                        className="font-display text-marine leading-none mb-5"
                         style={{ fontSize: 'clamp(1.5rem, 2.2vw, 2rem)' }}
                       >
                         {room.priceFrom}
                       </p>
                       <Link
                         to={`/bookings/rooms?room=${slug}`}
-                        className="w-full inline-flex items-center justify-center gap-3 bg-marine text-sand rounded-[16px] px-5 py-3 text-xs tracking-widest2 uppercase hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marine"
+                        className="min-h-11 w-full inline-flex items-center justify-center gap-3 bg-marine text-sand rounded-full px-5 py-3 text-xs tracking-widest2 uppercase hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marine"
                       >
                         Reserve Room
                         <span aria-hidden="true">→</span>
@@ -214,7 +210,7 @@ function SpecRow({ label, value }) {
       <dt className="text-[10px] tracking-widest2 uppercase text-ink/50 mb-0.5">
         {label}
       </dt>
-      <dd className="font-display italic text-marine text-base leading-tight">
+      <dd className="font-display text-marine text-base leading-tight">
         {value}
       </dd>
     </div>

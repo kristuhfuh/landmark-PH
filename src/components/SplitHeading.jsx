@@ -23,6 +23,7 @@ export default function SplitHeading({
 
   useEffect(() => {
     if (!ref.current) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const ctx = gsap.context(() => {
       const split = new SplitText(ref.current, { type: splitBy })
       const targets = splitBy === 'chars' ? split.chars : split.words

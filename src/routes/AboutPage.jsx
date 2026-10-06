@@ -33,7 +33,6 @@ const TIMELINE = [
 
 const STATS = [
   { value: '9', label: 'Quarters across the grounds' },
-  { value: '3,734', label: 'sqm — the Beach Club footprint' },
   { value: '45m', label: 'Flagship walkthrough duration' },
   { value: '10%', label: 'Citizen savings on every ticket' },
 ]
@@ -54,10 +53,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative border-b border-ink/10">
         <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-24">
-          <p className="inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-10">
-            <span className="font-display italic text-orange-dark/90 text-base tabular-nums">
-              00
-            </span>
+          <p className="text-orange-dark text-xs tracking-widest2 uppercase mb-10">
             About the grounds
           </p>
 
@@ -68,7 +64,7 @@ export default function AboutPage() {
                 style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
               >
                 A waterfront quarter, held together by{' '}
-                <span className="italic text-marine">one long walk.</span>
+                <span className="text-marine">one long walk.</span>
               </h1>
 
               <p className="mt-10 max-w-xl text-ink/70 text-base md:text-lg leading-relaxed">
@@ -91,7 +87,7 @@ export default function AboutPage() {
               </div>
               <figcaption className="mt-3 flex items-baseline justify-between text-[10px] tracking-widest2 uppercase text-ink/55">
                 <span>Fig. 01</span>
-                <span className="font-display italic normal-case tracking-normal text-ink/70">
+                <span className="font-display normal-case tracking-normal text-ink/70">
                   From above
                 </span>
               </figcaption>
@@ -103,7 +99,7 @@ export default function AboutPage() {
         <div className="pointer-events-none overflow-hidden">
           <p
             aria-hidden="true"
-            className="font-display italic text-orange-dark/10 leading-none whitespace-nowrap select-none px-6 md:px-10"
+            className="font-display text-orange-dark/10 leading-none whitespace-nowrap select-none px-6 md:px-10"
             style={{ fontSize: 'clamp(6rem, 22vw, 22rem)' }}
           >
             {brand}.
@@ -125,7 +121,7 @@ export default function AboutPage() {
             </div>
             <figcaption className="mt-4 flex flex-wrap items-baseline justify-between gap-3 text-[10px] tracking-widest2 uppercase text-ink/55">
               <span>Fig. 02 · The approach from the shore</span>
-              <span className="font-display italic normal-case tracking-normal text-ink/70">
+              <span className="font-display normal-case tracking-normal text-ink/70">
                 Photography · on-site
               </span>
             </figcaption>
@@ -143,13 +139,13 @@ export default function AboutPage() {
               </p>
               <h2 className="font-display text-4xl md:text-5xl leading-tight text-marine">
                 Three principles behind every{' '}
-                <span className="italic">decision.</span>
+                <span>decision.</span>
               </h2>
             </div>
             <div className="md:col-span-8 space-y-14">
               {PRINCIPLES.map((p) => (
                 <article key={p.n}>
-                  <span className="font-display italic text-orange-dark text-sm tabular-nums block mb-4">
+                  <span className="font-display text-orange-dark text-sm tabular-nums block mb-4">
                     {p.n}
                   </span>
                   <h3 className="font-display text-2xl md:text-3xl text-marine mb-3 leading-tight">
@@ -199,10 +195,10 @@ export default function AboutPage() {
           <p className="text-orange-light text-[11px] tracking-widest2 uppercase mb-10">
             By the numbers
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-10">
+          <div className="grid sm:grid-cols-3 gap-y-10 gap-x-10">
             {STATS.map((s, i) => (
               <div key={s.label} className="border-t border-sand/20 pt-6">
-                <p className="font-display italic text-orange-light text-xs tabular-nums mb-3">
+                <p className="font-display text-orange-light text-xs tabular-nums mb-3">
                   {String(i + 1).padStart(2, '0')}
                 </p>
                 <p
@@ -228,7 +224,7 @@ export default function AboutPage() {
           </p>
           <h2 className="font-display text-4xl md:text-5xl leading-tight text-marine mb-14 max-w-3xl">
             From commissioned concept to open{' '}
-            <span className="italic">grounds.</span>
+            <span>grounds.</span>
           </h2>
 
           <ol className="relative border-l border-ink/15 pl-8 md:pl-10 space-y-10">
@@ -239,7 +235,7 @@ export default function AboutPage() {
                   className="absolute -left-[41px] md:-left-[45px] top-1.5 h-2.5 w-2.5 rounded-full bg-orange-dark ring-4 ring-sand"
                 />
                 <div className="flex flex-col md:flex-row md:items-baseline md:gap-8">
-                  <p className="font-display italic text-orange-dark text-xl md:text-2xl tabular-nums w-24 shrink-0">
+                  <p className="font-display text-orange-dark text-xl md:text-2xl tabular-nums w-24 shrink-0">
                     {t.year}
                   </p>
                   <p className="text-ink/80 font-display text-2xl md:text-3xl leading-tight">
@@ -264,12 +260,12 @@ export default function AboutPage() {
             </p>
             <h2 className="font-display text-4xl md:text-6xl leading-[1.05] text-ink max-w-2xl">
               Plan your first walk-through with{' '}
-              <span className="italic text-marine">us.</span>
+              <span className="text-marine">us.</span>
             </h2>
           </div>
           <Link
             to="/bookings/walkthrough"
-            className="inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+            className="min-h-11 rounded-full inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
           >
             Book Walkthrough
             <span aria-hidden="true">→</span>

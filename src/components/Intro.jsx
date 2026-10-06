@@ -25,6 +25,12 @@ export default function Intro() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.set(pillRef.current, { width: '100%', height: 'auto' })
+        gsap.set(contentRef.current, { opacity: 1 })
+        gsap.set(archRef.current, { opacity: 1 })
+        return
+      }
       // Big-worm morph. The head (top) stays a perfect semicircle at every
       // width — top corners' radii sit at 9999px permanently so CSS
       // auto-clamps them to half the width. The animation happens over a
@@ -110,7 +116,7 @@ export default function Intro() {
       ref={ref}
       className="relative -mt-[35vh] pt-0 pb-0 overflow-hidden"
     >
-      <div className="relative flex items-start justify-center min-h-[200vh]">
+      <div className="concept-body relative flex items-start justify-center min-h-[200vh]">
         {/* Sand backdrop behind the pill's lower portion so, once expanded,
             it hands off cleanly into the sand-coloured flagship section. */}
         <div className="absolute inset-x-0 bottom-0 h-[45vh] bg-sand -z-10 pointer-events-none" />
@@ -163,11 +169,10 @@ export default function Intro() {
 
           <div
             ref={contentRef}
-            className="h-full flex flex-col justify-center pt-[14vh] md:pt-[16vh] pb-8 md:pb-10 px-6 md:px-10 relative z-10"
+            className="concept-copy h-full flex flex-col justify-center pt-[14vh] md:pt-[16vh] pb-8 md:pb-10 px-6 md:px-10 relative z-10"
           >
             <div className="max-w-5xl mx-auto text-center mb-16 md:mb-20">
-              <p className="reveal inline-flex items-center gap-3 text-orange-dark text-xs tracking-widest2 uppercase mb-8">
-                <span className="font-display italic text-orange-dark/90 text-base tabular-nums">01</span>
+              <p className="reveal text-orange-dark text-xs tracking-widest2 uppercase mb-8">
                 {eyebrow}
               </p>
               <h2
@@ -175,7 +180,7 @@ export default function Intro() {
                 className="font-display text-3xl md:text-5xl leading-tight text-ink"
               >
                 {headingText}
-                <span className="italic text-marine"> {headingItalic}</span>
+                <span className="text-marine"> {headingItalic}</span>
               </h2>
             </div>
 
@@ -195,7 +200,7 @@ export default function Intro() {
                       className={`reveal ${layouts[i] || 'md:col-span-6'}`}
                     >
                       <div className="flex items-baseline gap-4 mb-4">
-                        <span className="font-display italic text-orange-dark text-base tabular-nums">
+                        <span className="font-display text-orange-dark text-base tabular-nums">
                           {String(i + 1).padStart(2, '0')}
                         </span>
                         <span className="h-px flex-1 bg-ink/15" />
@@ -221,12 +226,12 @@ export default function Intro() {
               </p>
               <a
                 href="#the-flagship"
-                className="group inline-flex items-baseline gap-3 font-display italic text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+                className="group inline-flex items-baseline gap-3 font-display text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
               >
                 Read on
                 <span
                   aria-hidden="true"
-                  className="inline-block transition-transform duration-300 group-hover:translate-x-1 not-italic"
+                  className="inline-block transition-transform duration-300 group-hover:translate-x-1"
                 >
                   →
                 </span>

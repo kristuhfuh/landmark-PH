@@ -16,6 +16,8 @@
  */
 
 const KNOWN_TYPES = new Set([
+  'entry',
+  'packages',
   'walkthrough',
   'table',
   'rooms',
@@ -27,6 +29,9 @@ const KNOWN_TYPES = new Set([
 ])
 
 const ALIASES = {
+  package: 'packages',
+  'entry-ticket': 'entry',
+  'group-booking': 'group',
   membership: 'other',
   stay: 'rooms',
   dining: 'table',

@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react'
 import staticContent from '../content.json'
+import { publicContent } from './publicContent'
 
 /**
  * Client-side content store.
@@ -17,7 +18,8 @@ import staticContent from '../content.json'
 // and requests become `/api/...`. Locally, default to the dev API on :4000.
 const API_BASE = (import.meta.env?.VITE_API_URL ?? (import.meta.env?.DEV ? 'http://localhost:4000' : '')).replace(/\/+$/, '')
 
-let current = staticContent
+const baseline = publicContent(staticContent)
+let current = baseline
 const listeners = new Set()
 
 function subscribe(fn) {
@@ -35,7 +37,7 @@ async function hydrate() {
     const remote = await res.json()
     // Shallow merge with the static baseline so sections the API doesn't
     // return yet (e.g. brand-new keys during dev) still resolve.
-    current = { ...staticContent, ...remote }
+    current = publicContent({ ...baseline, ...remote })
     listeners.forEach((fn) => fn())
   } catch (err) {
     if (import.meta.env?.DEV) {

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Instagram, Facebook, Youtube, Linkedin, ArrowRight, Check } from 'lucide-react'
+import { Instagram, Facebook, Youtube, Linkedin, ArrowRight, Check, Phone, Mail } from 'lucide-react'
 import { useContent } from '../lib/content'
 
 const EXPLORE_LINKS = [
@@ -12,6 +12,9 @@ const EXPLORE_LINKS = [
 
 const EXPERIENCES_LINKS = [
   { label: 'Things to Do', href: '/things-to-do' },
+  { label: 'Entry tickets', href: '/bookings/entry' },
+  { label: 'Packages', href: '/bookings/packages' },
+  { label: 'Group booking', href: '/bookings/group' },
   { label: 'Reserve Room', href: '/bookings/rooms' },
   { label: 'Book Day Pass', href: '/bookings/daypass' },
   { label: 'Book Walkthrough', href: '/bookings/walkthrough' },
@@ -42,6 +45,11 @@ export default function Footer() {
   const settings = useContent('siteSettings')
   const brand = settings.brand || 'Landmark'
   const brandSuffix = settings.brandSuffix || 'Port Harcourt'
+  const contact = settings.contact || {}
+  const phone = contact.phone || '+234 000 000 0000'
+  const contactEmail = contact.email || 'hello@landmark-portharcourt.ng'
+  const address = contact.addressLines?.length ? contact.addressLines : ['Landmark Village', 'Port Harcourt', 'Rivers State, Nigeria']
+  const hours = contact.hoursLines?.length ? contact.hoursLines : ['Sun – Thu · 10am – 11pm', 'Fri – Sat · 10am – 1am']
   const [email, setEmail] = useState('')
   const [accepted, setAccepted] = useState(false)
   const [subscribed, setSubscribed] = useState(false)
@@ -77,12 +85,12 @@ export default function Footer() {
             </p>
 
             {subscribed ? (
-              <div className="max-w-md border border-orange-dark/40 bg-white/60 px-5 py-4 flex items-start gap-3 text-sm text-marine-dark p-124">
-                <span className="mt-0.5 h-full w-6 rounded-16px border-orange-dark/50 flex items-center justify-center shrink-0">
+              <div className="max-w-md rounded-2xl border border-marine-dark/15 bg-white/60 px-5 py-4 flex items-start gap-3 text-sm text-marine-dark">
+                <span className="mt-0.5 h-6 w-6 rounded-full border border-marine-dark/20 flex items-center justify-center shrink-0">
                   <Check size={14} className="text-orange-dark" />
                 </span>
                 <div>
-                  <p className="font-display italic text-base leading-tight mb-1">
+                  <p className="font-display text-base leading-tight mb-1">
                     You're on the list.
                   </p>
                   <p className="text-marine-dark/70 text-xs leading-relaxed">
@@ -110,7 +118,7 @@ export default function Footer() {
 
                 <form
                   onSubmit={handleSubscribe}
-                  className="flex max-w-md overflow-hidden border border-marine-dark/20 bg-white"
+                  className="flex flex-col sm:flex-row gap-2 max-w-md rounded-2xl sm:rounded-full border border-marine-dark/20 bg-sand p-2"
                 >
                   <input
                     type="email"
@@ -118,12 +126,14 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="flex-1 px-4 py-3 bg-transparent text-sm text-marine-dark placeholder:text-marine-dark/40 outline-none"
+                    aria-label="Email address"
+                    autoComplete="email"
+                    className="min-w-0 flex-1 rounded-full px-4 py-3 bg-transparent text-sm text-marine-dark placeholder:text-marine-dark/40 outline-none"
                   />
                   <button
                     type="submit"
                     disabled={!accepted}
-                    className="rounded- px-5 py-3 bg-orange text-white text-sm font-medium hover:bg-orange-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+                    className="min-h-11 rounded-full px-5 py-3 bg-marine-dark text-sand text-sm font-medium hover:bg-marine transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
                   >
                     Subscribe
                     <ArrowRight size={14} />
@@ -139,7 +149,7 @@ export default function Footer() {
                   <a
                     href={href}
                     aria-label={label}
-                    className="h-10 w-10 rounded-full border border-marine-dark/25 flex items-center justify-center text-marine-dark hover:border-orange-dark hover:text-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+                    className="h-11 w-11 rounded-full border border-marine-dark/25 flex items-center justify-center text-marine-dark hover:border-orange-dark hover:text-orange-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
                   >
                     <Icon size={16} strokeWidth={1.5} />
                   </a>
@@ -153,6 +163,24 @@ export default function Footer() {
           <FooterColumn title="Experiences" links={EXPERIENCES_LINKS} className="md:col-span-2" />
           <FooterColumn title="Landmark" links={LANDMARK_LINKS} className="md:col-span-2" />
         </div>
+
+        <dl aria-label="Contact information" className="mt-12 md:mt-16 grid gap-8 md:grid-cols-[1fr_1.4fr_1fr] md:gap-12 border-t border-marine-dark/15 pt-8 md:pt-10">
+          <div className="min-w-0">
+            <dt className="text-xs tracking-widest2 uppercase text-orange-dark mb-3">Address</dt>
+            <dd className="text-sm leading-relaxed"><address className="not-italic">{address.map(line => <div key={line}>{line}</div>)}</address></dd>
+          </div>
+          <div className="min-w-0">
+            <dt className="text-xs tracking-widest2 uppercase text-orange-dark mb-3">Direct</dt>
+            <dd className="flex flex-col items-start gap-2 text-sm">
+              <a href={`tel:${phone.replace(/\s+/g, '')}`} className="inline-flex min-h-11 items-center gap-3 hover:text-orange-dark transition-colors"><Phone size={16} strokeWidth={1.5} aria-hidden="true" className="shrink-0" /><span>{phone}</span></a>
+              <a href={`mailto:${contactEmail}`} className="inline-flex min-h-11 max-w-full items-center gap-3 hover:text-orange-dark transition-colors"><Mail size={16} strokeWidth={1.5} aria-hidden="true" className="shrink-0" /><span className="min-w-0 break-words">{contactEmail}</span></a>
+            </dd>
+          </div>
+          <div className="min-w-0">
+            <dt className="text-xs tracking-widest2 uppercase text-orange-dark mb-3">Hours</dt>
+            <dd className="text-sm leading-relaxed space-y-1">{hours.map(line => <div key={line}>{line}</div>)}</dd>
+          </div>
+        </dl>
       </div>
 
       <div className="border-t border-marine-dark/15">

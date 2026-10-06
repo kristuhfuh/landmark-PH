@@ -8,7 +8,7 @@ const ZONES = [
   { id: 'the-waterfront', label: 'Zone Three · The Waterfront' },
   { id: 'table', label: 'At the Table' },
   { id: 'sitemap', label: 'Site Map' },
-  { id: 'visit', label: 'Plan a Visit' },
+  { id: 'visit', label: 'FAQs' },
 ]
 
 /**

@@ -162,7 +162,7 @@ export default function DragGallery({ items }) {
               aria-label={`Show ${it.title}`}
               onClick={() => goToIndex(i)}
               className={`h-1 transition-all duration-500 rounded-full ${
-                i === activeIndex ? 'w-8 bg-orange-dark' : 'w-3 bg-ink/25 hover:bg-ink/50'
+                i === activeIndex ? 'rounded-full w-8 bg-orange-dark' : 'w-3 bg-ink/25 hover:bg-ink/50'
               }`}
             />
           ))}
@@ -173,21 +173,21 @@ export default function DragGallery({ items }) {
           <button
             onClick={() => setPlaying((p) => !p)}
             aria-label={playing ? 'Pause slideshow' : 'Play slideshow'}
-            className="h-10 w-10 flex items-center justify-center border border-ink/30 text-ink/70 hover:border-orange-dark hover:text-orange-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark transition-colors"
+            className="min-h-11 rounded-full h-10 w-10 flex items-center justify-center border border-ink/30 text-ink/70 hover:border-orange-dark hover:text-orange-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark transition-colors"
           >
             {playing ? <Pause size={16} /> : <Play size={16} />}
           </button>
           <button
             onClick={() => scrollByAmount(-1)}
             aria-label="Previous"
-            className="h-10 w-10 flex items-center justify-center border border-ink/30 text-ink/70 hover:border-orange-dark hover:text-orange-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark transition-colors"
+            className="min-h-11 rounded-full h-10 w-10 flex items-center justify-center border border-ink/30 text-ink/70 hover:border-orange-dark hover:text-orange-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark transition-colors"
           >
             <ChevronLeft size={18} />
           </button>
           <button
             onClick={() => scrollByAmount(1)}
             aria-label="Next"
-            className="h-10 w-10 flex items-center justify-center border border-ink/30 text-ink/70 hover:border-orange-dark hover:text-orange-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark transition-colors"
+            className="min-h-11 rounded-full h-10 w-10 flex items-center justify-center border border-ink/30 text-ink/70 hover:border-orange-dark hover:text-orange-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark transition-colors"
           >
             <ChevronRight size={18} />
           </button>

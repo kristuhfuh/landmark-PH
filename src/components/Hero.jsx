@@ -16,6 +16,7 @@ export default function Hero() {
   const badge = hero.badge || 'Now open'
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const ctx = gsap.context(() => {
       gsap.from('.hero-rise', {
         opacity: 0,
@@ -51,11 +52,11 @@ export default function Hero() {
       ref={sectionRef}
       className="relative h-[140svh] md:h-[200svh] w-full"
     >
-      {/* Italic script watermark — sits behind the main heading, a big
+      {/* Ambient wordmark — sits behind the main heading, a big
           ambient word that echoes the resort's spirit. */}
       <span
         aria-hidden="true"
-        className="hero-rise absolute inset-x-0 top-[38%] md:top-[32%] -translate-y-1/2 text-center font-display italic text-sand/[0.08] pointer-events-none select-none leading-none whitespace-nowrap"
+        className="hero-rise absolute inset-x-0 top-[38%] md:top-[32%] -translate-y-1/2 text-center font-display text-sand/[0.08] pointer-events-none select-none leading-none whitespace-nowrap"
         style={{ fontSize: 'clamp(10rem, 32vw, 24rem)' }}
       >
         {watermark}
@@ -81,13 +82,13 @@ export default function Hero() {
         >
           {line1}
           <br />
-          <span className="italic text-orange-light font-normal">{line2}</span>
+          <span className="text-orange-light font-normal">{line2}</span>
         </h1>
 
         <div className="hero-rise mt-12">
           <a
             href={ctaHref}
-            className="inline-flex items-center gap-3 bg-orange-dark text-sand px-9 py-4 text-xs md:text-sm tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-light"
+            className="min-h-11 rounded-full inline-flex items-center gap-3 bg-orange-dark text-sand px-9 py-4 text-xs md:text-sm tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-light"
           >
             {ctaLabel}
             <span aria-hidden="true">→</span>
@@ -109,7 +110,7 @@ export default function Hero() {
       {/* Bottom-left location marker — a small "you are here" beat that adds
           editorial specificity to the hero. */}
       <div className="absolute bottom-8 left-6 md:left-10 z-10 hidden sm:flex flex-col text-sand/60 text-[11px] tracking-widest2 uppercase">
-        <span className="font-display italic text-sand/80 text-base normal-case tracking-normal">
+        <span className="font-display text-sand/80 text-base normal-case tracking-normal">
           04.75° N · 07.00° E
         </span>
         <span className="mt-1">Port Harcourt · Rivers</span>

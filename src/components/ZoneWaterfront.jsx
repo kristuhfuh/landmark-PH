@@ -26,7 +26,6 @@ export default function ZoneWaterfront() {
   const callout = waterfront.callout || ''
   const gallery = waterfront.gallery || []
   const stats = waterfront.stats || [
-    { label: 'Beach club', value: '3,734 sqm' },
     { label: 'Lounges', value: 'Two (day & night)' },
     { label: 'Pool decks', value: 'Adult · Kids' },
     { label: 'Service', value: 'Kitchen · Spa · Bar' },
@@ -73,7 +72,7 @@ export default function ZoneWaterfront() {
                 <dt className="text-orange-dark/80 text-[10px] tracking-widest2 uppercase mb-1.5">
                   {s.label}
                 </dt>
-                <dd className="font-display italic text-marine text-lg md:text-xl leading-tight">
+                <dd className="font-display text-marine text-lg md:text-xl leading-tight">
                   {s.value}
                 </dd>
               </div>
@@ -83,7 +82,7 @@ export default function ZoneWaterfront() {
           <button
             type="button"
             onClick={() => openBookingModal('daypass')}
-            className="reveal inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+            className="min-h-11 rounded-full reveal inline-flex items-center gap-3 bg-orange-dark text-sand px-8 py-3.5 text-xs tracking-widest2 uppercase hover:bg-orange transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
           >
             {dayPassLabel}
             <span aria-hidden="true">→</span>
@@ -94,7 +93,7 @@ export default function ZoneWaterfront() {
         <div className="md:col-span-7 order-1 md:order-2 relative min-h-[26rem] md:min-h-[38rem]">
           <RevealImage
             direction="right"
-            className="reveal relative h-80 md:h-[36rem] md:ml-16"
+            className="reveal relative h-80 md:h-[36rem] md:ml-16 rounded-2xl"
           >
             <div ref={beachImgRef} className="absolute -inset-[8%]">
               <Media
@@ -107,7 +106,7 @@ export default function ZoneWaterfront() {
           {/* Aside photo — small offset panel, negative-left so it visually
               sits under the main image's lower-left corner. Hidden on mobile
               to keep the stack tidy. */}
-          <div className="hidden md:block absolute -left-4 -bottom-12 w-56 h-72 overflow-hidden shadow-2xl shadow-marine-dark/30">
+          <div className="hidden md:block absolute -left-4 -bottom-12 w-56 h-72 rounded-2xl overflow-hidden border-4 border-sand shadow-lg shadow-marine-dark/15">
             <div ref={asideImgRef} className="absolute -inset-[10%]">
               <Media
                 src={asideImage}
@@ -129,7 +128,7 @@ export default function ZoneWaterfront() {
           <ul className="grid md:grid-cols-3 gap-x-10 gap-y-8">
             {features.map((f, i) => (
               <li key={i} className="reveal border-t border-ink/15 pt-5">
-                <span className="block font-display italic text-orange-dark text-sm tabular-nums mb-2">
+                <span className="block font-display text-orange-dark text-sm tabular-nums mb-2">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <p className="text-ink/75 text-sm md:text-base leading-relaxed">
@@ -164,7 +163,7 @@ export default function ZoneWaterfront() {
             <button
               type="button"
               onClick={() => openBookingModal('daypass')}
-              className="inline-flex items-center gap-3 border border-orange-dark text-orange-dark px-5 py-3 text-xs tracking-widest2 uppercase hover:bg-orange-dark hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+              className="min-h-11 rounded-full inline-flex items-center gap-3 border border-orange-dark text-orange-dark px-5 py-3 text-xs tracking-widest2 uppercase hover:bg-orange-dark hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
             >
               Book Day Pass
               <span aria-hidden="true">→</span>

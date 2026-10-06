@@ -8,6 +8,10 @@ const unwrap = (s) => (s && typeof s === 'object' && 'current' in s ? s.current 
 // Fade + rise reveal for text and cards, triggered once as the element enters view.
 export function revealOnScroll(selector, scope, opts = {}) {
   const els = gsap.utils.toArray(selector, unwrap(scope))
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.set(els, { opacity: 1, y: 0 })
+    return
+  }
   els.forEach((el, i) => {
     gsap.to(el, {
       opacity: 1,
@@ -27,6 +31,7 @@ export function revealOnScroll(selector, scope, opts = {}) {
 // Scroll-linked drift, mirroring the yPercent + ease:none + scrub pattern
 // measured on the reference site (decorative depth, not content-critical).
 export function parallaxLayer(selector, scope, { yPercent = 12, scrub = 0.6 } = {}) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
   const els = gsap.utils.toArray(unwrap(selector), unwrap(scope))
   els.forEach((el) => {
     gsap.to(el, {

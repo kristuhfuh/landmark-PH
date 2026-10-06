@@ -65,7 +65,7 @@ function Login({ onSuccess }) {
           Landmark · Admin
         </p>
         <h1 className="font-display text-4xl mb-8">
-          Sign in <span className="italic text-orange-light">.</span>
+          Sign in <span className="text-orange-light">.</span>
         </h1>
         <label className="block mb-6">
           <span className="block text-[10px] tracking-widest2 uppercase text-sand/60 mb-2">Email</span>
@@ -81,7 +81,7 @@ function Login({ onSuccess }) {
           <p className="text-orange-light text-sm mb-6">{error}</p>
         )}
         <button type="submit" disabled={busy}
-          className="w-full inline-flex items-center justify-center gap-3 bg-orange text-ink py-3 text-xs tracking-widest2 uppercase hover:bg-orange-light disabled:opacity-40 transition-colors">
+          className="min-h-11 rounded-full w-full inline-flex items-center justify-center gap-3 bg-orange text-ink py-3 text-xs tracking-widest2 uppercase hover:bg-orange-light disabled:opacity-40 transition-colors">
           {busy ? <Loader2 size={14} className="animate-spin" /> : 'Sign in →'}
         </button>
         <p className="mt-6 text-[10px] tracking-widest2 uppercase text-sand/40 text-center">
@@ -118,7 +118,7 @@ function Dashboard({ me, onLogout }) {
             <p className="text-orange-light text-[10px] tracking-widest2 uppercase">
               Landmark · Admin
             </p>
-            <p className="font-display italic text-sand/70 text-sm mt-0.5">
+            <p className="font-display text-sand/70 text-sm mt-0.5">
               {me.name} · {me.email}
             </p>
           </div>
@@ -187,7 +187,7 @@ function Sidebar({ meta, sections, active, onSelect }) {
                     onClick={() => onSelect(it)}
                     className={`w-full text-left px-3 py-2 border-l-2 transition-colors ${
                       on
-                        ? 'border-orange text-orange-light bg-marine-dark/40'
+                        ? 'min-h-11 rounded-full border-orange text-orange-light bg-marine-dark/40'
                         : 'border-transparent text-sand/70 hover:text-sand hover:border-sand/40'
                     }`}
                   >
@@ -307,7 +307,7 @@ function ArrayField({ value, onChange }) {
       {value.map((item, i) => (
         <div key={i} className="border border-sand/10 p-4 relative">
           <button onClick={() => onChange(value.filter((_, j) => j !== i))}
-            className="absolute top-2 right-2 text-sand/40 hover:text-orange-light">
+            className="min-h-11 rounded-full absolute top-2 right-2 text-sand/40 hover:text-orange-light">
             <Trash2 size={14} />
           </button>
           <p className="text-[10px] tracking-widest2 uppercase text-sand/40 mb-3">
@@ -431,17 +431,17 @@ function CollectionEditor({ meta }) {
                       {meta.orderable && (
                         <>
                           <button onClick={() => move(row.id, -1)}
-                            className="text-sand/50 hover:text-orange-light text-xs">↑</button>
+                            className="min-h-11 rounded-full text-sand/50 hover:text-orange-light text-xs">↑</button>
                           <button onClick={() => move(row.id, +1)}
-                            className="text-sand/50 hover:text-orange-light text-xs">↓</button>
+                            className="min-h-11 rounded-full text-sand/50 hover:text-orange-light text-xs">↓</button>
                         </>
                       )}
                       <button onClick={() => setEditing(row)}
-                        className="text-[10px] tracking-widest2 uppercase text-orange-light hover:text-orange">
+                        className="min-h-11 rounded-full text-[10px] tracking-widest2 uppercase text-orange-light hover:text-orange">
                         Edit
                       </button>
                       <button onClick={() => remove(row.id)}
-                        className="text-sand/50 hover:text-orange-light">
+                        className="min-h-11 rounded-full text-sand/50 hover:text-orange-light">
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -490,7 +490,7 @@ function RowEditor({ meta, row, onCancel, onSave }) {
             </p>
             <h2 className="font-display text-2xl">{meta.label}</h2>
           </div>
-          <button onClick={onCancel} className="text-sand/60 hover:text-sand">
+          <button onClick={onCancel} className="min-h-11 rounded-full text-sand/60 hover:text-sand">
             <X size={20} />
           </button>
         </div>
@@ -639,7 +639,7 @@ function BookingsPanel() {
                   </td>
                   <td className="py-3 text-right">
                     <button onClick={() => remove(b)}
-                      className="text-sand/50 hover:text-orange-light">
+                      className="min-h-11 rounded-full text-sand/50 hover:text-orange-light">
                       <Trash2 size={14} />
                     </button>
                   </td>
@@ -685,7 +685,7 @@ function PasswordModal({ onClose }) {
       <form onSubmit={submit} className="w-full max-w-md bg-marine-dark border border-sand/15 p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-display text-2xl">Change password</h2>
-          <button type="button" onClick={onClose} className="text-sand/60 hover:text-sand">
+          <button type="button" onClick={onClose} className="min-h-11 rounded-full text-sand/60 hover:text-sand">
             <X size={20} />
           </button>
         </div>
@@ -699,7 +699,7 @@ function PasswordModal({ onClose }) {
         </label>
         {error && <p className="text-orange-light text-sm mb-4">{error}</p>}
         <button type="submit" disabled={state === 'saving'}
-          className="w-full inline-flex items-center justify-center gap-2 bg-orange text-ink py-3 text-xs tracking-widest2 uppercase hover:bg-orange-light disabled:opacity-40 transition-colors">
+          className="min-h-11 rounded-full w-full inline-flex items-center justify-center gap-2 bg-orange text-ink py-3 text-xs tracking-widest2 uppercase hover:bg-orange-light disabled:opacity-40 transition-colors">
           {state === 'saved' ? <><Check size={14} /> Saved</> : 'Save'}
         </button>
       </form>

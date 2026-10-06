@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Users, Tag } from 'lucide-react'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import Media from './Media'
@@ -15,6 +16,7 @@ import { useContent } from '../lib/content'
 export default function CitizenApp() {
   const ref = useRevealOnScroll({ stagger: 0.06 })
   const app = useContent('citizenApp')
+  const [logoFailed, setLogoFailed] = useState(false)
 
   const heading = app.heading || 'Get Exclusive Rewards with Landmark Citizen'
   const body =
@@ -37,7 +39,7 @@ export default function CitizenApp() {
         className="absolute inset-x-0 bottom-0 h-[55%] pointer-events-none"
         style={{
           background:
-            'linear-gradient(to bottom, transparent 0%, rgba(230,240,247,0.4) 55%, rgba(230,240,247,0.85) 100%)',
+            'linear-gradient(to bottom, transparent 0%, rgb(var(--c-sky) / 0.4) 55%, rgb(var(--c-sky) / 0.85) 100%)',
         }}
       />
 
@@ -47,13 +49,16 @@ export default function CitizenApp() {
             that evokes the uploaded reference so the badge always renders. */}
         <div className="reveal flex justify-center mb-8">
           <div className="relative h-20 w-20 rounded-[18px] overflow-hidden shadow-[0_8px_24px_-6px_rgba(0,0,0,0.45)] bg-marine-dark">
-            <LcaLogo />
-            <img
-              src="/LCA Logo.png"
-              alt="Landmark Citizen"
-              className="absolute inset-0 h-full w-full object-cover"
-              onError={(e) => { e.currentTarget.style.display = 'none' }}
-            />
+            {logoFailed ? (
+              <LcaLogo />
+            ) : (
+              <img
+                src="/LCA Logo.png"
+                alt="Landmark Citizen"
+                className="absolute inset-0 h-full w-full object-cover"
+                onError={() => setLogoFailed(true)}
+              />
+            )}
           </div>
         </div>
 
@@ -73,7 +78,7 @@ export default function CitizenApp() {
         <div className="reveal flex flex-wrap justify-center gap-3">
           <a
             href={appStoreLink}
-            className="inline-flex items-center gap-3 bg-ink text-sand rounded-[16px] px-5 py-3 hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+            className="min-h-11 inline-flex items-center gap-3 bg-ink text-sand rounded-full px-5 py-3 hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-light"
           >
             <AppleGlyph />
             <span className="flex flex-col leading-tight text-left">
@@ -87,7 +92,7 @@ export default function CitizenApp() {
           </a>
           <a
             href={playStoreLink}
-            className="inline-flex items-center gap-3 bg-ink text-sand rounded-[16px] px-5 py-3 hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark"
+            className="min-h-11 inline-flex items-center gap-3 bg-ink text-sand rounded-full px-5 py-3 hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-light"
           >
             <PlayGlyph />
             <span className="flex flex-col leading-tight text-left">
@@ -126,7 +131,7 @@ function PhoneMockup({ mockupImage }) {
         {/* Cloudy fade on the bottom half — stronger blur + heavier haze so
             the image reads as being behind a soft fog that intensifies
             downward into the next section. */}
-        <div
+        {/* <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%]"
           style={{
@@ -135,40 +140,42 @@ function PhoneMockup({ mockupImage }) {
             maskImage: 'linear-gradient(to bottom, transparent 0%, black 45%, black 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 45%, black 100%)',
           }}
-        />
+        /> */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%]"
           style={{
             background:
-              'linear-gradient(to bottom, transparent 0%, rgba(239,231,214,0.55) 35%, rgba(230,240,247,0.9) 85%, #E6F0F7 100%)',
+              'linear-gradient(to bottom, transparent 0%, rgba(239,231,214,0.55) 35%, rgb(var(--c-sky) / 0.9) 85%, rgb(var(--c-sky)) 100%)',
           }}
         />
       </div>
 
       {/* Floating card — top-left: user count social proof */}
-      <div className="hidden md:flex absolute top-16 -left-16 items-center gap-3 rounded-[16px] bg-white text-ink px-4 py-3 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)]">
-        <span className="h-9 w-9 rounded-[12px] bg-marine-dark text-sand flex items-center justify-center">
+      <div className="hidden md:flex absolute top-16 -left-20 items-center gap-3 rounded-[16px] bg-white text-ink px-4 py-3 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)] max-w-[200px]">
+        <span className="h-9 w-9 shrink-0 rounded-[12px] bg-marine-dark text-sand flex items-center justify-center">
           <Users size={16} strokeWidth={2} />
         </span>
-        <div className="leading-tight text-left">
-          <p className="text-[10px] tracking-widest uppercase text-ink/55">
+        <div className="leading-tight text-left min-w-0">
+          <p className="text-[10px] tracking-widest uppercase text-ink/55 truncate">
             Already inside
           </p>
-          <p className="text-sm font-medium">Over 5,000 users</p>
+          <p className="text-sm font-medium leading-snug">Over 5,000 users</p>
         </div>
       </div>
 
       {/* Floating card — right: savings callout */}
-      <div className="hidden md:flex absolute top-52 -right-20 items-center gap-3 rounded-[16px] bg-white text-ink px-4 py-3 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)]">
-        <span className="h-9 w-9 rounded-[12px] bg-orange-dark text-sand flex items-center justify-center">
+      <div className="hidden md:flex absolute top-52 -right-24 items-center gap-3 rounded-[16px] bg-white text-ink px-4 py-3 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)] max-w-[220px]">
+        <span className="h-9 w-9 shrink-0 rounded-[12px] bg-orange-dark text-sand flex items-center justify-center">
           <Tag size={16} strokeWidth={2} />
         </span>
-        <div className="leading-tight text-left">
-          <p className="text-[10px] tracking-widest uppercase text-ink/55">
+        <div className="leading-tight text-left min-w-0">
+          <p className="text-[10px] tracking-widest uppercase text-ink/55 truncate">
             Citizen perk
           </p>
-          <p className="text-sm font-medium">Enjoy 10% off on all bookings</p>
+          <p className="text-sm font-medium leading-snug">
+            Enjoy 10% off on all bookings
+          </p>
         </div>
       </div>
     </div>

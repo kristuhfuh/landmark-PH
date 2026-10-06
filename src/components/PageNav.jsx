@@ -45,7 +45,7 @@ export default function PageNav() {
                 to={l.to}
                 className={`text-[11px] tracking-widest2 uppercase transition-colors ${
                   active
-                    ? 'text-orange-dark italic'
+                    ? 'text-orange-dark '
                     : 'text-ink/70 hover:text-orange-dark'
                 }`}
               >
@@ -58,7 +58,7 @@ export default function PageNav() {
         <button
           type="button"
           onClick={() => openBookingModal()}
-          className="shrink-0 border border-orange-dark px-3 md:px-5 py-2 text-[10px] md:text-xs tracking-widest2 uppercase text-orange-dark hover:bg-orange-dark hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
+          className="min-h-11 rounded-full shrink-0 border border-orange-dark px-3 md:px-5 py-2 text-[10px] md:text-xs tracking-widest2 uppercase text-orange-dark hover:bg-orange-dark hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-dark"
         >
           {ctaLabel}
         </button>
@@ -76,7 +76,7 @@ export default function PageNav() {
               key={l.to}
               to={l.to}
               className={`shrink-0 text-[10px] tracking-widest2 uppercase transition-colors ${
-                active ? 'text-orange-dark italic' : 'text-ink/70'
+                active ? 'text-orange-dark ' : 'text-ink/70'
               }`}
             >
               {l.label}

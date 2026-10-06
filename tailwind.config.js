@@ -17,19 +17,20 @@ export default {
           light: 'rgb(var(--c-orange-light) / <alpha-value>)',
           dark: 'rgb(var(--c-orange-dark) / <alpha-value>)',
         },
+        sky: 'rgb(var(--c-sky) / <alpha-value>)',
         sand: 'rgb(var(--c-sand) / <alpha-value>)',
         ink: 'rgb(var(--c-ink) / <alpha-value>)',
       },
       fontFamily: {
         // Ronzino is the site's primary typeface for both headings and
-        // body copy. Instrument Serif / Geist are kept as fallbacks so
+        // body copy. Sans-serif fallbacks preserve the upright typography so
         // the site still reads clearly if the Ronzino woff2 files aren't
         // present in /public/fonts/.
-        display: ['Ronzino', '"Instrument Serif"', 'serif'],
+        display: ['Ronzino', '"Geist"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         body: ['Ronzino', '"Geist"', 'sans-serif'],
       },
       letterSpacing: {
-        widest2: '0.28em',
+        widest2: '0.16em',
       },
     },
   },

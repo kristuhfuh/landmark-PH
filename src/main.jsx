@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
 import { CartProvider } from './lib/cart.jsx'
 import './index.css'
+import PaletteInjector from './components/PaletteInjector'
 
 const AdminPage = lazy(() => import('./routes/AdminPage.jsx'))
 const AboutPage = lazy(() => import('./routes/AboutPage.jsx'))
@@ -14,7 +15,7 @@ const RoomsPage = lazy(() => import('./routes/RoomsPage.jsx'))
 const ContactPage = lazy(() => import('./routes/ContactPage.jsx'))
 
 const routeFallback = (
-  <div className="min-h-screen bg-sand text-ink flex items-center justify-center font-display italic">
+  <div className="min-h-screen bg-sand text-ink flex items-center justify-center font-display">
     Loading…
   </div>
 )
@@ -30,6 +31,7 @@ const wrapInterior = (Component) => (
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
+      <PaletteInjector />
       <Routes>
         <Route
           path="/admin/*"

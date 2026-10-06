@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger)
  *
  * Props:
  *   eyebrow, heading, italic, body
- *   rooms: [{ name, tag, size, guests, priceFrom, body, imageUrl, features[] }]
+ *   rooms: [{ name, tag, guests, priceFrom, body, imageUrl, features[] }]
  */
 export default function RoomsShowcase({
   eyebrow = 'Where you stay',
@@ -81,7 +81,7 @@ export default function RoomsShowcase({
     <section
       id="rooms"
       ref={ref}
-      className="relative z-20 bg-[#E6F0F7] text-marine-dark py-24 md:py-36 px-6 md:px-10 overflow-clip"
+      className="relative z-20 bg-sky text-marine-dark py-24 md:py-36 px-6 md:px-10 overflow-clip"
     >
       {/* Subtle cultural line pattern — adinkra-inspired nested arcs,
           chevrons and dot grids rendered as a tiling SVG. Sand strokes at
@@ -118,7 +118,7 @@ export default function RoomsShowcase({
         </p>
         <SplitHeading className="font-display text-4xl md:text-6xl leading-[1.02] max-w-4xl">
           {heading}
-          <span className="italic text-orange-dark"> {italic}</span>
+          <span className="text-orange-dark"> {italic}</span>
         </SplitHeading>
         {body && (
           <p className="reveal text-marine/80 mt-6 max-w-xl leading-relaxed">
@@ -135,11 +135,11 @@ export default function RoomsShowcase({
               key={room.name}
               ref={registerCard}
               className={`reveal border-t border-marine-dark/15 pt-8 md:pt-12 transition-colors duration-500 ${
-                i === activeIndex ? 'text-marine-dark' : 'text-marine-dark/50'
+                i === activeIndex ? 'text-marine-dark' : 'text-marine-dark/80'
               }`}
             >
               <div className="flex items-baseline gap-4 mb-4">
-                <span className="font-display italic text-orange-dark text-sm tabular-nums">
+                <span className="font-display text-orange-dark text-sm tabular-nums">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <span className="text-xs tracking-widest2 uppercase text-orange-dark/80">
@@ -153,23 +153,19 @@ export default function RoomsShowcase({
               <Media
                 src={room.imageUrl}
                 alt={room.name}
-                className="md:hidden w-full h-64 object-cover mb-4"
+                className="md:hidden w-full h-64 rounded-2xl object-cover mb-5"
               />
-              <p className="leading-relaxed text-current/80 max-w-md mb-6">
+              <p className="leading-relaxed text-marine-dark/75 max-w-md mb-6">
                 {room.body}
               </p>
-              <dl className="grid grid-cols-3 gap-4 text-sm max-w-sm mb-6">
-                <div>
-                  <dt className="text-[10px] tracking-widest2 uppercase text-orange-dark/70 mb-1">Size</dt>
-                  <dd className="font-display italic text-base">{room.size}</dd>
-                </div>
+              <dl className="grid grid-cols-2 gap-6 text-sm max-w-sm mb-6">
                 <div>
                   <dt className="text-[10px] tracking-widest2 uppercase text-orange-dark/70 mb-1">Guests</dt>
-                  <dd className="font-display italic text-base">{room.guests}</dd>
+                  <dd className="font-display text-base">{room.guests}</dd>
                 </div>
                 <div>
                   <dt className="text-[10px] tracking-widest2 uppercase text-orange-dark/70 mb-1">From</dt>
-                  <dd className="font-display italic text-base">{room.priceFrom}</dd>
+                  <dd className="font-display text-base">{room.priceFrom}</dd>
                 </div>
               </dl>
               {/* App-discount nudge — Citizen app members save 10%. */}
@@ -189,17 +185,17 @@ export default function RoomsShowcase({
                   ))}
                 </ul>
               )}
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <button
                   type="button"
                   onClick={() => openBookingModal('rooms')}
-                  className="text-sand text-xs tracking-widest2 uppercase px-6 py-3 rounded-[16px] bg-marine hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marine"
+                  className="min-h-11 text-sand text-xs tracking-widest2 uppercase px-6 py-3 rounded-full bg-marine hover:bg-marine-dark transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marine"
                 >
                   Reserve Room
                 </button>
                 <a
                   href="/bookings/rooms"
-                  className="inline-flex items-center text-marine text-xs tracking-widest2 uppercase px-6 py-3 rounded-[16px] border border-marine/40 hover:bg-marine hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marine"
+                  className="min-h-11 inline-flex items-center text-marine text-xs tracking-widest2 uppercase px-6 py-3 rounded-full border border-marine/40 hover:bg-marine hover:text-sand transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marine"
                 >
                   View room
                 </a>
@@ -209,12 +205,12 @@ export default function RoomsShowcase({
           <li className="pt-10 border-t border-marine-dark/15">
             <a
               href="/rooms"
-              className="group inline-flex items-baseline gap-3 font-display italic text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
+              className="group inline-flex items-baseline gap-3 font-display text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
             >
               View all rooms
               <span
                 aria-hidden="true"
-                className="inline-block transition-transform duration-300 group-hover:translate-x-1 not-italic"
+                className="inline-block transition-transform duration-300 group-hover:translate-x-1"
               >
                 →
               </span>

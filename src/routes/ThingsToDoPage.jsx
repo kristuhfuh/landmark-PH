@@ -75,10 +75,7 @@ export default function ThingsToDoPage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-24 md:pt-40 pb-16 md:pb-24">
-          <p className="inline-flex items-center gap-3 text-orange-light text-xs tracking-widest2 uppercase mb-10">
-            <span className="font-display italic text-orange-light text-base tabular-nums">
-              00
-            </span>
+          <p className="text-orange-light text-xs tracking-widest2 uppercase mb-10">
             Things to do
           </p>
           <h1
@@ -86,7 +83,7 @@ export default function ThingsToDoPage() {
             style={{ fontSize: 'clamp(2.75rem, 8vw, 6.5rem)' }}
           >
             Every attraction, on a{' '}
-            <span className="italic text-orange-light">single loop.</span>
+            <span className="text-orange-light">single loop.</span>
           </h1>
           <p className="mt-10 max-w-2xl text-sand/80 text-base md:text-lg leading-relaxed">
             Move through the ring, cross into the green, then follow the
@@ -106,7 +103,7 @@ export default function ThingsToDoPage() {
                   aria-pressed={active}
                   className={`px-3 py-1.5 text-[11px] tracking-widest2 uppercase border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-dark ${
                     active
-                      ? 'bg-orange text-ink border-orange'
+                      ? 'min-h-11 rounded-full bg-orange text-ink border-orange'
                       : 'text-sand/80 border-sand/40 hover:border-orange-light hover:text-orange-light'
                   }`}
                 >
@@ -157,14 +154,9 @@ export default function ThingsToDoPage() {
                       </div>
                     )}
                   <div className="flex items-baseline justify-between gap-4 mb-3">
-                    <span className="font-display italic text-orange-dark text-sm tabular-nums">
+                    <span className="font-display text-orange-dark text-sm tabular-nums">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    {item.area && (
-                      <span className="text-[10px] tracking-widest2 uppercase text-ink/55">
-                        {item.area}
-                      </span>
-                    )}
                   </div>
                   <h3 className="font-display text-2xl md:text-3xl text-marine mb-2 leading-tight">
                     {item.title}
@@ -185,12 +177,12 @@ export default function ThingsToDoPage() {
               </p>
               <Link
                 to="/bookings"
-                className="group inline-flex items-baseline gap-3 font-display italic text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
+                className="group inline-flex items-baseline gap-3 font-display text-marine text-xl md:text-2xl hover:text-orange-dark transition-colors"
               >
                 Book something here
                 <span
                   aria-hidden="true"
-                  className="inline-block transition-transform duration-300 group-hover:translate-x-1 not-italic"
+                  className="inline-block transition-transform duration-300 group-hover:translate-x-1"
                 >
                   →
                 </span>

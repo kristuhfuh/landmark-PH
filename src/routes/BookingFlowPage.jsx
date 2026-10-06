@@ -1,980 +1,329 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import {
-  Ticket,
-  BedDouble,
-  UtensilsCrossed,
-  Users,
-  Cake,
-  Waves,
-  Check,
-  ArrowLeft,
-  Lock,
-} from 'lucide-react'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, Loader2 } from 'lucide-react'
 import PageNav from '../components/PageNav'
 import Footer from '../components/Footer'
 import { useContent } from '../lib/content'
+import { bookingTypes, bookingAliases, bookingTotal, resolveBooking, productCapacity, slugify, NAIRA, todayInLagos, followingDay } from '../lib/bookingTypes'
 
-/**
- * Booking-type registry — one entry per URL segment.
- * `basePrice` × guests drives the running total shown in the summary rail.
- * `options` are the checkable add-ons or format choices for step 1.
- */
-const TYPES = {
-  walkthrough: {
-    icon: Ticket,
-    tag: 'The Flagship',
-    title: 'Upside-Down Walkthrough',
-    lead: '45-minute guided walk-through of the inverted flagship — every room, corridor and fixture turned on its head.',
-    image: '/flagship-upside-down.png',
-    accent: 'orange',
-    basePrice: 8000,
-    unit: 'person',
-    guestNoun: 'guests',
-    minGuests: 1,
-    maxGuests: 12,
-    timeSlots: ['10:30', '12:00', '14:30', '16:00', '17:30'],
-    options: [
-      { key: 'photo', label: 'Photo point pass', price: 1500 },
-      { key: 'priority', label: 'Priority entry', price: 2500 },
-      { key: 'guide', label: 'Private guide', price: 6000 },
-    ],
-  },
-  table: {
-    icon: UtensilsCrossed,
-    tag: 'At the Table',
-    title: 'Table Booking',
-    lead: 'Reserve a table at The Jetty in the Ring or on the waterfront deck. Kitchens run through the day.',
-    image: '/d32f5702063e63708d194795bd491e05.jpg',
-    accent: 'marine',
-    basePrice: 0,
-    unit: '',
-    guestNoun: 'diners',
-    minGuests: 1,
-    maxGuests: 20,
-    timeSlots: ['12:30', '13:30', '18:30', '19:30', '20:30', '21:30'],
-    options: [
-      { key: 'window', label: 'Window seating request', price: 0 },
-      { key: 'birthday', label: 'Birthday setup + candle', price: 3500 },
-      { key: 'wine', label: 'Sommelier pairing (per head)', price: 8000 },
-    ],
-    holdOnly: true,
-  },
-  rooms: {
-    icon: BedDouble,
-    tag: 'Where you stay',
-    title: 'Rooms & Stays',
-    lead: 'A limited number of shore-facing suites, green-side lofts and central studios — each a short walk from the ring.',
-    image: '/pexels-petra-nesti-1766376-12161888.jpg',
-    accent: 'orange',
-    basePrice: 120000,
-    unit: 'night',
-    guestNoun: 'guests',
-    minGuests: 1,
-    maxGuests: 4,
-    stay: true,
-    options: [
-      { key: 'breakfast', label: 'Breakfast at The Jetty', price: 12000 },
-      { key: 'beach', label: 'Beach club access', price: 15000 },
-      { key: 'transfer', label: 'Airport transfer', price: 25000 },
-    ],
-  },
-  daypass: {
-    icon: Waves,
-    tag: 'The Waterfront',
-    title: 'Beach Club Day Pass',
-    lead: 'Full-day access to the beach club, both lounges and the adult pool — sun-lounger and towel service included.',
-    image: '/photo-1500815845799-7748ca339f27.avif',
-    accent: 'marine',
-    basePrice: 15000,
-    unit: 'person',
-    guestNoun: 'guests',
-    minGuests: 1,
-    maxGuests: 8,
-    timeSlots: ['10:00', '12:00', '14:00'],
-    options: [
-      { key: 'cabana', label: 'Reserved cabana · half-day', price: 40000 },
-      { key: 'welcome', label: 'Welcome drink round', price: 6000 },
-      { key: 'lunch', label: 'Set lunch on the deck (per head)', price: 9500 },
-    ],
-  },
-  group: {
-    icon: Users,
-    tag: 'For teams',
-    title: 'Group & Corporate',
-    lead: 'Grounds entry, two activities per guest and set lunch at The Jetty. Twenty guests and up, priced per head.',
-    image: '/concert live 2.jpg',
-    accent: 'orange',
-    basePrice: 8500,
-    unit: 'guest',
-    guestNoun: 'guests',
-    minGuests: 20,
-    maxGuests: 200,
-    step: 5,
-    timeSlots: ['09:30', '11:00', '14:00'],
-    options: [
-      { key: 'host', label: 'Dedicated host on the day', price: 25000 },
-      { key: 'branding', label: 'On-site branding (roll-up + signage)', price: 45000 },
-      { key: 'transport', label: 'Coach transfer round-trip', price: 90000 },
-    ],
-  },
-  birthday: {
-    icon: Cake,
-    tag: 'Celebrations',
-    title: 'Birthday & Private Events',
-    lead: 'Full day out — grounds entry, three attractions per guest, the kids club party room for three hours, and cake.',
-    image: '/Splash-Park-image-1.webp',
-    accent: 'marine',
-    basePrice: 120000,
-    unit: 'package',
-    guestNoun: 'guests',
-    minGuests: 8,
-    maxGuests: 40,
-    packageFor: 10,
-    timeSlots: ['11:00', '13:30', '16:00'],
-    options: [
-      { key: 'photographer', label: 'On-site photographer · 2 hrs', price: 60000 },
-      { key: 'decor', label: 'Themed room decor', price: 35000 },
-      { key: 'catering', label: 'Extended catering (per head above 10)', price: 4500 },
-    ],
-  },
-  other: {
-    icon: Users,
-    tag: 'Custom',
-    title: 'Custom enquiry',
-    lead: 'Weddings, private takeovers, film shoots, brand activations. Tell us what you have in mind and a host will build the day around you.',
-    image: '/hero.jpg',
-    accent: 'orange',
-    basePrice: 0,
-    unit: '',
-    guestNoun: 'guests',
-    minGuests: 2,
-    maxGuests: 500,
-    step: 5,
-    holdOnly: true,
-    options: [
-      { key: 'takeover', label: 'Full-grounds takeover', price: 0 },
-      { key: 'catering', label: 'Custom catering brief', price: 0 },
-      { key: 'production', label: 'Production / AV support', price: 0 },
-    ],
-  },
-}
+const STEPS = ['Visit details', 'Guest information', 'Review', 'Request received']
+const INPUT = 'w-full min-w-0 rounded-xl border border-marine-dark/20 bg-sand px-4 py-3 text-base text-ink placeholder:text-ink/45 transition-colors focus:border-marine'
 
-const STEPS = ['Details', 'Guest info', 'Payment', 'Confirmed']
-
-const NAIRA = new Intl.NumberFormat('en-NG', {
-  style: 'currency',
-  currency: 'NGN',
-  maximumFractionDigits: 0,
-})
-
-function slugify(name) {
-  return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+function formatDate(date, long = false) {
+  if (!date) return 'Choose a date'
+  return new Date(`${date}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: long ? 'long' : 'short', ...(long ? { year: 'numeric' } : {}) })
 }
 
 export default function BookingFlowPage() {
-  const { type = 'walkthrough' } = useParams()
-  const navigate = useNavigate()
-  const config = TYPES[type]
-  const settings = useContent('siteSettings')
-  const rooms = useContent('rooms')
-  const brand = settings.brand || 'Landmark'
-  const [searchParams] = useSearchParams()
-
-  // If arriving from /rooms with ?room=<slug>, surface the preselected room
-  // in the summary rail so the user knows which stay they're booking.
-  const selectedRoom = useMemo(() => {
-    if (type !== 'rooms') return null
-    const roomSlug = searchParams.get('room')
-    if (!roomSlug) return null
-    return (rooms.items || []).find((r) => slugify(r.name) === roomSlug) || null
-  }, [type, searchParams, rooms])
-
-  const [step, setStep] = useState(0)
-  const [date, setDate] = useState('')
-  const [checkOut, setCheckOut] = useState('')
-  const [guests, setGuests] = useState(() => (config ? config.minGuests : 2))
-  const [time, setTime] = useState('')
-  const [addOns, setAddOns] = useState([])
-  const [contact, setContact] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    notes: '',
-  })
-  const [card, setCard] = useState({ number: '', expiry: '', cvc: '', name: '' })
-  const [reference, setReference] = useState(() =>
-    `LMK-${Math.random().toString(36).slice(2, 7).toUpperCase()}${Date.now().toString().slice(-4)}`
-  )
-
-  useEffect(() => {
-    if (!config) return
-    document.title = `${config.title} · ${brand} Port Harcourt`
-    window.scrollTo(0, 0)
-  }, [config, brand, step])
-
-  if (!config) {
+  const { type } = useParams()
+  const canonicalType = bookingAliases[type] || type
+  if (!bookingTypes[canonicalType]) {
     return (
-      <div className="bg-sand text-ink min-h-screen">
+      <div className="min-h-screen bg-sand text-ink">
         <PageNav />
-        <section className="max-w-3xl mx-auto px-6 py-32 text-center">
-          <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-4">
-            404
-          </p>
-          <h1 className="font-display text-5xl mb-6">
-            No booking of that <span className="italic text-marine">shape.</span>
-          </h1>
-          <Link
-            to="/bookings"
-            className="inline-flex items-center gap-3 border border-ink/25 px-5 py-3 text-[11px] tracking-widest2 uppercase hover:border-orange-dark hover:text-orange-dark transition-colors"
-          >
-            <ArrowLeft size={14} /> Back to bookings
-          </Link>
-        </section>
+        <main className="mx-auto max-w-3xl px-6 py-24 text-center">
+          <h1 className="font-display text-4xl text-marine mb-5">Booking not found</h1>
+          <p className="text-ink/70 mb-8">Choose a booking from the options available for your visit.</p>
+          <Link to="/bookings" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-marine-dark px-6 py-3 text-sand"><ArrowLeft size={16} /> All bookings</Link>
+        </main>
         <Footer />
       </div>
     )
   }
+  return <BookingFlow key={canonicalType} type={canonicalType} />
+}
 
-  const Icon = config.icon
-  const isMarine = config.accent === 'marine'
-  const packageFor = config.packageFor
+function BookingFlow({ type }) {
+  const base = bookingTypes[type]
+  const settings = useContent('siteSettings')
+  const tickets = useContent('tickets')
+  const rooms = useContent('rooms')
+  const [searchParams] = useSearchParams()
+  const products = useMemo(() => (tickets.items || []).filter(item => item.category === base.catalogCategory && Number.isFinite(Number(item.priceNGN))), [tickets.items, base.catalogCategory])
+  const [productId, setProductId] = useState(() => searchParams.get('product') || products[0]?.id || '')
+  const [roomId, setRoomId] = useState(() => searchParams.get('room') || slugify(rooms.items?.[0]?.name))
+  const product = base.catalogCategory ? products.find(item => item.id === productId) || products[0] : null
+  const room = type === 'rooms' ? rooms.items?.find(item => slugify(item.name) === roomId) || rooms.items?.[0] : null
+  const config = useMemo(() => resolveBooking(base, product, room), [base, product, room])
+  const [step, setStep] = useState(0)
+  const [date, setDate] = useState('')
+  const [checkOut, setCheckOut] = useState('')
+  const [guests, setGuests] = useState(() => type === 'packages' ? Math.max(config.minGuests, productCapacity(product)) : config.minGuests)
+  const [time, setTime] = useState('')
+  const [addOns, setAddOns] = useState([])
+  const [contact, setContact] = useState({ firstName: '', lastName: '', email: '', phone: '', notes: '' })
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
+  const [reference, setReference] = useState('')
+  const today = todayInLagos()
+  const nights = config.stay && date && checkOut ? Math.max(1, Math.round((new Date(checkOut) - new Date(date)) / 86400000)) : 1
+  const total = bookingTotal(config, { guests, nights, addOns })
+  const units = config.packageFor ? Math.ceil(guests / config.packageFor) : guests
+  const partySize = type === 'entry' ? guests * productCapacity(product) : guests
+  const bookingName = product?.name || room?.name || config.title
+  const selectionReady = (!base.catalogCategory || Boolean(product)) && (type !== 'rooms' || Boolean(room))
+  const detailsReady = selectionReady && Boolean(date && date >= today) && (!config.stay || Boolean(checkOut && checkOut > date)) && (!config.timeSlots || Boolean(time))
 
-  const nights = useMemo(() => {
-    if (!config.stay || !date || !checkOut) return 1
-    const a = new Date(date)
-    const b = new Date(checkOut)
-    const diff = Math.round((b - a) / (1000 * 60 * 60 * 24))
-    return Math.max(1, diff)
-  }, [config.stay, date, checkOut])
+  useEffect(() => {
+    document.title = `${config.title} · ${settings.brand || 'Landmark'} Port Harcourt`
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [config.title, settings.brand, step])
 
-  const total = useMemo(() => {
-    if (config.holdOnly) return 0
-    const multiplier = config.stay
-      ? nights
-      : packageFor
-        ? Math.ceil(guests / packageFor)
-        : guests
-    const baseline = config.basePrice * multiplier
-    const extras = addOns.reduce((sum, key) => {
-      const opt = config.options.find((o) => o.key === key)
-      if (!opt) return sum
-      const perHead = /per head/i.test(opt.label)
-      return sum + (perHead ? opt.price * guests : opt.price)
-    }, 0)
-    return baseline + extras
-  }, [config, guests, addOns, nights, packageFor])
+  useEffect(() => {
+    setGuests(value => Math.max(config.minGuests, Math.min(config.maxGuests, value)))
+  }, [config.minGuests, config.maxGuests])
 
-  const guestStep = config.step || 1
+  function selectProduct(id) {
+    const selected = products.find(item => item.id === id)
+    setProductId(id)
+    if (type === 'packages') setGuests(selected?.priceUnit === 'guest' ? 20 : productCapacity(selected))
+    setError('')
+  }
 
   function toggleAddOn(key) {
-    setAddOns((prev) =>
-      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
-    )
+    setAddOns(previous => previous.includes(key) ? previous.filter(item => item !== key) : [...previous, key])
   }
 
-  async function next() {
-    // Submitting from the payment step — persist to the API best-effort
-    // before advancing to the confirmation screen.
-    if (step === 2) {
-      try {
-        const api = (import.meta.env?.VITE_API_URL ?? (import.meta.env?.DEV ? 'http://localhost:4000' : '')).replace(/\/+$/, '')
-        const res = await fetch(`${api}/api/bookings`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            bookingType: type,
-            firstName: contact.firstName,
-            lastName: contact.lastName,
-            email: contact.email,
-            phone: contact.phone,
-            dateFrom: date || undefined,
-            dateTo: checkOut || undefined,
-            timeSlot: time || undefined,
-            guests,
-            addOns,
-            totalNGN: total,
-            notes: contact.notes,
-            status: config.holdOnly ? 'hold' : 'confirmed',
-          }),
-        })
-        if (res.ok) {
-          const body = await res.json()
-          if (body?.reference) setReference(body.reference)
-        }
-      } catch {
-        // API might not be up in local dev — the client-side reference
-        // still shows on the confirmation screen so the flow completes.
-      }
+  async function next(event) {
+    event.preventDefault()
+    if (submitting || !event.currentTarget.reportValidity()) return
+    setError('')
+    if (step < 2) {
+      if (step === 0 && !detailsReady) return
+      setStep(value => value + 1)
+      return
     }
-    setStep((s) => Math.min(STEPS.length - 1, s + 1))
-  }
-  function back() {
-    setStep((s) => Math.max(0, s - 1))
+    setSubmitting(true)
+    try {
+      const api = (import.meta.env?.VITE_API_URL ?? (import.meta.env?.DEV ? 'http://localhost:4000' : '')).replace(/\/+$/, '')
+      const selectedDetails = [product ? `${config.title}: ${product.name}; ${type === 'entry' ? guests : units} ${type === 'entry' ? 'tickets' : product.priceUnit === 'guest' ? 'guests' : 'packages'}.` : '', room ? `Room: ${room.name}.` : '', contact.notes.trim()].filter(Boolean).join('\n')
+      const response = await fetch(`${api}/api/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(20000),
+        body: JSON.stringify({
+          bookingType: type,
+          firstName: contact.firstName.trim(),
+          lastName: contact.lastName.trim(),
+          email: contact.email.trim(),
+          phone: contact.phone.trim(),
+          dateFrom: date,
+          dateTo: config.stay ? checkOut : undefined,
+          timeSlot: time || undefined,
+          guests: partySize,
+          addOns: [...addOns, ...(product ? [`product:${product.id}`] : []), ...(room ? [`room:${slugify(room.name)}`] : [])],
+          totalNGN: total,
+          notes: selectedDetails,
+          status: 'pending',
+        }),
+      })
+      const result = await response.json().catch(() => ({}))
+      if (!response.ok || typeof result.reference !== 'string' || !result.reference) throw new Error('Booking request failed')
+      setReference(result.reference)
+      setStep(3)
+    } catch {
+      setError('We couldn’t send your booking request. Please try again, or contact our team for help.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
-  const canAdvanceFromStep = (() => {
-    if (step === 0) {
-      if (config.stay) return Boolean(date && checkOut)
-      if (config.timeSlots) return Boolean(date && time)
-      return Boolean(date)
-    }
-    if (step === 1) return contact.firstName && contact.lastName && contact.email
-    if (step === 2) {
-      if (config.holdOnly) return true
-      return card.number.length >= 12 && card.expiry.length >= 4 && card.cvc.length >= 3
-    }
-    return true
-  })()
+  const summary = { type, config, product, room, bookingName, date, checkOut, time, guests, partySize, units, nights, addOns, total }
 
   return (
-    <div className="bg-sand text-ink min-h-screen">
+    <div className="min-h-screen bg-sand text-ink">
       <PageNav />
-
-      {/* Header strip */}
-      <section className="border-b border-ink/10">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 pt-14 md:pt-20 pb-10">
-          <Link
-            to="/bookings"
-            className="inline-flex items-center gap-2 text-[11px] tracking-widest2 uppercase text-ink/60 hover:text-orange-dark transition-colors mb-8"
-          >
-            <ArrowLeft size={14} /> All booking types
-          </Link>
-
-          <div className="flex items-start gap-6 mb-10">
-            <span
-              className={`hidden md:flex h-16 w-16 shrink-0 border items-center justify-center ${
-                isMarine
-                  ? 'border-marine/30 text-marine'
-                  : 'border-orange-dark/40 text-orange-dark'
-              }`}
-            >
-              <Icon size={24} strokeWidth={1.5} />
-            </span>
-            <div className="flex-1">
-              <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-3">
-                {config.tag}
-              </p>
-              <h1
-                className={`font-display leading-[1.02] tracking-tight ${
-                  isMarine ? 'text-marine' : 'text-ink'
-                }`}
-                style={{ fontSize: 'clamp(2.25rem, 5.5vw, 4.5rem)' }}
-              >
-                {config.title}
-              </h1>
-              <p className="mt-5 max-w-2xl text-ink/70 leading-relaxed">
-                {config.lead}
-              </p>
-            </div>
-          </div>
-
-          {/* Stepper */}
-          <ol className="flex flex-wrap items-center gap-3 md:gap-5 text-[10px] tracking-widest2 uppercase">
-            {STEPS.map((label, i) => {
-              const state = i < step ? 'done' : i === step ? 'active' : 'idle'
-              return (
-                <li key={label} className="flex items-center gap-3">
-                  <span
-                    className={`h-6 w-6 rounded-full border inline-flex items-center justify-center font-display italic text-xs ${
-                      state === 'done'
-                        ? 'bg-orange-dark border-orange-dark text-sand'
-                        : state === 'active'
-                          ? 'border-orange-dark text-orange-dark'
-                          : 'border-ink/25 text-ink/40'
-                    }`}
-                  >
-                    {state === 'done' ? <Check size={12} /> : String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span
-                    className={
-                      state === 'idle' ? 'text-ink/40' : 'text-ink'
-                    }
-                  >
-                    {label}
-                  </span>
-                  {i < STEPS.length - 1 && (
-                    <span aria-hidden="true" className="hidden md:block h-px w-10 bg-ink/20" />
-                  )}
+      <main>
+        <header className="border-b border-marine-dark/10">
+          <div className="max-w-6xl mx-auto px-6 md:px-10 pt-12 md:pt-16 pb-10 md:pb-12">
+            <Link to="/bookings" className="inline-flex items-center gap-2 text-sm text-marine-dark/70 hover:text-marine mb-8"><ArrowLeft size={16} /> All bookings</Link>
+            <p className="text-xs tracking-widest2 uppercase text-marine-dark/65 mb-3">{config.tag}</p>
+            <h1 className="font-display text-marine-dark leading-tight tracking-tight" style={{ fontSize: 'clamp(2.25rem, 5vw, 4rem)' }}>{config.title}</h1>
+            <p className="mt-4 max-w-2xl text-ink/70 leading-relaxed">{config.lead}</p>
+            <ol aria-label="Booking progress" className="mt-9 grid grid-cols-2 md:grid-cols-4 gap-3">
+              {STEPS.map((label, index) => (
+                <li key={label} aria-current={index === step ? 'step' : undefined} className={`flex items-center gap-2 rounded-full border px-4 py-3 text-xs md:text-sm ${index === step ? 'bg-marine-dark border-marine-dark text-sand' : index < step ? 'border-marine-dark/20 text-marine-dark' : 'border-marine-dark/10 text-ink/50'}`}>
+                  {index < step && <Check size={14} aria-hidden="true" className="shrink-0" />}
+                  <span>{label}</span>
                 </li>
-              )
-            })}
-          </ol>
-        </div>
-      </section>
+              ))}
+            </ol>
+          </div>
+        </header>
 
-      {/* Body */}
-      <section className="border-b border-ink/10">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 py-14 md:py-20 grid md:grid-cols-12 gap-10 md:gap-14">
-          {/* Flow */}
-          <div className="md:col-span-7">
-            {step === 0 && (
-              <StepDetails
-                config={config}
-                date={date}
-                setDate={setDate}
-                checkOut={checkOut}
-                setCheckOut={setCheckOut}
-                guests={guests}
-                setGuests={setGuests}
-                time={time}
-                setTime={setTime}
-                addOns={addOns}
-                toggleAddOn={toggleAddOn}
-                guestStep={guestStep}
-                nights={nights}
-              />
-            )}
-            {step === 1 && (
-              <StepContact contact={contact} setContact={setContact} config={config} />
-            )}
-            {step === 2 && (
-              <StepPayment
-                config={config}
-                total={total}
-                card={card}
-                setCard={setCard}
-              />
-            )}
-            {step === 3 && (
-              <StepConfirmed
-                config={config}
-                total={total}
-                reference={reference}
-                contact={contact}
-                date={date}
-                checkOut={checkOut}
-                time={time}
-                guests={guests}
-                nights={nights}
-              />
-            )}
+        <div className="max-w-6xl mx-auto px-6 md:px-10 py-12 md:py-16 grid lg:grid-cols-[minmax(0,1fr)_340px] gap-10 lg:gap-14 items-start">
+          <div className="min-w-0">
+            {step < 3 ? (
+              <form onSubmit={next} aria-label="Booking details">
+                {step === 0 && (
+                  <StepDetails type={type} config={config} products={products} product={product} selectProduct={selectProduct} rooms={rooms.items || []} room={room} selectRoom={setRoomId} date={date} setDate={value => { setDate(value); if (checkOut && checkOut <= value) setCheckOut('') }} checkOut={checkOut} setCheckOut={setCheckOut} today={today} guests={guests} setGuests={setGuests} time={time} setTime={setTime} addOns={addOns} toggleAddOn={toggleAddOn} units={units} />
+                )}
+                {step === 1 && <StepContact contact={contact} setContact={setContact} />}
+                {step === 2 && <StepReview summary={summary} contact={contact} />}
 
-            {step < STEPS.length - 1 && (
-              <div className="mt-10 pt-8 border-t border-ink/15 flex flex-wrap items-center justify-between gap-4">
-                <button
-                  type="button"
-                  onClick={back}
-                  disabled={step === 0}
-                  className="inline-flex items-center gap-2 text-[11px] tracking-widest2 uppercase text-ink/60 hover:text-orange-dark transition-colors disabled:opacity-30 disabled:pointer-events-none"
-                >
-                  <ArrowLeft size={14} /> Back
-                </button>
-                <button
-                  type="button"
-                  onClick={next}
-                  disabled={!canAdvanceFromStep}
-                  className="inline-flex items-center gap-3 bg-orange-dark text-sand px-6 py-3.5 text-[11px] tracking-widest2 uppercase hover:bg-orange transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  {step === 2
-                    ? config.holdOnly
-                      ? 'Request Quote'
-                      : `Pay & Confirm · ${NAIRA.format(total)}`
-                    : 'Continue'}
-                  <span aria-hidden="true">→</span>
-                </button>
-              </div>
-            )}
+                {error && <p role="alert" className="mt-6 rounded-xl border border-orange-dark/40 bg-orange-light/10 p-4 text-sm leading-relaxed text-marine-dark">{error} <Link to="/contact" className="underline underline-offset-2">Contact us</Link></p>}
+                <div className="mt-10 pt-6 border-t border-marine-dark/15 flex flex-wrap items-center justify-between gap-4">
+                  <button type="button" onClick={() => { setStep(value => Math.max(0, value - 1)); setError('') }} disabled={step === 0 || submitting} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-marine-dark/20 px-5 py-3 text-sm text-marine-dark hover:bg-marine-dark/5 disabled:opacity-35 disabled:cursor-not-allowed"><ArrowLeft size={16} /> Back</button>
+                  <button type="submit" disabled={submitting || (step === 0 && !detailsReady)} className="inline-flex min-h-11 items-center justify-center gap-3 rounded-full bg-marine-dark px-6 py-3 text-sm font-medium text-sand hover:bg-marine disabled:opacity-40 disabled:cursor-not-allowed">
+                    {submitting ? <><Loader2 size={16} className="animate-spin" aria-hidden="true" /> Sending request</> : <>{step === 2 ? 'Send booking request' : step === 1 ? 'Review booking' : 'Continue'}<ArrowRight size={16} aria-hidden="true" /></>}
+                  </button>
+                </div>
+                {step === 0 && !detailsReady && <p className="mt-3 text-sm text-ink/60">{!selectionReady ? 'Choose an available booking option to continue.' : config.stay ? 'Choose your check-in and check-out dates to continue.' : config.timeSlots ? 'Choose a date and time to continue.' : 'Choose a date to continue.'}</p>}
+              </form>
+            ) : <StepReceived reference={reference} contact={contact} summary={summary} />}
           </div>
 
-          {/* Summary rail */}
-          <aside className="md:col-span-5 md:pl-10 md:border-l md:border-ink/10">
-            <div className="sticky top-24">
-              <figure className="aspect-[4/5] w-full overflow-hidden bg-ink/5 mb-6">
-                <img
-                  src={selectedRoom?.imageUrl || config.image}
-                  alt=""
-                  loading="eager"
-                  className="h-full w-full object-cover"
-                />
-              </figure>
-
-              <p className="text-[10px] tracking-widest2 uppercase text-ink/55 mb-3">
-                Your booking
-              </p>
-              <h2 className="font-display text-2xl md:text-3xl text-marine leading-tight mb-3">
-                {selectedRoom ? selectedRoom.name : config.title}
-              </h2>
-              {selectedRoom && (
-                <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-6">
-                  {selectedRoom.tag} · {selectedRoom.priceFrom}
-                </p>
-              )}
-              {!selectedRoom && <div className="mb-6" />}
-
-              <dl className="space-y-4 text-sm border-t border-ink/15 pt-6">
-                <SummaryRow label="Date">
-                  {date ? new Date(date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) : '—'}
-                  {config.stay && checkOut ? ` → ${new Date(checkOut).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}` : ''}
-                </SummaryRow>
-                {config.timeSlots && (
-                  <SummaryRow label="Time">{time || '—'}</SummaryRow>
-                )}
-                <SummaryRow label={config.guestNoun}>
-                  {guests}
-                </SummaryRow>
-                {config.stay && (
-                  <SummaryRow label="Nights">{nights}</SummaryRow>
-                )}
-                {addOns.length > 0 && (
-                  <SummaryRow label="Add-ons">
-                    <span className="text-right">
-                      {addOns
-                        .map((k) => config.options.find((o) => o.key === k)?.label)
-                        .filter(Boolean)
-                        .join(', ')}
-                    </span>
-                  </SummaryRow>
-                )}
-              </dl>
-
-              <div className="mt-8 border-t border-ink/15 pt-6 flex items-baseline justify-between">
-                <p className="text-[10px] tracking-widest2 uppercase text-ink/55">
-                  {config.holdOnly ? 'Estimate' : 'Total'}
-                </p>
-                <p className="font-display italic text-orange-dark text-3xl tabular-nums">
-                  {config.holdOnly ? 'On enquiry' : NAIRA.format(total)}
-                </p>
-              </div>
-              {!config.holdOnly && (
-                <p className="text-[11px] text-ink/55 mt-3 leading-relaxed">
-                  All prices inclusive of VAT. Card charged only after the
-                  final step.
-                </p>
-              )}
+          <aside aria-label="Booking summary" className="min-w-0 rounded-3xl bg-sky p-6 lg:sticky lg:top-28">
+            <img src={room?.imageUrl || config.image} alt={bookingName} className="w-full aspect-[16/10] rounded-2xl object-cover mb-6" />
+            <p className="text-xs uppercase tracking-widest2 text-marine-dark/65 mb-2">Your visit</p>
+            <h2 className="font-display text-2xl leading-tight text-marine-dark mb-5">{bookingName}</h2>
+            <BookingSummary summary={summary} />
+            <div className="mt-6 pt-5 border-t border-marine-dark/15">
+              <p className="text-sm text-marine-dark/70 mb-1">{config.holdOnly ? 'Pricing' : 'Estimated total'}</p>
+              <p className="font-display text-3xl text-marine-dark tabular-nums">{config.holdOnly ? 'On enquiry' : NAIRA.format(total)}</p>
+              <p className="mt-3 text-xs leading-relaxed text-marine-dark/65">Availability and payment details are confirmed by our team. No payment is taken with this request.</p>
             </div>
           </aside>
         </div>
-      </section>
-
+      </main>
       <Footer />
     </div>
   )
 }
 
-function SummaryRow({ label, children }) {
+function Field({ label, children, required = false }) {
+  return <label className="block min-w-0"><span className="block text-sm font-medium text-marine-dark mb-2">{label}{required && <span aria-hidden="true" className="text-orange-dark"> *</span>}</span>{children}</label>
+}
+
+function GuestCounter({ config, guests, setGuests }) {
+  const increment = config.step || 1
+  const [draft, setDraft] = useState(String(guests))
+  useEffect(() => { setDraft(String(guests)) }, [guests])
+  function updateCount(value) {
+    setDraft(value)
+    const count = Number(value)
+    if (Number.isInteger(count) && count >= config.minGuests && count <= config.maxGuests) setGuests(count)
+  }
   return (
-    <div className="flex items-baseline justify-between gap-4">
-      <dt className="text-[10px] tracking-widest2 uppercase text-ink/55 shrink-0">
-        {label}
-      </dt>
-      <dd className="font-display italic text-ink text-right">{children}</dd>
+    <div>
+      <p id="guest-count-label" className="text-sm font-medium text-marine-dark mb-2">{config.guestNoun === 'tickets' ? 'Number of tickets' : config.guestNoun === 'diners' ? 'Diners' : 'Guests'}</p>
+      <div aria-labelledby="guest-count-label" className="inline-flex items-center gap-3">
+        <button type="button" aria-label="Fewer" disabled={guests <= config.minGuests} onClick={() => setGuests(value => Math.max(config.minGuests, value - increment))} className="h-11 w-11 rounded-full border border-marine-dark/20 text-marine-dark hover:bg-marine-dark/5 disabled:opacity-35 disabled:cursor-not-allowed">−</button>
+        <input type="number" aria-labelledby="guest-count-label" required min={config.minGuests} max={config.maxGuests} step={1} value={draft} onChange={event => updateCount(event.target.value)} onBlur={() => { const count = Math.max(config.minGuests, Math.min(config.maxGuests, Math.round(Number(draft) || config.minGuests))); setGuests(count); setDraft(String(count)) }} className="h-11 w-20 rounded-xl border border-marine-dark/20 bg-sand text-center text-xl font-medium text-marine-dark tabular-nums" />
+        <button type="button" aria-label="More" disabled={guests >= config.maxGuests} onClick={() => setGuests(value => Math.min(config.maxGuests, value + increment))} className="h-11 w-11 rounded-full border border-marine-dark/20 text-marine-dark hover:bg-marine-dark/5 disabled:opacity-35 disabled:cursor-not-allowed">+</button>
+      </div>
+      <p className="mt-2 text-xs text-ink/60">{config.minGuests}–{config.maxGuests} {config.guestNoun}</p>
     </div>
   )
 }
 
-/* -------------------------------------------------------------------------- */
-
-function StepDetails({
-  config,
-  date,
-  setDate,
-  checkOut,
-  setCheckOut,
-  guests,
-  setGuests,
-  time,
-  setTime,
-  addOns,
-  toggleAddOn,
-  guestStep,
-  nights,
-}) {
-  const today = new Date().toISOString().split('T')[0]
-
+function StepDetails({ type, config, products, product, selectProduct, rooms, room, selectRoom, date, setDate, checkOut, setCheckOut, today, guests, setGuests, time, setTime, addOns, toggleAddOn, units }) {
   return (
     <div>
-      <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-3">
-        01 · Details
-      </p>
-      <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-8">
-        When are you{' '}
-        <span className="italic">coming?</span>
-      </h2>
+      <h2 className="font-display text-3xl text-marine-dark leading-tight mb-3">Plan your visit</h2>
+      <p className="text-sm text-ink/65 mb-8">Choose what works for your party. You can review everything before sending your request.</p>
 
-      {/* Dates */}
-      <div className="grid md:grid-cols-2 gap-6 mb-10">
-        <label className="block">
-          <span className="block text-[10px] tracking-widest2 uppercase text-ink/60 mb-2">
-            {config.stay ? 'Check-in' : 'Date'}
-          </span>
-          <input
-            type="date"
-            min={today}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm transition-colors"
-          />
-        </label>
-        {config.stay ? (
-          <label className="block">
-            <span className="block text-[10px] tracking-widest2 uppercase text-ink/60 mb-2">
-              Check-out
-            </span>
-            <input
-              type="date"
-              min={date || today}
-              value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
-              className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm transition-colors"
-            />
-          </label>
-        ) : (
-          <label className="block">
-            <span className="block text-[10px] tracking-widest2 uppercase text-ink/60 mb-2">
-              {config.guestNoun}
-            </span>
-            <div className="flex items-center gap-4 pt-1">
-              <button
-                type="button"
-                onClick={() =>
-                  setGuests((g) => Math.max(config.minGuests, g - guestStep))
-                }
-                className="h-9 w-9 border border-ink/25 hover:border-orange-dark hover:text-orange-dark transition-colors"
-                aria-label="Fewer"
-              >
-                −
-              </button>
-              <span className="font-display italic text-2xl tabular-nums w-10 text-center">
-                {guests}
-              </span>
-              <button
-                type="button"
-                onClick={() =>
-                  setGuests((g) => Math.min(config.maxGuests, g + guestStep))
-                }
-                className="h-9 w-9 border border-ink/25 hover:border-orange-dark hover:text-orange-dark transition-colors"
-                aria-label="More"
-              >
-                +
-              </button>
-              <span className="text-[11px] text-ink/50 ml-2">
-                {config.minGuests}–{config.maxGuests}
-              </span>
-            </div>
-          </label>
-        )}
-      </div>
-
-      {/* Guests for stay type */}
-      {config.stay && (
-        <div className="mb-10">
-          <span className="block text-[10px] tracking-widest2 uppercase text-ink/60 mb-2">
-            {config.guestNoun} · {nights} {nights === 1 ? 'night' : 'nights'}
-          </span>
-          <div className="flex items-center gap-4 pt-1">
-            <button
-              type="button"
-              onClick={() => setGuests((g) => Math.max(config.minGuests, g - 1))}
-              className="h-9 w-9 border border-ink/25 hover:border-orange-dark hover:text-orange-dark transition-colors"
-              aria-label="Fewer"
-            >
-              −
-            </button>
-            <span className="font-display italic text-2xl tabular-nums w-10 text-center">
-              {guests}
-            </span>
-            <button
-              type="button"
-              onClick={() => setGuests((g) => Math.min(config.maxGuests, g + 1))}
-              className="h-9 w-9 border border-ink/25 hover:border-orange-dark hover:text-orange-dark transition-colors"
-              aria-label="More"
-            >
-              +
-            </button>
-          </div>
+      {config.catalogCategory && (
+        <div className="mb-8">
+          {products.length ? (
+            <>
+              <Field label={type === 'entry' ? 'Entry ticket' : 'Package'} required><select required value={product?.id || ''} onChange={event => selectProduct(event.target.value)} className={INPUT}>{products.map(item => <option key={item.id} value={item.id}>{item.name} · {NAIRA.format(item.priceNGN)} / {item.priceUnit || 'package'}</option>)}</select></Field>
+              <p className="mt-4 text-sm text-ink/70 leading-relaxed">{product?.body}</p>
+              {product?.includes?.length > 0 && <ul aria-label="Included in your booking" className="mt-4 grid sm:grid-cols-2 gap-x-5 gap-y-2">{product.includes.map(item => <li key={item} className="flex items-start gap-2 text-sm text-marine-dark/80"><Check size={15} aria-hidden="true" className="shrink-0 mt-1 text-marine" />{item}</li>)}</ul>}
+            </>
+          ) : <p className="rounded-xl border border-marine-dark/20 p-4 text-sm">These bookings are not available yet. <Link to="/contact" className="underline">Contact our team</Link> to plan a visit.</p>}
         </div>
       )}
 
-      {/* Time slots */}
-      {config.timeSlots && (
-        <fieldset className="mb-10">
-          <legend className="text-[10px] tracking-widest2 uppercase text-ink/60 mb-3">
-            Preferred time
-          </legend>
-          <div className="flex flex-wrap gap-2">
-            {config.timeSlots.map((slot) => {
-              const active = time === slot
-              return (
-                <button
-                  key={slot}
-                  type="button"
-                  onClick={() => setTime(slot)}
-                  aria-pressed={active}
-                  className={`px-4 py-2 text-sm tabular-nums border transition-colors ${
-                    active
-                      ? 'bg-orange-dark text-sand border-orange-dark'
-                      : 'text-ink/70 border-ink/25 hover:border-orange-dark hover:text-orange-dark'
-                  }`}
-                >
-                  {slot}
-                </button>
-              )
-            })}
-          </div>
-        </fieldset>
-      )}
+      {type === 'rooms' && rooms.length > 0 && <div className="mb-8"><Field label="Room or cabana" required><select required value={slugify(room?.name)} onChange={event => selectRoom(event.target.value)} className={INPUT}>{rooms.map(item => <option key={item.name} value={slugify(item.name)}>{item.name} · {item.priceFrom}</option>)}</select></Field>{room?.body && <p className="mt-4 text-sm text-ink/70 leading-relaxed">{room.body}</p>}</div>}
 
-      {/* Add-ons */}
-      {config.options && config.options.length > 0 && (
-        <fieldset>
-          <legend className="text-[10px] tracking-widest2 uppercase text-ink/60 mb-4">
-            Add-ons
-          </legend>
-          <ul className="border-t border-ink/15">
-            {config.options.map((opt) => {
-              const active = addOns.includes(opt.key)
-              return (
-                <li key={opt.key} className="border-b border-ink/15">
-                  <label className="flex items-center gap-4 py-4 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={active}
-                      onChange={() => toggleAddOn(opt.key)}
-                      className="h-4 w-4 accent-orange-dark shrink-0"
-                    />
-                    <span className="flex-1 text-sm text-ink/80">
-                      {opt.label}
-                    </span>
-                    <span className="font-display italic text-orange-dark text-sm tabular-nums">
-                      {opt.price
-                        ? `+ ${NAIRA.format(opt.price)}`
-                        : 'included'}
-                    </span>
-                  </label>
-                </li>
-              )
-            })}
-          </ul>
-        </fieldset>
-      )}
+      <div className="grid sm:grid-cols-2 gap-6 mb-8">
+        <Field label={config.stay ? 'Check-in date' : 'Visit date'} required><input required type="date" min={today} value={date} onChange={event => setDate(event.target.value)} className={INPUT} /></Field>
+        {config.stay ? <Field label="Check-out date" required><input required type="date" min={date ? followingDay(date) : followingDay(today)} value={checkOut} onChange={event => setCheckOut(event.target.value)} className={INPUT} /></Field> : <GuestCounter config={config} guests={guests} setGuests={setGuests} />}
+      </div>
+      {config.stay && <div className="mb-8"><GuestCounter config={config} guests={guests} setGuests={setGuests} /></div>}
+      {config.packageFor && <p className="mb-8 rounded-xl bg-sky p-4 text-sm text-marine-dark">Each package includes up to {config.packageFor} guests. Your party needs {units} {units === 1 ? 'package' : 'packages'}.</p>}
+      {type === 'entry' && productCapacity(product) > 1 && <p className="mb-8 text-sm text-marine-dark/75">Each ticket includes {productCapacity(product)} guests. {guests} {guests === 1 ? 'ticket covers' : 'tickets cover'} up to {guests * productCapacity(product)} guests.</p>}
+
+      {config.timeSlots && <fieldset className="mb-8"><legend className="text-sm font-medium text-marine-dark mb-3">Preferred time <span aria-hidden="true" className="text-orange-dark">*</span></legend><div className="flex flex-wrap gap-2">{config.timeSlots.map(slot => <button key={slot} type="button" aria-pressed={time === slot} onClick={() => setTime(slot)} className={`rounded-full border px-5 py-3 text-sm tabular-nums transition-colors ${time === slot ? 'bg-marine-dark border-marine-dark text-sand' : 'border-marine-dark/20 text-marine-dark hover:bg-marine-dark/5'}`}>{slot}</button>)}</div></fieldset>}
+
+      {config.options?.length > 0 && <fieldset><legend className="text-sm font-medium text-marine-dark mb-3">Optional extras</legend><ul className="divide-y divide-marine-dark/10 border-y border-marine-dark/10">{config.options.map(option => <li key={option.key}><label className="flex items-start gap-3 py-4 cursor-pointer"><input type="checkbox" checked={addOns.includes(option.key)} onChange={() => toggleAddOn(option.key)} className="mt-1 h-5 w-5 shrink-0 accent-marine" /><span className="min-w-0 flex-1 text-sm text-ink/80">{option.label}</span><span className="shrink-0 text-sm text-marine-dark tabular-nums">{option.price ? `+ ${NAIRA.format(option.price)}` : 'No extra charge'}</span></label></li>)}</ul></fieldset>}
     </div>
   )
 }
 
-function StepContact({ contact, setContact, config }) {
+function StepContact({ contact, setContact }) {
+  function change(key, value) { setContact(previous => ({ ...previous, [key]: value })) }
   return (
     <div>
-      <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-3">
-        02 · Guest info
-      </p>
-      <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-8">
-        Who's on the{' '}
-        <span className="italic">booking?</span>
-      </h2>
-
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <input
-          required
-          type="text"
-          placeholder="First name"
-          value={contact.firstName}
-          onChange={(e) => setContact({ ...contact, firstName: e.target.value })}
-          className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors"
-        />
-        <input
-          required
-          type="text"
-          placeholder="Last name"
-          value={contact.lastName}
-          onChange={(e) => setContact({ ...contact, lastName: e.target.value })}
-          className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors"
-        />
+      <h2 className="font-display text-3xl text-marine-dark leading-tight mb-3">Your contact details</h2>
+      <p className="text-sm text-ink/65 mb-8">Our team will use these details to confirm your visit.</p>
+      <div className="grid sm:grid-cols-2 gap-5 mb-5">
+        <Field label="First name" required><input required name="firstName" autoComplete="given-name" maxLength={120} value={contact.firstName} onChange={event => change('firstName', event.target.value)} pattern=".*\S.*" className={INPUT} /></Field>
+        <Field label="Last name" required><input required name="lastName" autoComplete="family-name" maxLength={120} value={contact.lastName} onChange={event => change('lastName', event.target.value)} pattern=".*\S.*" className={INPUT} /></Field>
       </div>
-
-      <input
-        required
-        type="email"
-        placeholder="Email — your booking goes here"
-        value={contact.email}
-        onChange={(e) => setContact({ ...contact, email: e.target.value })}
-        className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors mb-6"
-      />
-      <input
-        type="tel"
-        placeholder="Phone (WhatsApp welcome)"
-        value={contact.phone}
-        onChange={(e) => setContact({ ...contact, phone: e.target.value })}
-        className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors mb-6"
-      />
-      <textarea
-        rows={4}
-        placeholder={
-          config.holdOnly
-            ? 'Tell us the shape of what you have in mind'
-            : 'Anything the host should know? (optional)'
-        }
-        value={contact.notes}
-        onChange={(e) => setContact({ ...contact, notes: e.target.value })}
-        className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 resize-none transition-colors"
-      />
+      <div className="space-y-5">
+        <Field label="Email address" required><input required name="email" type="email" autoComplete="email" value={contact.email} onChange={event => change('email', event.target.value)} className={INPUT} /></Field>
+        <Field label="Phone number (optional)"><input name="phone" type="tel" autoComplete="tel" maxLength={60} value={contact.phone} onChange={event => change('phone', event.target.value)} className={INPUT} /></Field>
+        <Field label="Notes for our team (optional)"><textarea name="notes" rows={4} placeholder="Special requests, access needs or anything else we should know" value={contact.notes} onChange={event => change('notes', event.target.value)} className={`${INPUT} resize-y`} /></Field>
+      </div>
     </div>
   )
 }
 
-function StepPayment({ config, total, card, setCard }) {
-  if (config.holdOnly) {
-    return (
-      <div>
-        <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-3">
-          03 · Request a quote
-        </p>
-        <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-6">
-          No card{' '}
-          <span className="italic">needed today.</span>
-        </h2>
-        <p className="text-ink/70 max-w-md leading-relaxed">
-          We'll email you a firm quote and hold the slot for 48 hours while
-          you decide. Payment happens once the details are agreed.
-        </p>
-      </div>
-    )
-  }
+function BookingSummary({ summary }) {
+  const { type, config, date, checkOut, time, guests, partySize, units, nights, addOns } = summary
+  return (
+    <dl className="space-y-3 text-sm">
+      <SummaryRow label={config.stay ? 'Stay' : 'Date'}>{formatDate(date)}{config.stay && checkOut ? ` – ${formatDate(checkOut)}` : ''}</SummaryRow>
+      {config.timeSlots && <SummaryRow label="Time">{time || 'Choose a time'}</SummaryRow>}
+      <SummaryRow label={type === 'entry' ? 'Tickets' : config.guestNoun === 'diners' ? 'Diners' : 'Guests'}>{guests}</SummaryRow>
+      {type === 'entry' && partySize !== guests && <SummaryRow label="Guests included">{partySize}</SummaryRow>}
+      {config.packageFor && <SummaryRow label="Packages">{units}</SummaryRow>}
+      {config.stay && <SummaryRow label="Nights">{nights}</SummaryRow>}
+      {addOns.length > 0 && <SummaryRow label="Extras"><ul className="space-y-1">{addOns.map(key => <li key={key}>{config.options.find(option => option.key === key)?.label}</li>)}</ul></SummaryRow>}
+    </dl>
+  )
+}
 
+function SummaryRow({ label, children }) {
+  return <div className="flex items-start justify-between gap-5"><dt className="shrink-0 text-marine-dark/65">{label}</dt><dd className="min-w-0 text-right font-medium text-marine-dark break-words">{children}</dd></div>
+}
+
+function StepReview({ summary, contact }) {
   return (
     <div>
-      <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-3">
-        03 · Payment
-      </p>
-      <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine mb-3">
-        Pay{' '}
-        <span className="italic text-orange-dark">
-          {NAIRA.format(total)}
-        </span>
-      </h2>
-      <p className="text-ink/60 text-sm inline-flex items-center gap-2 mb-8">
-        <Lock size={12} />
-        Secured by Paystack · your card is never stored on our servers.
-      </p>
-
-      <input
-        required
-        type="text"
-        placeholder="Cardholder name"
-        value={card.name}
-        onChange={(e) => setCard({ ...card, name: e.target.value })}
-        className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 transition-colors mb-6"
-      />
-      <input
-        required
-        inputMode="numeric"
-        placeholder="Card number"
-        value={card.number}
-        onChange={(e) =>
-          setCard({ ...card, number: e.target.value.replace(/\D/g, '').slice(0, 19) })
-        }
-        className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 tabular-nums transition-colors mb-6"
-      />
-      <div className="grid grid-cols-2 gap-6">
-        <input
-          required
-          inputMode="numeric"
-          placeholder="MM / YY"
-          value={card.expiry}
-          onChange={(e) =>
-            setCard({ ...card, expiry: e.target.value.replace(/[^\d/]/g, '').slice(0, 7) })
-          }
-          className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 tabular-nums transition-colors"
-        />
-        <input
-          required
-          inputMode="numeric"
-          placeholder="CVC"
-          value={card.cvc}
-          onChange={(e) =>
-            setCard({ ...card, cvc: e.target.value.replace(/\D/g, '').slice(0, 4) })
-          }
-          className="w-full bg-transparent border-b border-ink/30 focus:border-orange-dark outline-none py-3 text-sm placeholder:text-ink/50 tabular-nums transition-colors"
-        />
+      <h2 className="font-display text-3xl text-marine-dark leading-tight mb-3">Review your booking</h2>
+      <p className="text-sm text-ink/65 mb-8">Check your visit and contact details before sending your request.</p>
+      <h3 className="font-display text-xl text-marine-dark mb-4">{summary.bookingName}</h3>
+      <BookingSummary summary={summary} />
+      <div className="mt-6 pt-6 border-t border-marine-dark/15 space-y-2 text-sm text-ink/75">
+        <p className="font-medium text-marine-dark">{contact.firstName} {contact.lastName}</p>
+        <p className="break-words">{contact.email}</p>
+        {contact.phone && <p>{contact.phone}</p>}
+        {contact.notes && <p className="pt-2 whitespace-pre-line break-words">{contact.notes}</p>}
+      </div>
+      <div className="mt-6 rounded-2xl border border-marine-dark/15 p-5">
+        <p className="text-sm font-medium text-marine-dark mb-2">{summary.config.holdOnly ? 'Request a quote' : `Estimated total · ${NAIRA.format(summary.total)}`}</p>
+        <p className="text-sm text-ink/65 leading-relaxed">Our team will confirm availability and payment details. Sending this request does not take a payment.</p>
       </div>
     </div>
   )
 }
 
-function StepConfirmed({
-  config,
-  total,
-  reference,
-  contact,
-  date,
-  checkOut,
-  time,
-  guests,
-  nights,
-}) {
+function StepReceived({ reference, contact, summary }) {
   return (
-    <div className="pt-2">
-      <div className="w-14 h-14 rounded-full border border-orange-dark/40 flex items-center justify-center mb-6">
-        <Check size={22} className="text-orange-dark" />
+    <div role="status">
+      <CheckCircle2 size={44} strokeWidth={1.5} className="text-marine mb-6" aria-hidden="true" />
+      <h2 className="font-display text-3xl md:text-4xl leading-tight text-marine-dark mb-4">Your request is received.</h2>
+      <p className="text-ink/70 leading-relaxed mb-8">Our team will confirm availability and payment details using <span className="font-medium text-marine-dark break-words">{contact.email}</span>. Keep your reference for any follow-up.</p>
+      <div className="rounded-2xl border border-marine-dark/20 p-5 mb-8"><p className="text-sm text-ink/65 mb-1">Booking reference</p><p className="font-display text-xl text-marine-dark break-all">{reference}</p></div>
+      <h3 className="font-display text-xl text-marine-dark mb-4">{summary.bookingName}</h3>
+      <BookingSummary summary={summary} />
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Link to="/bookings" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-marine-dark px-6 py-3 text-sm text-sand hover:bg-marine">Make another booking <ArrowRight size={16} /></Link>
+        <Link to="/things-to-do" className="inline-flex min-h-11 items-center rounded-full border border-marine-dark/20 px-6 py-3 text-sm text-marine-dark hover:bg-marine-dark/5">Explore the grounds</Link>
       </div>
-      <p className="text-orange-dark text-[11px] tracking-widest2 uppercase mb-3">
-        {config.holdOnly ? 'Held for 48 hours' : 'Confirmed'}
-      </p>
-      <h2 className="font-display text-4xl md:text-5xl leading-tight text-ink mb-6">
-        {config.holdOnly ? "We've got your enquiry." : "You're on the list."}
-      </h2>
-      <p className="text-ink/70 max-w-md leading-relaxed mb-10">
-        {config.holdOnly
-          ? `A host is preparing your quote and will write to ${contact.email || 'you'} within the hour.`
-          : `A confirmation has been sent to ${contact.email || 'your email'}. Show the reference below at the gate — or the QR that lands in your inbox.`}
-      </p>
-
-      <dl className="border-t border-ink/15 divide-y divide-ink/10">
-        <ConfirmRow label="Reference">
-          <span className="font-mono tabular-nums text-sm">{reference}</span>
-        </ConfirmRow>
-        <ConfirmRow label="Booking">
-          {config.title}
-        </ConfirmRow>
-        <ConfirmRow label="Date">
-          {date
-            ? new Date(date).toLocaleDateString('en-GB', {
-                weekday: 'short',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })
-            : '—'}
-          {config.stay && checkOut ? ` → ${new Date(checkOut).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}` : ''}
-        </ConfirmRow>
-        {time && <ConfirmRow label="Time">{time}</ConfirmRow>}
-        <ConfirmRow label={config.guestNoun}>{guests}</ConfirmRow>
-        {config.stay && <ConfirmRow label="Nights">{nights}</ConfirmRow>}
-        {!config.holdOnly && (
-          <ConfirmRow label="Paid">
-            <span className="font-display italic text-orange-dark">
-              {NAIRA.format(total)}
-            </span>
-          </ConfirmRow>
-        )}
-      </dl>
-
-      <div className="mt-10 flex flex-wrap gap-4">
-        <Link
-          to="/things-to-do"
-          className="inline-flex items-center gap-3 border border-ink/25 px-5 py-3 text-[11px] tracking-widest2 uppercase text-ink hover:border-orange-dark hover:text-orange-dark transition-colors"
-        >
-          Explore the grounds
-        </Link>
-        <Link
-          to="/bookings"
-          className="inline-flex items-center gap-3 text-[11px] tracking-widest2 uppercase text-orange-dark hover:text-ink transition-colors"
-        >
-          Book something else →
-        </Link>
-      </div>
-    </div>
-  )
-}
-
-function ConfirmRow({ label, children }) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-4">
-      <dt className="text-[10px] tracking-widest2 uppercase text-ink/55">
-        {label}
-      </dt>
-      <dd className="text-ink text-right font-display text-lg">{children}</dd>
     </div>
   )
 }
